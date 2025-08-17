@@ -1,0 +1,1245 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ZENITH ENGLISH - 캘린더</title>
+    
+    <!-- html2canvas & jsPDF 라이브러리 -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Pacifico&family=Fredoka:wght@400;500;600;700&family=Noto+Sans+KR:wght@400;500;700;900&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+        
+        /* PDF 저장 시 선택 효과 방지 */
+        ::selection {
+            background: transparent;
+        }
+        
+        ::-moz-selection {
+            background: transparent;
+        }
+        
+        :root {
+            --primary: #5B21B6;
+            --secondary: #EC4899;
+            --accent: #06B6D4;
+            --success: #10B981;
+            --danger: #EF4444;
+            --dark: #1F2937;
+            --light: #F9FAFB;
+        }
+        
+        /* 계절별 테마 */
+        .theme-spring {
+            --primary: #EC4899;
+            --secondary: #F472B6;
+            --bg-gradient: linear-gradient(135deg, #FEE2E2 0%, #FBBF24 50%, #86EFAC 100%);
+            --header-gradient: linear-gradient(135deg, #F472B6 0%, #FB923C 50%, #86EFAC 100%);
+            --season-emoji: "🌸";
+            --season-name: "봄";
+        }
+        
+        .theme-summer {
+            --primary: #06B6D4;
+            --secondary: #0EA5E9;
+            --bg-gradient: linear-gradient(135deg, #38BDF8 0%, #0EA5E9 50%, #FDE047 100%);
+            --header-gradient: linear-gradient(135deg, #0EA5E9 0%, #06B6D4 50%, #10B981 100%);
+            --season-emoji: "☀️";
+            --season-name: "여름";
+        }
+        
+        .theme-autumn {
+            --primary: #DC2626;
+            --secondary: #EA580C;
+            --bg-gradient: linear-gradient(135deg, #FED7AA 0%, #FB923C 50%, #DC2626 100%);
+            --header-gradient: linear-gradient(135deg, #F97316 0%, #DC2626 50%, #92400E 100%);
+            --season-emoji: "🍂";
+            --season-name: "가을";
+        }
+        
+        .theme-winter {
+            --primary: #5B21B6;
+            --secondary: #6366F1;
+            --bg-gradient: linear-gradient(135deg, #E0E7FF 0%, #C7D2FE 50%, #8B5CF6 100%);
+            --header-gradient: linear-gradient(135deg, #6366F1 0%, #5B21B6 50%, #312E81 100%);
+            --season-emoji: "❄️";
+            --season-name: "겨울";
+        }
+        
+        body {
+            font-family: 'Noto Sans KR', sans-serif;
+            background: var(--bg-gradient, linear-gradient(135deg, #667eea 0%, #764ba2 100%));
+            min-height: 100vh;
+            padding: 20px;
+            transition: background 0.5s ease;
+        }
+        
+        .container {
+            max-width: 210mm; /* A4 width */
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+        
+        /* 헤더 디자인 */
+        .header {
+            background: var(--header-gradient, linear-gradient(135deg, #5B21B6 0%, #EC4899 50%, #06B6D4 100%));
+            padding: 30px;
+            text-align: center;
+            position: relative;
+            transition: background 0.5s ease;
+        }
+        
+        .header::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: linear-gradient(90deg, #FFD700, #FFA500, #FF69B4, #00CED1, #FFD700);
+        }
+        
+        .season-indicator {
+            position: absolute;
+            top: 15px;
+            right: 30px;
+            font-size: 2.5rem;
+        }
+        
+        /* 아기자기한 로고 디자인 */
+        .logo-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+        
+        .logo-main {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .logo-zenith {
+            font-family: 'Fredoka', cursive;
+            font-size: 3.2rem;
+            font-weight: 700;
+            color: #FFFFFF;
+            text-shadow: 
+                4px 4px 0px #FF6B6B,
+                3px 3px 0px #FF8E53,
+                2px 2px 0px #FEB47B,
+                1px 1px 0px #FFE66D,
+                5px 5px 10px rgba(0, 0, 0, 0.3);
+            letter-spacing: 3px;
+            transform: rotate(-2deg);
+            display: inline-block;
+            margin-bottom: -10px;
+        }
+        
+        .logo-english {
+            font-family: 'Pacifico', cursive;
+            font-size: 2.5rem;
+            color: #FFE66D;
+            text-shadow: 
+                2px 2px 0px #FF6B6B,
+                3px 3px 8px rgba(0, 0, 0, 0.4);
+            letter-spacing: 4px;
+            transform: rotate(1deg);
+            display: inline-block;
+            margin-top: -5px;
+        }
+        
+        .logo-star {
+            color: #FFE66D;
+            font-size: 2rem;
+            text-shadow: 0 0 10px rgba(255, 230, 109, 0.8);
+        }
+        
+        .subtitle {
+            color: rgba(255, 255, 255, 0.95);
+            font-size: 1.1rem;
+            font-weight: 500;
+            background: rgba(0, 0, 0, 0.25);
+            display: inline-block;
+            padding: 8px 25px;
+            border-radius: 25px;
+            font-family: 'Fredoka', sans-serif;
+            letter-spacing: 1px;
+            box-shadow: 
+                inset 0 2px 4px rgba(0, 0, 0, 0.2),
+                0 2px 4px rgba(255, 255, 255, 0.3);
+        }
+        
+        /* 장식 요소 */
+        .header-decoration {
+            position: absolute;
+            font-size: 1.5rem;
+            opacity: 0.7;
+        }
+        
+        .deco-1 { top: 20px; left: 40px; }
+        .deco-2 { top: 50px; left: 80px; }
+        .deco-3 { bottom: 30px; left: 50px; }
+        .deco-4 { top: 30px; right: 80px; }
+        .deco-5 { bottom: 40px; right: 60px; }
+        
+        /* 컨트롤 영역 */
+        .controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 30px;
+            background: #F3F4F6;
+            border-bottom: 2px solid #E5E7EB;
+        }
+        
+        .date-selector {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+        
+        .select-wrapper {
+            position: relative;
+        }
+        
+        .select-wrapper::after {
+            content: '▼';
+            position: absolute;
+            right: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            pointer-events: none;
+            color: var(--primary);
+            font-size: 0.8rem;
+        }
+        
+        select {
+            appearance: none;
+            padding: 10px 35px 10px 15px;
+            border: 2px solid var(--primary);
+            border-radius: 10px;
+            background: white;
+            font-size: 1rem;
+            font-weight: 500;
+            color: var(--dark);
+            cursor: pointer;
+            min-width: 100px;
+            transition: border-color 0.3s ease;
+        }
+        
+        select:focus {
+            outline: none;
+            border-color: var(--secondary);
+            box-shadow: 0 0 0 3px rgba(236, 72, 153, 0.1);
+        }
+        
+        .action-buttons {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 10px;
+            font-size: 0.95rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            opacity: 0.9;
+            transform: translateY(-2px);
+        }
+        
+        .btn-success {
+            background: var(--success);
+            color: white;
+        }
+        
+        .btn-success:hover {
+            background: #059669;
+        }
+        
+        .btn-info {
+            background: var(--accent);
+            color: white;
+        }
+        
+        .btn-info:hover {
+            background: #0891B2;
+        }
+        
+        .btn-warning {
+            background: #F59E0B;
+            color: white;
+        }
+        
+        .btn-warning:hover {
+            background: #D97706;
+        }
+        
+        /* 파일 입력 숨김 */
+        .file-input {
+            display: none;
+        }
+        
+        /* 캘린더 영역 */
+        .calendar {
+            padding: 20px;
+        }
+        
+        .month-year-display {
+            text-align: center;
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 20px;
+            padding: 10px;
+            background: linear-gradient(90deg, transparent, rgba(91, 33, 182, 0.1), transparent);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            font-family: 'Fredoka', sans-serif;
+        }
+        
+        .month-decoration {
+            font-size: 1.5rem;
+        }
+        
+        .weekdays {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 2px;
+            margin-bottom: 2px;
+            background: #E5E7EB;
+            padding: 2px;
+            border-radius: 10px;
+        }
+        
+        .weekday {
+            background: var(--primary);
+            color: white;
+            padding: 12px;
+            text-align: center;
+            font-weight: 600;
+            font-size: 0.95rem;
+            transition: background 0.3s ease;
+        }
+        
+        .weekday:first-child {
+            background: var(--danger);
+            border-radius: 8px 0 0 8px;
+        }
+        
+        .weekday:last-child {
+            background: var(--secondary);
+            border-radius: 0 8px 8px 0;
+        }
+        
+        .days {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 2px;
+            background: #E5E7EB;
+            padding: 2px;
+            border-radius: 10px;
+        }
+        
+        .day {
+            background: white;
+            min-height: 85px;
+            padding: 8px;
+            border: 1px solid #E5E7EB;
+            cursor: pointer;
+            position: relative;
+            transition: all 0.2s ease;
+        }
+        
+        .day:hover {
+            background: #F9FAFB;
+            border-color: var(--primary);
+            z-index: 1;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+        
+        .day-number {
+            font-weight: 600;
+            color: var(--dark);
+            margin-bottom: 5px;
+            font-size: 1rem;
+        }
+        
+        .day.other-month .day-number {
+            color: #CBD5E1;
+        }
+        
+        .day.today {
+            background: linear-gradient(135deg, rgba(var(--primary-rgb, 91, 33, 182), 0.1), rgba(var(--secondary-rgb, 236, 72, 153), 0.1));
+            border: 2px solid var(--primary);
+        }
+        
+        .day.today .day-number {
+            color: var(--primary);
+            font-weight: 700;
+        }
+        
+        .events {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+            font-size: 0.7rem;
+        }
+        
+        .event {
+            background: linear-gradient(90deg, rgba(var(--primary-rgb, 91, 33, 182), 0.1), rgba(var(--secondary-rgb, 236, 72, 153), 0.1));
+            border-left: 2px solid var(--primary);
+            padding: 2px 4px;
+            border-radius: 3px;
+            cursor: pointer;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            line-height: 1.3;
+        }
+        
+        .event:hover {
+            background: linear-gradient(90deg, rgba(var(--primary-rgb, 91, 33, 182), 0.2), rgba(var(--secondary-rgb, 236, 72, 153), 0.2));
+        }
+        
+        .add-event-btn {
+            background: var(--success);
+            color: white;
+            border: none;
+            width: 100%;
+            padding: 3px;
+            margin-top: 3px;
+            border-radius: 5px;
+            font-size: 0.65rem;
+            cursor: pointer;
+            opacity: 0;
+            transition: opacity 0.2s ease;
+        }
+        
+        .day:hover .add-event-btn {
+            opacity: 1;
+        }
+        
+        /* 모달 */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+        }
+        
+        .modal-content {
+            background: white;
+            max-width: 400px;
+            margin: 100px auto;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+        }
+        
+        .modal h3 {
+            color: var(--primary);
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        
+        .modal input {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #E5E7EB;
+            border-radius: 8px;
+            font-size: 1rem;
+            margin-bottom: 15px;
+        }
+        
+        .modal input:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+        
+        .modal-buttons {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+        }
+        
+        .btn-secondary {
+            background: #6B7280;
+            color: white;
+        }
+        
+        .btn-secondary:hover {
+            background: #4B5563;
+        }
+        
+        .btn-danger {
+            background: var(--danger);
+            color: white;
+        }
+        
+        .btn-danger:hover {
+            background: #DC2626;
+        }
+        
+        /* 푸터 */
+        .footer {
+            background: linear-gradient(90deg, #F3F4F6, #E5E7EB, #F3F4F6);
+            padding: 20px;
+            text-align: center;
+            color: var(--primary);
+            font-weight: 600;
+            font-size: 1rem;
+            border-top: 3px solid var(--primary);
+            transition: border-color 0.3s ease;
+            font-family: 'Fredoka', sans-serif;
+        }
+        
+        /* PDF 저장 중 로딩 */
+        .loading-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            gap: 20px;
+        }
+        
+        .loading-spinner {
+            width: 50px;
+            height: 50px;
+            border: 5px solid #f3f3f3;
+            border-top: 5px solid var(--primary);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .loading-text {
+            color: white;
+            font-size: 1.2rem;
+        }
+        
+        /* 반응형 디자인 */
+        @media (max-width: 768px) {
+            .logo-zenith {
+                font-size: 2.5rem;
+            }
+            
+            .logo-english {
+                font-size: 2rem;
+            }
+            
+            .controls {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .date-selector {
+                width: 100%;
+                justify-content: center;
+            }
+            
+            .action-buttons {
+                width: 100%;
+                justify-content: center;
+                flex-wrap: wrap;
+            }
+            
+            .day {
+                min-height: 70px;
+                padding: 5px;
+            }
+        }
+        
+        /* 프린트용 스타일 */
+        @media print {
+            * {
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+            
+            body {
+                background: white !important;
+            }
+            
+            .controls {
+                display: none !important;
+            }
+            
+            .add-event-btn {
+                display: none !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container" id="calendar-container">
+        <div class="header">
+            <span class="header-decoration deco-1">✨</span>
+            <span class="header-decoration deco-2">🌟</span>
+            <span class="header-decoration deco-3">⭐</span>
+            <span class="header-decoration deco-4">💫</span>
+            <span class="header-decoration deco-5">✨</span>
+            
+            <div class="season-indicator" id="season-indicator">❄️</div>
+            
+            <div class="logo-container">
+                <span class="logo-star">⭐</span>
+                <div class="logo-main">
+                    <span class="logo-zenith">ZENITH</span>
+                    <span class="logo-english">English</span>
+                </div>
+                <span class="logo-star">⭐</span>
+            </div>
+            
+            <div class="subtitle">✨ Excellence in English Education ✨</div>
+        </div>
+        
+        <div class="controls">
+            <div class="date-selector">
+                <div class="select-wrapper">
+                    <select id="year-select">
+                        <!-- 5년 단위 년도 옵션 -->
+                    </select>
+                </div>
+                <div class="select-wrapper">
+                    <select id="month-select">
+                        <option value="0">1월</option>
+                        <option value="1">2월</option>
+                        <option value="2">3월</option>
+                        <option value="3">4월</option>
+                        <option value="4">5월</option>
+                        <option value="5">6월</option>
+                        <option value="6">7월</option>
+                        <option value="7">8월</option>
+                        <option value="8">9월</option>
+                        <option value="9">10월</option>
+                        <option value="10">11월</option>
+                        <option value="11">12월</option>
+                    </select>
+                </div>
+            </div>
+            <div class="action-buttons">
+                <button class="btn btn-success" onclick="saveToCSV()">
+                    <span>💾</span> CSV 백업
+                </button>
+                <input type="file" id="csv-file" class="file-input" accept=".csv" onchange="loadFromCSV(event)">
+                <button class="btn btn-info" onclick="document.getElementById('csv-file').click()">
+                    <span>📂</span> CSV 복원
+                </button>
+                <button class="btn btn-warning" onclick="saveToPDF()">
+                    <span>📄</span> PDF 저장
+                </button>
+            </div>
+        </div>
+        
+        <div class="calendar">
+            <div class="month-year-display" id="month-year-display">
+                <span class="month-decoration">🌸</span>
+                <span id="month-year-text"></span>
+                <span class="month-decoration">🌸</span>
+            </div>
+            <div style="text-align: center; margin-bottom: 15px; color: #10B981; font-size: 0.9rem;" id="save-status">
+                ✅ 모든 일정은 자동으로 저장됩니다
+            </div>
+            <div class="weekdays">
+                <div class="weekday">일</div>
+                <div class="weekday">월</div>
+                <div class="weekday">화</div>
+                <div class="weekday">수</div>
+                <div class="weekday">목</div>
+                <div class="weekday">금</div>
+                <div class="weekday">토</div>
+            </div>
+            
+            <div class="days" id="calendar-days">
+                <!-- 캘린더 날짜들이 여기에 동적으로 생성됩니다 -->
+            </div>
+        </div>
+        
+        <div class="footer">
+            🌟 ZENITH ENGLISH ACADEMY - Building Tomorrow's Global Leaders 🌟
+        </div>
+    </div>
+    
+    <!-- 일정 추가/편집 모달 -->
+    <div id="event-modal" class="modal">
+        <div class="modal-content">
+            <h3 id="modal-title">일정 추가</h3>
+            <input type="text" id="event-input" placeholder="일정을 입력하세요... 예) 중간고사, 학부모 상담">
+            <div class="modal-buttons">
+                <button class="btn btn-secondary" onclick="closeModal()">취소</button>
+                <button class="btn btn-danger" id="delete-btn" onclick="deleteEvent()" style="display: none;">삭제</button>
+                <button class="btn btn-primary" onclick="saveEvent()">저장</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- PDF 저장 중 로딩 -->
+    <div class="loading-overlay" id="loading-overlay">
+        <div class="loading-spinner"></div>
+        <div class="loading-text">PDF 생성 중...</div>
+    </div>
+    
+    <script>
+        let events = {}; // 메모리에 일정 저장
+        let currentDate = null;
+        let editingEventIndex = null;
+        let currentYearMonth = ''; // 현재 표시중인 년월
+        
+        // 계절 테마 설정
+        function setSeasonTheme(month) {
+            const body = document.body;
+            const seasonIndicator = document.getElementById('season-indicator');
+            const monthDecorations = document.querySelectorAll('.month-decoration');
+            
+            // 기존 테마 클래스 제거
+            body.className = '';
+            
+            // 계절별 테마 적용
+            if (month >= 2 && month <= 4) { // 3-5월: 봄
+                body.classList.add('theme-spring');
+                seasonIndicator.textContent = '🌸';
+                monthDecorations.forEach(el => el.textContent = '🌸');
+            } else if (month >= 5 && month <= 7) { // 6-8월: 여름
+                body.classList.add('theme-summer');
+                seasonIndicator.textContent = '☀️';
+                monthDecorations.forEach(el => el.textContent = '🌊');
+            } else if (month >= 8 && month <= 10) { // 9-11월: 가을
+                body.classList.add('theme-autumn');
+                seasonIndicator.textContent = '🍂';
+                monthDecorations.forEach(el => el.textContent = '🍁');
+            } else { // 12-2월: 겨울
+                body.classList.add('theme-winter');
+                seasonIndicator.textContent = '❄️';
+                monthDecorations.forEach(el => el.textContent = '⛄');
+            }
+        }
+        
+        // 년도 선택 옵션 생성 (5년 단위)
+        function initYearOptions() {
+            const yearSelect = document.getElementById('year-select');
+            const currentYear = new Date().getFullYear();
+            const startYear = currentYear - 2;
+            const endYear = currentYear + 2;
+            
+            for (let year = startYear; year <= endYear; year++) {
+                const option = document.createElement('option');
+                option.value = year;
+                option.textContent = year + '년';
+                if (year === currentYear) {
+                    option.selected = true;
+                }
+                yearSelect.appendChild(option);
+            }
+        }
+        
+        // 현재 선택된 월 표시
+        function updateMonthYearDisplay() {
+            const year = document.getElementById('year-select').value;
+            const month = parseInt(document.getElementById('month-select').value) + 1;
+            const monthNames = ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'];
+            document.getElementById('month-year-text').textContent = `${year}년 ${monthNames[month - 1]}`;
+            
+            // 계절 테마 설정
+            setSeasonTheme(month - 1);
+        }
+        
+        // 캘린더 생성
+        function generateCalendar() {
+            const yearSelect = document.getElementById('year-select');
+            const monthSelect = document.getElementById('month-select');
+            const year = parseInt(yearSelect.value);
+            const month = parseInt(monthSelect.value);
+            const today = new Date();
+            const firstDay = new Date(year, month, 1);
+            const lastDay = new Date(year, month + 1, 0);
+            const startDate = new Date(firstDay);
+            
+            // 현재 년월 저장
+            currentYearMonth = `${year}${String(month + 1).padStart(2, '0')}`;
+            
+            // 첫 번째 주의 시작을 일요일로 맞춤
+            startDate.setDate(startDate.getDate() - firstDay.getDay());
+            
+            const calendarDays = document.getElementById('calendar-days');
+            calendarDays.innerHTML = '';
+            
+            // 월/년 표시 업데이트
+            updateMonthYearDisplay();
+            
+            // 현재 월의 데이터 자동 로드
+            events = {}; // 이전 데이터 초기화
+            loadMonthData(year, month);
+            
+            for (let i = 0; i < 42; i++) { // 6주 * 7일
+                const date = new Date(startDate);
+                date.setDate(startDate.getDate() + i);
+                
+                const dayElement = document.createElement('div');
+                dayElement.className = 'day';
+                
+                // 이번 달이 아닌 날짜 스타일링
+                if (date.getMonth() !== month) {
+                    dayElement.classList.add('other-month');
+                }
+                
+                // 오늘 날짜 표시
+                if (date.toDateString() === today.toDateString()) {
+                    dayElement.classList.add('today');
+                }
+                
+                const dateKey = `${date.getFullYear()}-${date.getMonth()}-${date.getDate()}`;
+                
+                dayElement.innerHTML = `
+                    <div class="day-number">${date.getDate()}</div>
+                    <div class="events" id="events-${dateKey}"></div>
+                    <button class="add-event-btn" onclick="openModal('${dateKey}')">+ 추가</button>
+                `;
+                
+                calendarDays.appendChild(dayElement);
+                
+                // 저장된 일정 표시
+                if (events[dateKey]) {
+                    displayEvents(dateKey);
+                }
+            }
+            
+            // 데이터 로드 상태 표시
+            showDataStatus();
+        }
+        
+        // 일정 표시
+        function displayEvents(dateKey) {
+            const eventsContainer = document.getElementById(`events-${dateKey}`);
+            if (!eventsContainer) return;
+            
+            eventsContainer.innerHTML = '';
+            
+            if (events[dateKey]) {
+                events[dateKey].forEach((event, index) => {
+                    const eventElement = document.createElement('div');
+                    eventElement.className = 'event';
+                    eventElement.textContent = event;
+                    eventElement.onclick = () => editEvent(dateKey, index);
+                    eventsContainer.appendChild(eventElement);
+                });
+            }
+        }
+        
+        // 모달 열기
+        function openModal(dateKey) {
+            currentDate = dateKey;
+            editingEventIndex = null;
+            document.getElementById('modal-title').textContent = '일정 추가';
+            document.getElementById('event-input').value = '';
+            document.getElementById('delete-btn').style.display = 'none';
+            document.getElementById('event-modal').style.display = 'block';
+            document.getElementById('event-input').focus();
+        }
+        
+        // 일정 편집
+        function editEvent(dateKey, eventIndex) {
+            currentDate = dateKey;
+            editingEventIndex = eventIndex;
+            document.getElementById('modal-title').textContent = '일정 편집';
+            document.getElementById('event-input').value = events[dateKey][eventIndex];
+            document.getElementById('delete-btn').style.display = 'inline-block';
+            document.getElementById('event-modal').style.display = 'block';
+            document.getElementById('event-input').focus();
+        }
+        
+        // 모달 닫기
+        function closeModal() {
+            document.getElementById('event-modal').style.display = 'none';
+            currentDate = null;
+            editingEventIndex = null;
+        }
+        
+        // 일정 저장
+        function saveEvent() {
+            const eventText = document.getElementById('event-input').value.trim();
+            
+            if (!eventText) {
+                alert('일정을 입력해주세요!');
+                return;
+            }
+            
+            if (!events[currentDate]) {
+                events[currentDate] = [];
+            }
+            
+            if (editingEventIndex !== null) {
+                events[currentDate][editingEventIndex] = eventText;
+            } else {
+                events[currentDate].push(eventText);
+            }
+            
+            displayEvents(currentDate);
+            closeModal();
+            
+            // 자동 저장
+            autoSave();
+            showDataStatus();
+        }
+        
+        // 일정 삭제
+        function deleteEvent() {
+            if (editingEventIndex !== null && events[currentDate]) {
+                events[currentDate].splice(editingEventIndex, 1);
+                
+                if (events[currentDate].length === 0) {
+                    delete events[currentDate];
+                }
+                
+                displayEvents(currentDate);
+                closeModal();
+                
+                // 자동 저장
+                autoSave();
+                showDataStatus();
+            }
+        }
+        
+        // CSV로 백업
+        function saveToCSV() {
+            const year = document.getElementById('year-select').value;
+            const month = String(parseInt(document.getElementById('month-select').value) + 1).padStart(2, '0');
+            const filename = `${year}${month}.csv`;
+            
+            // 먼저 자동 저장
+            autoSave();
+            
+            let csvContent = 'Date,Events\n';
+            
+            // 현재 월의 이벤트만 필터링
+            Object.keys(events).forEach(dateKey => {
+                const [y, m, d] = dateKey.split('-');
+                if (y == year && parseInt(m) == parseInt(document.getElementById('month-select').value)) {
+                    const dateStr = `${y}-${String(parseInt(m) + 1).padStart(2, '0')}-${String(d).padStart(2, '0')}`;
+                    const eventsList = events[dateKey].join('|'); // 파이프로 구분
+                    csvContent += `${dateStr},"${eventsList}"\n`;
+                }
+            });
+            
+            const blob = new Blob(['\ufeff' + csvContent], { type: 'text/csv;charset=utf-8;' });
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(blob);
+            link.download = filename;
+            link.click();
+            
+            alert(`${filename} 파일로 백업되었습니다.`);
+        }
+        
+        // CSV에서 복원
+        function loadFromCSV(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+            
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const content = e.target.result;
+                const lines = content.split('\n');
+                
+                // 현재 데이터 초기화
+                events = {};
+                
+                // 헤더 제외하고 데이터 파싱
+                for (let i = 1; i < lines.length; i++) {
+                    const line = lines[i].trim();
+                    if (!line) continue;
+                    
+                    const match = line.match(/^(\d{4}-\d{2}-\d{2}),"(.*)"/);
+                    if (match) {
+                        const dateStr = match[1];
+                        const eventsList = match[2];
+                        
+                        const [year, month, day] = dateStr.split('-');
+                        const dateKey = `${year}-${parseInt(month) - 1}-${parseInt(day)}`;
+                        
+                        if (eventsList) {
+                            events[dateKey] = eventsList.split('|');
+                        }
+                    }
+                }
+                
+                // 자동 저장
+                autoSave();
+                
+                // 캘린더 재생성
+                generateCalendar();
+                alert('데이터를 복원했습니다!');
+            };
+            reader.readAsText(file);
+        }
+        
+        // 월 데이터 자동 로드
+        function loadMonthData(year, month) {
+            const storageKey = `zenith_calendar_${year}${String(month + 1).padStart(2, '0')}`;
+            const savedData = localStorage.getItem(storageKey);
+            
+            if (savedData) {
+                try {
+                    const parsedData = JSON.parse(savedData);
+                    events = parsedData;
+                    console.log(`${year}년 ${month + 1}월 데이터 자동 로드 완료`);
+                } catch (e) {
+                    console.error('데이터 로드 실패:', e);
+                    events = {};
+                }
+            } else {
+                events = {};
+                console.log(`${year}년 ${month + 1}월 저장된 데이터 없음`);
+            }
+        }
+        
+        // 자동 저장 (localStorage)
+        function autoSave() {
+            const year = document.getElementById('year-select').value;
+            const month = document.getElementById('month-select').value;
+            const storageKey = `zenith_calendar_${year}${String(parseInt(month) + 1).padStart(2, '0')}`;
+            
+            // 현재 월의 이벤트만 필터링하여 저장
+            const monthEvents = {};
+            Object.keys(events).forEach(dateKey => {
+                const [y, m] = dateKey.split('-');
+                if (y == year && parseInt(m) == month) {
+                    monthEvents[dateKey] = events[dateKey];
+                }
+            });
+            
+            localStorage.setItem(storageKey, JSON.stringify(monthEvents));
+            console.log(`${year}년 ${parseInt(month) + 1}월 데이터 자동 저장 완료`);
+        }
+        
+        // 데이터 상태 표시
+        function showDataStatus() {
+            const year = document.getElementById('year-select').value;
+            const month = parseInt(document.getElementById('month-select').value) + 1;
+            const storageKey = `zenith_calendar_${year}${String(month).padStart(2, '0')}`;
+            const hasData = localStorage.getItem(storageKey) !== null;
+            const statusElement = document.getElementById('save-status');
+            
+            if (hasData) {
+                const eventCount = Object.keys(events).filter(key => {
+                    const [y, m] = key.split('-');
+                    return y == year && parseInt(m) == (month - 1);
+                }).length;
+                
+                let totalEvents = 0;
+                Object.keys(events).forEach(key => {
+                    const [y, m] = key.split('-');
+                    if (y == year && parseInt(m) == (month - 1)) {
+                        totalEvents += events[key].length;
+                    }
+                });
+                
+                if (eventCount > 0) {
+                    statusElement.innerHTML = `✅ ${eventCount}개 날짜에 총 ${totalEvents}개 일정 (자동 저장됨)`;
+                    statusElement.style.color = '#10B981';
+                } else {
+                    statusElement.innerHTML = `📅 이번 달은 일정이 없습니다`;
+                    statusElement.style.color = '#6B7280';
+                }
+            } else {
+                statusElement.innerHTML = `📅 이번 달은 일정이 없습니다`;
+                statusElement.style.color = '#6B7280';
+            }
+        }
+        
+        // PDF로 저장 (jsPDF 사용)
+        async function saveToPDF() {
+            const year = document.getElementById('year-select').value;
+            const month = String(parseInt(document.getElementById('month-select').value) + 1).padStart(2, '0');
+            const filename = `ZENITH_${year}${month}.pdf`;
+            
+            // 로딩 표시
+            const loadingOverlay = document.getElementById('loading-overlay');
+            loadingOverlay.style.display = 'flex';
+            
+            // 컨트롤 버튼 임시 숨기기
+            const controls = document.querySelector('.controls');
+            controls.style.display = 'none';
+            
+            // 추가 버튼 숨기기
+            const addButtons = document.querySelectorAll('.add-event-btn');
+            addButtons.forEach(btn => btn.style.display = 'none');
+            
+            // 선택 효과 제거를 위한 스타일 추가
+            const style = document.createElement('style');
+            style.textContent = `
+                * {
+                    -webkit-user-select: none !important;
+                    -moz-user-select: none !important;
+                    -ms-user-select: none !important;
+                    user-select: none !important;
+                }
+                ::selection {
+                    background: transparent !important;
+                }
+                ::-moz-selection {
+                    background: transparent !important;
+                }
+            `;
+            document.head.appendChild(style);
+            
+            try {
+                // html2canvas로 캘린더를 이미지로 변환
+                const element = document.getElementById('calendar-container');
+                const canvas = await html2canvas(element, {
+                    scale: 2, // 고품질
+                    useCORS: true,
+                    logging: false,
+                    backgroundColor: '#ffffff',
+                    removeContainer: false,
+                    windowWidth: element.scrollWidth,
+                    windowHeight: element.scrollHeight,
+                    allowTaint: true,
+                    foreignObjectRendering: false
+                });
+                
+                // jsPDF 생성
+                const { jsPDF } = window.jspdf;
+                const pdf = new jsPDF({
+                    orientation: 'portrait',
+                    unit: 'mm',
+                    format: 'a4'
+                });
+                
+                // 이미지를 PDF에 추가
+                const imgData = canvas.toDataURL('image/png');
+                const imgWidth = 210; // A4 너비 (mm)
+                const imgHeight = (canvas.height * imgWidth) / canvas.width;
+                
+                pdf.addImage(imgData, 'PNG', 0, 0, imgWidth, imgHeight);
+                
+                // PDF 저장
+                pdf.save(filename);
+                
+                alert(`${filename} 파일로 저장되었습니다!`);
+            } catch (error) {
+                console.error('PDF 생성 오류:', error);
+                alert('PDF 생성 중 오류가 발생했습니다.');
+            } finally {
+                // 원래 상태로 복구
+                controls.style.display = 'flex';
+                addButtons.forEach(btn => btn.style.display = '');
+                loadingOverlay.style.display = 'none';
+                style.remove();
+            }
+        }
+        
+        // 모달 외부 클릭 시 닫기
+        document.getElementById('event-modal').onclick = function(event) {
+            if (event.target === this) {
+                closeModal();
+            }
+        }
+        
+        // Enter 키로 저장
+        document.getElementById('event-input').addEventListener('keypress', function(event) {
+            if (event.key === 'Enter') {
+                saveEvent();
+            }
+        });
+        
+        // ESC 키로 모달 닫기
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape') {
+                const modal = document.getElementById('event-modal');
+                if (modal.style.display === 'block') {
+                    closeModal();
+                }
+            }
+        });
+        
+        // 년/월 선택 시 캘린더 재생성
+        document.getElementById('year-select').addEventListener('change', function() {
+            // 변경 전 데이터 자동 저장
+            if (currentYearMonth) {
+                autoSave();
+            }
+            generateCalendar();
+        });
+        
+        document.getElementById('month-select').addEventListener('change', function() {
+            // 변경 전 데이터 자동 저장
+            if (currentYearMonth) {
+                autoSave();
+            }
+            generateCalendar();
+        });
+        
+        // 페이지 나가기 전 자동 저장
+        window.addEventListener('beforeunload', function() {
+            if (currentYearMonth) {
+                autoSave();
+            }
+        });
+        
+        // 초기화
+        initYearOptions();
+        
+        // 현재 월 설정
+        const now = new Date();
+        document.getElementById('month-select').value = now.getMonth();
+        
+        // 캘린더 생성
+        generateCalendar();
+        
+        // 초기 상태 메시지
+        console.log('🎓 ZENITH ENGLISH 캘린더 시작');
+        console.log('💾 모든 일정은 자동으로 저장됩니다');
+        console.log('📅 월을 변경하면 자동으로 해당 월 데이터를 불러옵니다');
+    </script>
+</body>
+</html>
