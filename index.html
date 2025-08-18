@@ -1311,16 +1311,17 @@
         
         // 일정 표시 - localEvents 사용 ✅
         function displayEvents(dateKey) {
-            console.log(`=== displayEvents 시작: ${dateKey} ===`);
-            
-            const eventsContainer = document.getElementById(`events-${dateKey}`);
-            const dayElement = eventsContainer.closest('.day');
-            
-            if (!eventsContainer) {
-                console.log('❌ 이벤트 컨테이너를 찾을 수 없음');
-                return;
-            }
-            
+			console.log(`=== displayEvents 시작: ${dateKey} ===`);
+			
+			const eventsContainer = document.getElementById(`events-${dateKey}`);
+			
+			if (!eventsContainer) {
+				console.log('❌ 이벤트 컨테이너를 찾을 수 없음 (현재 화면에 없는 날짜)');
+				return;
+			}
+			
+			const dayElement = eventsContainer.closest('.day');
+					
             eventsContainer.innerHTML = '';
             
             // 변경사항 여부 확인
@@ -1657,29 +1658,30 @@
                 showStatus(`Processing ${dateKey}... (${totalOperations})`, 'syncing');
                 
                 try {
-                    // 1단계: 기존 이벤트들 모두 삭제 (뒤에서부터)
+                    // 1단계: 기존 이벤트들 모두 삭제 (항상 인덱스 0 삭제)
                     if (originalEventsForDate.length > 0) {
                         console.log(`${dateKey}: 기존 ${originalEventsForDate.length}개 이벤트 삭제 시작`);
                         
-                        for (let i = originalEventsForDate.length - 1; i >= 0; i--) {
-                            console.log(`  삭제 중: [${i}] "${originalEventsForDate[i]}"`);
+                        // 배열에서 요소 삭제 시 인덱스가 재조정되므로 항상 첫 번째(0번) 인덱스를 삭제
+                        for (let i = 0; i < originalEventsForDate.length; i++) {
+                            console.log(`  삭제 중: [0] "${originalEventsForDate[i]}" (원래 ${i}번째)`);
                             
-                            const deleteUrl = `${SCRIPT_URL}?action=deleteEvent&year=${year}&month=${month}&date=${encodeURIComponent(originalKey)}&index=${i}`;
+                            const deleteUrl = `${SCRIPT_URL}?action=deleteEvent&year=${year}&month=${month}&date=${encodeURIComponent(originalKey)}&index=0`;
                             
                             try {
                                 const deleteResponse = await fetch(deleteUrl);
                                 const deleteResult = await deleteResponse.json();
                                 
                                 if (deleteResult.status === 'success') {
-                                    console.log(`  ✅ 삭제 성공: [${i}]`);
+                                    console.log(`  ✅ 삭제 성공: [0] (원래 ${i}번째)`);
                                 } else {
-                                    console.log(`  ❌ 삭제 실패: [${i}] - ${deleteResult.message}`);
+                                    console.log(`  ❌ 삭제 실패: [0] (원래 ${i}번째) - ${deleteResult.message}`);
                                 }
                                 
                                 await new Promise(resolve => setTimeout(resolve, 200));
                                 
                             } catch (error) {
-                                console.error(`  ❌ 삭제 오류: [${i}] -`, error);
+                                console.error(`  ❌ 삭제 오류: [0] (원래 ${i}번째) -`, error);
                             }
                         }
                     }
@@ -1740,10 +1742,13 @@
                 markAsSaved();
                 showStatus(`All changes saved! (${successCount} dates processed)`, 'saved');
                 
-                // UI 업데이트
-                Object.keys(localEvents).forEach(dateKey => {
-                    displayEvents(dateKey);
-                });
+                // 현재 화면에 있는 날짜들만 UI 업데이트
+				Object.keys(localEvents).forEach(dateKey => {
+					const eventsContainer = document.getElementById(`events-${dateKey}`);
+					if (eventsContainer) {
+						displayEvents(dateKey);
+					}
+				});
                 
                 // 전체 새로고침으로 서버와 동기화 확인
                 setTimeout(() => {
