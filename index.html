@@ -1152,16 +1152,33 @@
         
         // 초기화 - URL 직접 설정 버전 ✅
         function init() {
-            // URL이 설정되어 있으므로 바로 캘린더 시작
-            document.getElementById('setup-panel').classList.remove('active');
-            document.getElementById('calendar-container').style.display = 'block';
-            
-            initYearOptions();
-            setCurrentMonth();
-            generateCalendar();
-            checkConnection();
-            updateSaveButton();
-        }
+			// DOM 로딩 완료 체크
+			if (document.readyState === 'loading') {
+				document.addEventListener('DOMContentLoaded', init);
+				return;
+			}
+			
+			console.log('Initializing calendar...');
+			
+			try {
+				// URL이 설정되어 있으므로 바로 캘린더 시작
+				const setupPanel = document.getElementById('setup-panel');
+				const calendarContainer = document.getElementById('calendar-container');
+				
+				if (setupPanel) setupPanel.classList.remove('active');
+				if (calendarContainer) calendarContainer.style.display = 'block';
+				
+				initYearOptions();
+				setCurrentMonth();
+				generateCalendar();
+				checkConnection();
+				updateSaveButton();
+				
+				console.log('Calendar initialized successfully');
+			} catch (error) {
+				console.error('Initialization error:', error);
+			}
+		}
         
         // 변경사항 추적 및 UI 업데이트 ✅
         function markAsChanged() {
@@ -1254,7 +1271,7 @@
             } else if (type === 'modified') {
                 statusMessage.innerHTML = '<span>⚡</span> ' + message;
             }
-        }a
+        }
         
         // 계절 테마 설정
         function setSeasonTheme(month) {
@@ -1284,29 +1301,70 @@
         }
         
         // 년도 옵션 생성 - 영어 버전 ✅
-        function initYearOptions() {
-            const yearSelect = document.getElementById('year-select');
-            yearSelect.innerHTML = '';
-            const currentYear = new Date().getFullYear();
-            const startYear = currentYear - 2;
-            const endYear = currentYear + 3;
-            
-            for (let year = startYear; year <= endYear; year++) {
-                const option = document.createElement('option');
-                option.value = year;
-                option.textContent = year; // "년" 제거
-                if (year === currentYear) {
-                    option.selected = true;
-                }
-                yearSelect.appendChild(option);
-            }
-        }
+		function initYearOptions() {
+			const yearSelect = document.getElementById('year-select');
+			if (!yearSelect) {
+				console.error('Year select element not found');
+				return;
+			}
+			
+			yearSelect.innerHTML = '';
+			
+			// 더 안전한 현재 년도 가져오기
+			let currentYear;
+			try {
+				const now = new Date();
+				currentYear = now.getFullYear();
+				
+				// NaN 체크
+				if (isNaN(currentYear) || currentYear < 2020 || currentYear > 2030) {
+					currentYear = 2025; // 기본값
+				}
+			} catch (error) {
+				console.error('Date error:', error);
+				currentYear = 2025; // 기본값
+			}
+			
+			const startYear = currentYear - 2;
+			const endYear = currentYear + 3;
+			
+			for (let year = startYear; year <= endYear; year++) {
+				const option = document.createElement('option');
+				option.value = year;
+				option.textContent = year;
+				if (year === currentYear) {
+					option.selected = true;
+				}
+				yearSelect.appendChild(option);
+			}
+			
+			console.log(`Year options created: ${startYear}-${endYear}, current: ${currentYear}`);
+		}
         
         // 현재 월 설정
         function setCurrentMonth() {
-            const now = new Date();
-            document.getElementById('month-select').value = now.getMonth() + 1;
-        }
+			const monthSelect = document.getElementById('month-select');
+			if (!monthSelect) {
+				console.error('Month select element not found');
+				return;
+			}
+			
+			try {
+				const now = new Date();
+				let currentMonth = now.getMonth() + 1;
+				
+				// NaN 체크
+				if (isNaN(currentMonth) || currentMonth < 1 || currentMonth > 12) {
+					currentMonth = 8; // 기본값 (8월)
+				}
+				
+				monthSelect.value = currentMonth;
+				console.log(`Current month set to: ${currentMonth}`);
+			} catch (error) {
+				console.error('Month setting error:', error);
+				monthSelect.value = 8; // 기본값
+			}
+		}
         
         // 월 표시 업데이트 - 영어 버전 ✅
         function updateMonthYearDisplay() {
