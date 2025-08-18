@@ -720,6 +720,24 @@
             100% { transform: rotate(360deg); }
         }
         
+		.save-status.syncing::before {
+            content: '';
+            display: inline-block;
+            width: 16px;
+            height: 16px;
+            border: 2px solid #f3f4f6;
+            border-top: 2px solid #F59E0B;
+            border-radius: 50%;
+            animation: spin-small 1s linear infinite;
+            margin-right: 8px;
+            vertical-align: middle;
+        }
+
+        @keyframes spin-small {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+		
         .loading-text {
             color: white;
             font-size: 1rem;
@@ -1228,7 +1246,7 @@
             statusElement.className = `save-status ${type}`;
             
             if (type === 'syncing') {
-                statusMessage.innerHTML = '<span>🔄</span> ' + message;
+                statusMessage.innerHTML = message; // CSS ::before로 스피너 표시
             } else if (type === 'saved') {
                 statusMessage.innerHTML = '<span>☁️</span> ' + message;
             } else if (type === 'error') {
@@ -1236,7 +1254,7 @@
             } else if (type === 'modified') {
                 statusMessage.innerHTML = '<span>⚡</span> ' + message;
             }
-        }
+        }a
         
         // 계절 테마 설정
         function setSeasonTheme(month) {
