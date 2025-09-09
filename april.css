@@ -1,0 +1,82 @@
+/* April Theme - Cherry Blossoms & Fresh Green */
+:root {
+    --primary: #F472B6;
+    --secondary: #FB7185;
+    --accent: #10B981;
+    --bg-gradient: linear-gradient(135deg, #FDF2F8 0%, #F0FDF4 50%, #ECFDF5 100%);
+    --header-gradient: linear-gradient(135deg, #F472B6 0%, #FB7185 50%, #10B981 100%);
+}
+
+.logo-zenith {
+    background: linear-gradient(45deg, #F472B6, #FB7185, #34D399);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-shadow: none;
+    font-family: 'Fredoka', cursive;
+    font-weight: 700;
+    animation: blooming 4s ease-in-out infinite;
+}
+
+.logo-english {
+    color: #FDF2F8;
+    text-shadow: 2px 2px 0px #F472B6, 3px 3px 8px rgba(0, 0, 0, 0.4);
+    font-family: 'Pacifico', cursive;
+    transform: rotate(1.5deg);
+}
+
+.logo-english::before {
+    content: "🌸 ";
+    font-size: 1.2rem;/* April Theme - Cherry Blossoms & Fresh Green (Print Static) */
+:root {
+    --primary: #F472B6;
+    --secondary: #FB7185;
+    --accent: #10B981;
+    --bg-gradient: linear-gradient(135deg, #FDF2F8 0%, #F0FDF4 50%, #ECFDF5 100%);
+    --header-gradient: linear-gradient(135deg, #F472B6 0%, #FB7185 50%, #10B981 100%);
+}
+
+.logo-zenith {
+    background: linear-gradient(45deg, #F472B6, #FB7185, #34D399);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-shadow: none;
+    font-family: 'Fredoka', cursive;
+    font-weight: 700;
+    transform: rotate(-2deg);
+}
+
+.logo-english {
+    color: #FDF2F8;
+    text-shadow: 2px 2px 0px #F472B6, 3px 3px 8px rgba(0, 0, 0, 0.4);
+    font-family: 'Pacifico', cursive;
+    transform: rotate(1.5deg);
+}
+
+.logo-english::before {
+    content: "Bloom ";
+    font-size: 0.8rem;
+    color: #F472B6;
+}
+
+.logo-english::after {
+    content: " Academy";
+    font-size: 0.8rem;
+    color: #F472B6;
+}
+
+.season-indicator::before {
+    content: "April 2025";
+    font-size: 0.8rem;
+    color: white;
+    background: rgba(0, 0, 0, 0.3);
+    padding: 4px 8px;
+    border-radius: 10px;
+}
+
+.header-decoration.deco-1::before { content: "🌸"; }
+.header-decoration.deco-2::before { content: "📚"; }
+.header-decoration.deco-3::before { content: "✏️"; }
+.header-decoration.deco-4::before { content: "📖"; }
+.header-decoration.deco-5::before { content: "🌺"; }

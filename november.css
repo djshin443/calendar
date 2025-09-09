@@ -1,0 +1,53 @@
+/* October Theme - Halloween & Fall Colors (Print Static) */
+:root {
+    --primary: #EA580C;
+    --secondary: #FB923C;
+    --accent: #8B5A2B;
+    --bg-gradient: linear-gradient(135deg, #FED7AA 0%, #FDBA74 50%, #92400E 100%);
+    --header-gradient: linear-gradient(135deg, #EA580C 0%, #FB923C 50%, #8B5A2B 100%);
+}
+
+.logo-zenith {
+    background: linear-gradient(45deg, #EA580C, #FB923C, #8B5A2B);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-shadow: none;
+    font-family: 'Fredoka', cursive;
+    font-weight: 700;
+    transform: rotate(-2deg);
+}
+
+.logo-english {
+    color: #FED7AA;
+    text-shadow: 2px 2px 0px #EA580C, 3px 3px 8px rgba(0, 0, 0, 0.4);
+    font-family: 'Pacifico', cursive;
+    transform: rotate(-2deg);
+}
+
+.logo-english::before {
+    content: "Autumn ";
+    font-size: 0.8rem;
+    color: #FB923C;
+}
+
+.logo-english::after {
+    content: " Academy";
+    font-size: 0.8rem;
+    color: #FB923C;
+}
+
+.season-indicator::before {
+    content: "October 2025";
+    font-size: 0.8rem;
+    color: white;
+    background: rgba(0, 0, 0, 0.3);
+    padding: 4px 8px;
+    border-radius: 10px;
+}
+
+.header-decoration.deco-1::before { content: "🍂"; }
+.header-decoration.deco-2::before { content: "📚"; }
+.header-decoration.deco-3::before { content: "✏️"; }
+.header-decoration.deco-4::before { content: "🍁"; }
+.header-decoration.deco-5::before { content: "📖"; }

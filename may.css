@@ -1,0 +1,53 @@
+/* May Theme - Fresh Green & Children's Day (Print Static) */
+:root {
+    --primary: #22C55E;
+    --secondary: #34D399;
+    --accent: #FBBF24;
+    --bg-gradient: linear-gradient(135deg, #F0FDF4 0%, #DCFCE7 50%, #FEF9C3 100%);
+    --header-gradient: linear-gradient(135deg, #22C55E 0%, #34D399 50%, #FBBF24 100%);
+}
+
+.logo-zenith {
+    background: linear-gradient(45deg, #22C55E, #84CC16, #FBBF24);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-shadow: none;
+    font-family: 'Fredoka', cursive;
+    font-weight: 700;
+    transform: rotate(-2deg);
+}
+
+.logo-english {
+    color: #F0FDF4;
+    text-shadow: 2px 2px 0px #22C55E, 3px 3px 8px rgba(0, 0, 0, 0.4);
+    font-family: 'Pacifico', cursive;
+    transform: rotate(-1deg);
+}
+
+.logo-english::before {
+    content: "Nature ";
+    font-size: 0.8rem;
+    color: #22C55E;
+}
+
+.logo-english::after {
+    content: " Learning";
+    font-size: 0.8rem;
+    color: #22C55E;
+}
+
+.season-indicator::before {
+    content: "May 2025";
+    font-size: 0.8rem;
+    color: white;
+    background: rgba(0, 0, 0, 0.3);
+    padding: 4px 8px;
+    border-radius: 10px;
+}
+
+.header-decoration.deco-1::before { content: "🌿"; }
+.header-decoration.deco-2::before { content: "📚"; }
+.header-decoration.deco-3::before { content: "✏️"; }
+.header-decoration.deco-4::before { content: "🌱"; }
+.header-decoration.deco-5::before { content: "📖"; }

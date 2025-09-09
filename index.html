@@ -9,6 +9,9 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     
+    <!-- 월별 테마 CSS 동적 로드용 -->
+    <link id="monthly-theme" rel="stylesheet" href="january.css">
+    
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Pacifico&family=Fredoka:wght@400;500;600;700&family=Noto+Sans+KR:wght@400;500;700;900&display=swap');
         
@@ -40,47 +43,20 @@
             --warning: #F59E0B;
             --dark: #1F2937;
             --light: #F9FAFB;
-        }
-        
-        /* 계절별 테마 */
-        .theme-spring {
-            --primary: #EC4899;
-            --secondary: #F472B6;
-            --bg-gradient: linear-gradient(135deg, #FEE2E2 0%, #FBBF24 50%, #86EFAC 100%);
-            --header-gradient: linear-gradient(135deg, #F472B6 0%, #FB923C 50%, #86EFAC 100%);
-        }
-        
-        .theme-summer {
-            --primary: #06B6D4;
-            --secondary: #0EA5E9;
-            --bg-gradient: linear-gradient(135deg, #38BDF8 0%, #0EA5E9 50%, #FDE047 100%);
-            --header-gradient: linear-gradient(135deg, #0EA5E9 0%, #06B6D4 50%, #10B981 100%);
-        }
-        
-        .theme-autumn {
-            --primary: #DC2626;
-            --secondary: #EA580C;
-            --bg-gradient: linear-gradient(135deg, #FED7AA 0%, #FB923C 50%, #DC2626 100%);
-            --header-gradient: linear-gradient(135deg, #F97316 0%, #DC2626 50%, #92400E 100%);
-        }
-        
-        .theme-winter {
-            --primary: #5B21B6;
-            --secondary: #6366F1;
-            --bg-gradient: linear-gradient(135deg, #E0E7FF 0%, #C7D2FE 50%, #8B5CF6 100%);
-            --header-gradient: linear-gradient(135deg, #6366F1 0%, #5B21B6 50%, #312E81 100%);
+            --bg-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --header-gradient: linear-gradient(135deg, #5B21B6 0%, #EC4899 50%, #06B6D4 100%);
         }
         
         body {
             font-family: 'Noto Sans KR', sans-serif;
-            background: var(--bg-gradient, linear-gradient(135deg, #667eea 0%, #764ba2 100%));
+            background: var(--bg-gradient);
             min-height: 100vh;
             padding: 10px;
             transition: background 0.5s ease;
         }
         
         .container {
-            max-width: 180mm; /* PDF 여백을 위해 210mm에서 180mm로 축소 */
+            max-width: 180mm;
             margin: 0 auto;
             background: white;
             border-radius: 15px;
@@ -91,56 +67,6 @@
         /* 설정 패널 - 숨김 처리 */
         .setup-panel {
             display: none !important;
-        }
-        
-        .setup-panel h2 {
-            font-size: 2.5rem;
-            margin-bottom: 20px;
-            font-family: 'Fredoka', cursive;
-        }
-        
-        .setup-instructions {
-            background: rgba(255, 255, 255, 0.1);
-            padding: 25px;
-            border-radius: 15px;
-            margin-bottom: 25px;
-            text-align: left;
-            line-height: 2;
-        }
-        
-        .setup-instructions ol {
-            margin-left: 20px;
-        }
-        
-        .setup-instructions li {
-            margin-bottom: 10px;
-        }
-        
-        .setup-input {
-            width: 100%;
-            max-width: 600px;
-            padding: 15px;
-            border: none;
-            border-radius: 10px;
-            font-size: 1rem;
-            margin-bottom: 20px;
-        }
-        
-        .btn-setup {
-            background: #10B981;
-            color: white;
-            padding: 15px 40px;
-            border: none;
-            border-radius: 10px;
-            font-size: 1.1rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-        
-        .btn-setup:hover {
-            background: #059669;
-            transform: translateY(-2px);
         }
         
         /* 연결 상태 표시 */
@@ -176,10 +102,10 @@
             50% { opacity: 0.5; }
         }
         
-        /* 헤더 디자인 - 크기 축소 */
+        /* 헤더 디자인 */
         .header {
-            background: var(--header-gradient, linear-gradient(135deg, #5B21B6 0%, #EC4899 50%, #06B6D4 100%));
-            padding: 20px 15px; /* 패딩 축소 */
+            background: var(--header-gradient);
+            padding: 20px 15px;
             text-align: center;
             position: relative;
             transition: background 0.5s ease;
@@ -199,10 +125,11 @@
             position: absolute;
             top: 10px;
             right: 15px;
-            font-size: 1.8rem; /* 크기 축소 */
+            font-size: 1.8rem;
+			display: none !important;  /* 이 줄 추가 */
         }
         
-        /* 로고 디자인 - 크기 축소 */
+        /* 로고 디자인 - 기본 스타일 */
         .logo-container {
             display: flex;
             align-items: center;
@@ -218,9 +145,10 @@
             gap: 2px;
         }
         
+        /* 기본 로고 스타일 (월별 테마로 오버라이드됨) */
         .logo-zenith {
             font-family: 'Fredoka', cursive;
-            font-size: 2.4rem; /* 3.2rem에서 축소 */
+            font-size: 2.4rem;
             font-weight: 700;
             color: #FFFFFF;
             text-shadow: 
@@ -237,7 +165,7 @@
         
         .logo-english {
             font-family: 'Pacifico', cursive;
-            font-size: 1.8rem; /* 2.5rem에서 축소 */
+            font-size: 1.8rem;
             color: #FFE66D;
             text-shadow: 
                 2px 2px 0px #FF6B6B,
@@ -250,13 +178,13 @@
         
         .logo-star {
             color: #FFE66D;
-            font-size: 1.5rem; /* 크기 축소 */
+            font-size: 1.5rem;
             text-shadow: 0 0 8px rgba(255, 230, 109, 0.8);
         }
         
         .subtitle {
             color: rgba(255, 255, 255, 0.95);
-            font-size: 0.9rem; /* 크기 축소 */
+            font-size: 0.9rem;
             font-weight: 500;
             background: rgba(0, 0, 0, 0.25);
             display: inline-block;
@@ -269,10 +197,10 @@
                 0 2px 4px rgba(255, 255, 255, 0.3);
         }
         
-        /* 장식 요소 - 크기 축소 */
+        /* 장식 요소 - 기본값 */
         .header-decoration {
             position: absolute;
-            font-size: 1.2rem; /* 크기 축소 */
+            font-size: 1.2rem;
             opacity: 0.7;
         }
         
@@ -281,6 +209,13 @@
         .deco-3 { bottom: 20px; left: 40px; }
         .deco-4 { top: 20px; right: 60px; }
         .deco-5 { bottom: 25px; right: 45px; }
+        
+        /* 기본 장식 요소 내용 */
+        .deco-1::before { content: "✨"; }
+        .deco-2::before { content: "🌟"; }
+        .deco-3::before { content: "⭐"; }
+        .deco-4::before { content: "💫"; }
+        .deco-5::before { content: "✨"; }
         
         /* 컨트롤 영역 */
         .controls {
@@ -397,7 +332,7 @@
         
         .month-year-display {
             text-align: center;
-            font-size: 1.5rem; /* 크기 축소 */
+            font-size: 1.5rem;
             font-weight: 700;
             color: var(--primary);
             margin-bottom: 15px;
@@ -411,7 +346,7 @@
         }
         
         .month-decoration {
-            font-size: 1.2rem; /* 크기 축소 */
+            font-size: 1.2rem;
         }
         
         .save-status {
@@ -481,7 +416,7 @@
         
         .day {
             background: white;
-            min-height: 120px; /* 높이 축소 */
+            min-height: 120px;
             padding: 4px;
             border: 1px solid #E5E7EB;
             cursor: pointer;
@@ -508,7 +443,6 @@
             background: #FDE68A;
         }
         
-        /* 오늘 날짜 강조 제거 */
         .day.today {
             background: white !important;
             border-color: #E5E7EB !important;
@@ -678,16 +612,156 @@
             background: #7C3AED;
         }
         
-        /* 푸터 - 크기 축소 */
+        /* 푸터 */
         .footer {
             background: linear-gradient(90deg, #F3F4F6, #E5E7EB, #F3F4F6);
             padding: 15px;
             text-align: center;
             color: var(--primary);
             font-weight: 600;
-            font-size: 0.85rem; /* 크기 축소 */
+            font-size: 0.85rem;
             border-top: 2px solid var(--primary);
             font-family: 'Fredoka', sans-serif;
+        }
+        
+        /* 저장 옵션 모달 */
+        .save-modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(15, 23, 42, 0.8);
+            backdrop-filter: blur(8px);
+            z-index: 3000;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .save-modal {
+            background: white;
+            border-radius: 24px;
+            padding: 40px;
+            width: 100%;
+            max-width: 400px;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.25);
+            position: relative;
+            animation: modalSlideIn 0.3s ease;
+            margin: 20px;
+        }
+        
+        @keyframes modalSlideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px) scale(0.95);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+        
+        .save-modal-header {
+            margin-bottom: 30px;
+            text-align: center;
+        }
+        
+        .save-modal-title {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--dark);
+            margin-bottom: 8px;
+            font-family: 'Fredoka', sans-serif;
+        }
+        
+        .save-modal-subtitle {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+        }
+        
+        .save-options {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            margin-bottom: 30px;
+        }
+        
+        .save-option {
+            background: #F8FAFC;
+            border: 2px solid #E2E8F0;
+            border-radius: 16px;
+            padding: 24px 20px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        .save-option:hover {
+            border-color: var(--primary);
+            background: white;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+        }
+        
+        .save-option-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            color: white;
+            margin-bottom: 8px;
+        }
+        
+        .save-option.pdf .save-option-icon {
+            background: linear-gradient(135deg, #EF4444 0%, #DC2626 100%);
+        }
+        
+        .save-option.png .save-option-icon {
+            background: linear-gradient(135deg, #10B981 0%, #059669 100%);
+        }
+        
+        .save-option-title {
+            font-size: 1.125rem;
+            font-weight: 700;
+            color: var(--dark);
+            font-family: 'Fredoka', sans-serif;
+        }
+        
+        .save-option-desc {
+            font-size: 0.813rem;
+            color: var(--text-secondary);
+            line-height: 1.4;
+        }
+        
+        .save-modal-actions {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+        }
+        
+        .btn-modal-cancel {
+            background: white;
+            color: var(--text-secondary);
+            border: 2px solid #E2E8F0;
+            padding: 12px 24px;
+            border-radius: 12px;
+            font-size: 0.875rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        
+        .btn-modal-cancel:hover {
+            background: #F8FAFC;
+            border-color: var(--text-secondary);
         }
         
         /* 로딩 오버레이 */
@@ -720,7 +794,7 @@
             100% { transform: rotate(360deg); }
         }
         
-		.save-status.syncing::before {
+        .save-status.syncing::before {
             content: '';
             display: inline-block;
             width: 16px;
@@ -737,7 +811,7 @@
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
         }
-		
+        
         .loading-text {
             color: white;
             font-size: 1rem;
@@ -894,6 +968,16 @@
                 padding: 10px;
                 font-size: 0.7rem;
             }
+            
+            .save-options {
+                grid-template-columns: 1fr;
+                gap: 12px;
+            }
+            
+            .save-modal {
+                padding: 30px 20px;
+                margin: 15px;
+            }
         }
         
         /* 태블릿 최적화 - 768px 이하 */
@@ -1005,11 +1089,11 @@
                 <span id="status-text">Connecting...</span>
             </div>
             
-            <span class="header-decoration deco-1">✨</span>
-            <span class="header-decoration deco-2">🌟</span>
-            <span class="header-decoration deco-3">⭐</span>
-            <span class="header-decoration deco-4">💫</span>
-            <span class="header-decoration deco-5">✨</span>
+            <span class="header-decoration deco-1"></span>
+            <span class="header-decoration deco-2"></span>
+            <span class="header-decoration deco-3"></span>
+            <span class="header-decoration deco-4"></span>
+            <span class="header-decoration deco-5"></span>
             
             <div class="season-indicator" id="season-indicator">❄️</div>
             
@@ -1056,8 +1140,8 @@
                 <button class="btn btn-save" id="save-all-btn" onclick="saveAllChanges()">
                     <span>💾</span> Save All
                 </button>
-                <button class="btn btn-warning" onclick="saveToPDF()">
-                    <span>📄</span> Save PDF
+                <button class="btn btn-warning" onclick="showSaveOptions()">
+                    <span>📄</span> Save File
                 </button>
             </div>
         </div>
@@ -1105,10 +1189,38 @@
         </div>
     </div>
     
+    <!-- 저장 옵션 선택 모달 -->
+    <div class="save-modal-overlay" id="save-modal-overlay">
+        <div class="save-modal">
+            <div class="save-modal-header">
+                <h3 class="save-modal-title">Choose File Format</h3>
+                <p class="save-modal-subtitle">Select how you'd like to save your calendar</p>
+            </div>
+            
+            <div class="save-options">
+                <div class="save-option pdf" onclick="saveAs('pdf')">
+                    <div class="save-option-icon">📄</div>
+                    <div class="save-option-title">PDF</div>
+                    <div class="save-option-desc">Perfect for printing and sharing. Maintains quality at any size.</div>
+                </div>
+                
+                <div class="save-option png" onclick="saveAs('png')">
+                    <div class="save-option-icon">🖼️</div>
+                    <div class="save-option-title">PNG</div>
+                    <div class="save-option-desc">High-quality image format. Great for digital use and presentations.</div>
+                </div>
+            </div>
+            
+            <div class="save-modal-actions">
+                <button class="btn-modal-cancel" onclick="closeSaveModal()">Cancel</button>
+            </div>
+        </div>
+    </div>
+    
     <!-- PDF 저장 중 로딩 -->
     <div class="loading-overlay" id="loading-overlay">
         <div class="loading-spinner"></div>
-        <div class="loading-text">Generating PDF...</div>
+        <div class="loading-text" id="loading-text">Generating PDF...</div>
     </div>
     
     <script>
@@ -1122,7 +1234,65 @@
         let editingEventIndex = null;
         let isOnline = false;
         let isSyncing = false;
-        let hasChanges = false; // 변경사항 추적 ✅
+        let hasChanges = false; // 변경사항 추적 ✅\
+		
+        // 월별 테마 로딩 함수 - 수정 버전
+        function loadMonthlyTheme(month) {
+			const monthNames = [
+				'january', 'february', 'march', 'april', 'may', 'june',
+				'july', 'august', 'september', 'october', 'november', 'december'
+			];
+			
+			const monthName = monthNames[month - 1];
+			const themeLink = document.getElementById('monthly-theme');
+			
+			if (themeLink) {
+				themeLink.href = `${monthName}.css`;
+				console.log(`월별 테마 로드: ${monthName}.css`);
+			}
+			
+			// 월별 로고 텍스트 변경
+			const logoEnglish = document.querySelector('.logo-english');
+			if (logoEnglish) {
+				const monthTexts = {
+					1: 'English',  // 1월 - 기본
+					2: 'Love English',  // 2월 - 발렌타인
+					3: 'Spring English',  // 3월 - 봄
+					4: 'Bloom English',  // 4월 - 벚꽃
+					5: 'Family English',  // 5월 - 가정의 달
+					6: 'Summer English',  // 6월 - 여름
+					7: 'Vacation English',  // 7월 - 방학
+					8: 'Adventure English',  // 8월 - 모험
+					9: 'Study English',  // 9월 - 개학
+					10: 'Halloween English',  // 10월 - 할로윈
+					11: 'Thanks English',  // 11월 - 감사
+					12: 'Xmas English'  // 12월 - 크리스마스
+				};
+				
+				logoEnglish.textContent = monthTexts[month] || 'English';
+			}
+			
+			// 월별 시즌 인디케이터 이모지 변경 (CSS 외에 추가 보장)
+			const seasonIndicator = document.getElementById('season-indicator');
+			if (seasonIndicator) {
+				const seasonEmojis = {
+					1: '❄️',  // 1월 - 눈
+					2: '💝',  // 2월 - 하트
+					3: '🌸',  // 3월 - 벚꽃
+					4: '🌷',  // 4월 - 튤립
+					5: '🌺',  // 5월 - 꽃
+					6: '☀️',  // 6월 - 태양
+					7: '🏖️',  // 7월 - 해변
+					8: '🌊',  // 8월 - 파도
+					9: '📚',  // 9월 - 책
+					10: '🎃',  // 10월 - 호박
+					11: '🍂',  // 11월 - 단풍
+					12: '🎄'  // 12월 - 크리스마스트리
+				};
+				
+				seasonIndicator.textContent = seasonEmojis[month] || '⭐';
+			}
+		}
         
         // 특정 날짜의 모든 이벤트 삭제 ✅ - 함수를 먼저 정의
         function clearAllEventsForDay(dateKey) {
@@ -1152,33 +1322,33 @@
         
         // 초기화 - URL 직접 설정 버전 ✅
         function init() {
-			// DOM 로딩 완료 체크
-			if (document.readyState === 'loading') {
-				document.addEventListener('DOMContentLoaded', init);
-				return;
-			}
-			
-			console.log('Initializing calendar...');
-			
-			try {
-				// URL이 설정되어 있으므로 바로 캘린더 시작
-				const setupPanel = document.getElementById('setup-panel');
-				const calendarContainer = document.getElementById('calendar-container');
-				
-				if (setupPanel) setupPanel.classList.remove('active');
-				if (calendarContainer) calendarContainer.style.display = 'block';
-				
-				initYearOptions();
-				setCurrentMonth();
-				generateCalendar();
-				checkConnection();
-				updateSaveButton();
-				
-				console.log('Calendar initialized successfully');
-			} catch (error) {
-				console.error('Initialization error:', error);
-			}
-		}
+            // DOM 로딩 완료 체크
+            if (document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', init);
+                return;
+            }
+            
+            console.log('Initializing calendar...');
+            
+            try {
+                // URL이 설정되어 있으므로 바로 캘린더 시작
+                const setupPanel = document.getElementById('setup-panel');
+                const calendarContainer = document.getElementById('calendar-container');
+                
+                if (setupPanel) setupPanel.classList.remove('active');
+                if (calendarContainer) calendarContainer.style.display = 'block';
+                
+                initYearOptions();
+                setCurrentMonth();
+                generateCalendar();
+                checkConnection();
+                updateSaveButton();
+                
+                console.log('Calendar initialized successfully');
+            } catch (error) {
+                console.error('Initialization error:', error);
+            }
+        }
         
         // 변경사항 추적 및 UI 업데이트 ✅
         function markAsChanged() {
@@ -1273,108 +1443,82 @@
             }
         }
         
-        // 계절 테마 설정
-        function setSeasonTheme(month) {
-            const body = document.body;
-            const seasonIndicator = document.getElementById('season-indicator');
-            const monthDecorations = document.querySelectorAll('.month-decoration');
-            
-            body.className = '';
-            
-            if (month >= 3 && month <= 5) {
-                body.classList.add('theme-spring');
-                seasonIndicator.textContent = '🌸';
-                monthDecorations.forEach(el => el.textContent = '🌸');
-            } else if (month >= 6 && month <= 8) {
-                body.classList.add('theme-summer');
-                seasonIndicator.textContent = '☀️';
-                monthDecorations.forEach(el => el.textContent = '🌊');
-            } else if (month >= 9 && month <= 11) {
-                body.classList.add('theme-autumn');
-                seasonIndicator.textContent = '🍂';
-                monthDecorations.forEach(el => el.textContent = '🍁');
-            } else {
-                body.classList.add('theme-winter');
-                seasonIndicator.textContent = '❄️';
-                monthDecorations.forEach(el => el.textContent = '⛄');
-            }
-        }
-        
         // 년도 옵션 생성 - 영어 버전 ✅
-		function initYearOptions() {
-			const yearSelect = document.getElementById('year-select');
-			if (!yearSelect) {
-				console.error('Year select element not found');
-				return;
-			}
-			
-			yearSelect.innerHTML = '';
-			
-			// 더 안전한 현재 년도 가져오기
-			let currentYear;
-			try {
-				const now = new Date();
-				currentYear = now.getFullYear();
-				
-				// NaN 체크
-				if (isNaN(currentYear) || currentYear < 2020 || currentYear > 2030) {
-					currentYear = 2025; // 기본값
-				}
-			} catch (error) {
-				console.error('Date error:', error);
-				currentYear = 2025; // 기본값
-			}
-			
-			const startYear = currentYear - 2;
-			const endYear = currentYear + 3;
-			
-			for (let year = startYear; year <= endYear; year++) {
-				const option = document.createElement('option');
-				option.value = year;
-				option.textContent = year;
-				if (year === currentYear) {
-					option.selected = true;
-				}
-				yearSelect.appendChild(option);
-			}
-			
-			console.log(`Year options created: ${startYear}-${endYear}, current: ${currentYear}`);
-		}
+        function initYearOptions() {
+            const yearSelect = document.getElementById('year-select');
+            if (!yearSelect) {
+                console.error('Year select element not found');
+                return;
+            }
+            
+            yearSelect.innerHTML = '';
+            
+            // 더 안전한 현재 년도 가져오기
+            let currentYear;
+            try {
+                const now = new Date();
+                currentYear = now.getFullYear();
+                
+                // NaN 체크
+                if (isNaN(currentYear) || currentYear < 2020 || currentYear > 2030) {
+                    currentYear = 2025; // 기본값
+                }
+            } catch (error) {
+                console.error('Date error:', error);
+                currentYear = 2025; // 기본값
+            }
+            
+            const startYear = currentYear - 2;
+            const endYear = currentYear + 3;
+            
+            for (let year = startYear; year <= endYear; year++) {
+                const option = document.createElement('option');
+                option.value = year;
+                option.textContent = year;
+                if (year === currentYear) {
+                    option.selected = true;
+                }
+                yearSelect.appendChild(option);
+            }
+            
+            console.log(`Year options created: ${startYear}-${endYear}, current: ${currentYear}`);
+        }
         
         // 현재 월 설정
         function setCurrentMonth() {
-			const monthSelect = document.getElementById('month-select');
-			if (!monthSelect) {
-				console.error('Month select element not found');
-				return;
-			}
-			
-			try {
-				const now = new Date();
-				let currentMonth = now.getMonth() + 1;
-				
-				// NaN 체크
-				if (isNaN(currentMonth) || currentMonth < 1 || currentMonth > 12) {
-					currentMonth = 8; // 기본값 (8월)
-				}
-				
-				monthSelect.value = currentMonth;
-				console.log(`Current month set to: ${currentMonth}`);
-			} catch (error) {
-				console.error('Month setting error:', error);
-				monthSelect.value = 8; // 기본값
-			}
-		}
+            const monthSelect = document.getElementById('month-select');
+            if (!monthSelect) {
+                console.error('Month select element not found');
+                return;
+            }
+            
+            try {
+                const now = new Date();
+                let currentMonth = now.getMonth() + 1;
+                
+                // NaN 체크
+                if (isNaN(currentMonth) || currentMonth < 1 || currentMonth > 12) {
+                    currentMonth = 1; // 기본값 (1월)
+                }
+                
+                monthSelect.value = currentMonth;
+                console.log(`Current month set to: ${currentMonth}`);
+            } catch (error) {
+                console.error('Month setting error:', error);
+                monthSelect.value = 1; // 기본값
+            }
+        }
         
-        // 월 표시 업데이트 - 영어 버전 ✅
+        // 월 표시 업데이트 - 영어 버전 + 테마 로딩 ✅
         function updateMonthYearDisplay() {
             const year = document.getElementById('year-select').value;
-            const month = document.getElementById('month-select').value;
+            const month = parseInt(document.getElementById('month-select').value);
             const monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 
                                'July', 'August', 'September', 'October', 'November', 'December'];
             document.getElementById('month-year-text').textContent = `${monthNames[month - 1]} ${year}`;
             
-            setSeasonTheme(parseInt(month));
+            // 월별 테마 로딩
+            loadMonthlyTheme(month);
         }
         
         // Google Sheets에서 데이터 로드 ✅
@@ -1513,12 +1657,6 @@
                     dayElement.classList.add('other-month');
                 }
                 
-                // 오늘 날짜 강조 제거 - 더 이상 today 클래스 추가하지 않음
-                // const today = new Date();
-                // if (date.toDateString() === today.toDateString()) {
-                //     dayElement.classList.add('today');
-                // }
-                
                 // dateKey 형식
                 const dateKey = `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`;
                 
@@ -1553,17 +1691,17 @@
         
         // 일정 표시 - localEvents 사용 ✅
         function displayEvents(dateKey) {
-			console.log(`=== displayEvents 시작: ${dateKey} ===`);
-			
-			const eventsContainer = document.getElementById(`events-${dateKey}`);
-			
-			if (!eventsContainer) {
-				console.log('⌀ 이벤트 컨테이너를 찾을 수 없음 (현재 화면에 없는 날짜)');
-				return;
-			}
-			
-			const dayElement = eventsContainer.closest('.day');
-					
+            console.log(`=== displayEvents 시작: ${dateKey} ===`);
+            
+            const eventsContainer = document.getElementById(`events-${dateKey}`);
+            
+            if (!eventsContainer) {
+                console.log('⚪ 이벤트 컨테이너를 찾을 수 없음 (현재 화면에 없는 날짜)');
+                return;
+            }
+            
+            const dayElement = eventsContainer.closest('.day');
+                    
             eventsContainer.innerHTML = '';
             
             // 변경사항 여부 확인
@@ -1595,615 +1733,555 @@
                 });
                 console.log('5. ✅ 모든 이벤트 표시 완료');
             } else {
-                console.log('4. ⌀ 표시할 이벤트 없음');
+                console.log('4. ⚪ 표시할 이벤트 없음');
             }
             
             console.log(`=== displayEvents 완료: ${dateKey} ===`);
         }
         
         // 특정 날짜에 로컬 변경사항이 있는지 확인 ✅
-        function hasLocalChangesForDate(dateKey) {
-            const original = events[dateKey] || [];
-            const local = localEvents[dateKey] || [];
-            
-            if (original.length !== local.length) {
-                return true;
-            }
-            
-            for (let i = 0; i < original.length; i++) {
-                if (original[i] !== local[i]) {
-                    return true;
-                }
-            }
-            
-            return false;
-        }
-        
-        // 모든 변경사항을 Google Sheets에 저장 - 단순화된 버전 ✅
-        async function saveAllChanges() {
-            if (!hasChanges || isSyncing || !isOnline) {
-                if (!hasChanges) {
-                    alert('No changes to save!');
-                }
-                return;
-            }
-            
-            isSyncing = true;
-            showStatus('Saving all changes...', 'syncing');
-            
-            try {
-                await saveChangesSimplified();
-            } catch (error) {
-                console.error('Error saving all changes:', error);
-                showStatus('Save failed: ' + error.message, 'error');
-            } finally {
-                isSyncing = false;
-            }
-        }
-        
-        // 개별 날짜 저장 함수 ✅
-        async function saveEventsForDate(dateKey, year, month) {
-            console.log(`=== 개별 저장 시작: ${dateKey} ===`);
-            
-            const localEventsForDate = localEvents[dateKey] || [];
-            const originalEventsForDate = events[dateKey] || [];
-            const originalKey = originalDateKeys[dateKey] || dateKey;
-            
-            console.log(`- 원본 (${originalEventsForDate.length}개):`, originalEventsForDate);
-            console.log(`- 로컬 (${localEventsForDate.length}개):`, localEventsForDate);
-            console.log(`- 원본 키: ${originalKey}`);
-            
-            try {
-                // 1단계: 기존 이벤트들 모두 삭제 (항상 인덱스 0 삭제)
-                if (originalEventsForDate.length > 0) {
-                    console.log(`${dateKey}: 기존 ${originalEventsForDate.length}개 이벤트 삭제 시작`);
-                    
-                    for (let i = 0; i < originalEventsForDate.length; i++) {
-                        console.log(`  삭제 중: [0] "${originalEventsForDate[i]}" (원래 ${i}번째)`);
-                        
-                        const deleteUrl = `${SCRIPT_URL}?action=deleteEvent&year=${year}&month=${month}&date=${encodeURIComponent(originalKey)}&index=0`;
-                        
-                        try {
-                            const deleteResponse = await fetch(deleteUrl);
-                            const deleteResult = await deleteResponse.json();
-                            
-                            if (deleteResult.status !== 'success') {
-                                console.log(`  ⌀ 삭제 실패: [0] (원래 ${i}번째) - ${deleteResult.message}`);
-                            }
-                            
-                            await new Promise(resolve => setTimeout(resolve, 200));
-                            
-                        } catch (error) {
-                            console.error(`  ⌀ 삭제 오류: [0] (원래 ${i}번째) -`, error);
-                        }
-                    }
-                }
-                
-                // 2단계: 새로운 이벤트들 추가
-                if (localEventsForDate.length > 0) {
-                    console.log(`${dateKey}: 새로운 ${localEventsForDate.length}개 이벤트 추가 시작`);
-                    
-                    for (let i = 0; i < localEventsForDate.length; i++) {
-                        const eventText = localEventsForDate[i];
-                        console.log(`  추가 중: [${i}] "${eventText}"`);
-                        
-                        const addUrl = `${SCRIPT_URL}?action=addEvent&year=${year}&month=${month}&date=${encodeURIComponent(dateKey)}&event=${encodeURIComponent(eventText)}`;
-                        
-                        try {
-                            const addResponse = await fetch(addUrl);
-                            const addResult = await addResponse.json();
-                            
-                            if (addResult.status !== 'success') {
-                                console.log(`  ⌀ 추가 실패: [${i}] "${eventText}" - ${addResult.message}`);
-                                return false;
-                            }
-                            
-                            await new Promise(resolve => setTimeout(resolve, 200));
-                            
-                        } catch (error) {
-                            console.error(`  ⌀ 추가 오류: [${i}] "${eventText}" -`, error);
-                            return false;
-                        }
-                    }
-                }
-                
-                console.log(`✅ ${dateKey} 처리 완료`);
-                return true;
-                
-            } catch (error) {
-                console.error(`⌀ ${dateKey} 처리 중 오류:`, error);
-                return false;
-            }
-        }
-        
-        // 단순화된 저장 로직 ✅
-        async function saveChangesSimplified() {
-            console.log('=== 단순화된 저장 시작 ===');
-            
-            const year = document.getElementById('year-select').value;
-            const month = document.getElementById('month-select').value;
-            let successCount = 0;
-            let totalDates = 0;
-            
-            // 처리할 날짜들 수집 (변경된 날짜만)
-            const changedDates = [];
-            
-            // 로컬에서 변경된 날짜들
-            Object.keys(localEvents).forEach(dateKey => {
-                if (hasLocalChangesForDate(dateKey)) {
-                    changedDates.push(dateKey);
-                }
-            });
-            
-            // 완전히 삭제된 날짜들 (원본에는 있지만 로컬에 없거나 빈 배열)
-            Object.keys(events).forEach(dateKey => {
-                if (!localEvents[dateKey] || localEvents[dateKey].length === 0) {
-                    if (!changedDates.includes(dateKey)) {
-                        changedDates.push(dateKey);
-                    }
-                }
-            });
-            
-            totalDates = changedDates.length;
-            console.log(`처리할 날짜 수: ${totalDates}`, changedDates);
-            
-            if (totalDates === 0) {
-                showStatus('No changes to save', 'saved');
-                markAsSaved();
-                return;
-            }
-            
-            // 각 날짜별로 처리
-            for (let i = 0; i < changedDates.length; i++) {
-                const dateKey = changedDates[i];
-                const progress = i + 1;
-                
-                showStatus(`Saving ${progress}/${totalDates}: ${dateKey}`, 'syncing');
-                
-                try {
-                    const success = await saveEventsForDate(dateKey, year, month);
-                    if (success) {
-                        successCount++;
-                        console.log(`✅ ${dateKey} 저장 성공`);
-                    } else {
-                        console.log(`⌀ ${dateKey} 저장 실패`);
-                    }
-                } catch (error) {
-                    console.error(`⌀ ${dateKey} 저장 오류:`, error);
-                }
-                
-                // 진행률 표시를 위한 잠시 대기
-                await new Promise(resolve => setTimeout(resolve, 100));
-            }
-            
-            console.log(`=== 저장 완료: ${successCount}/${totalDates} ===`);
-            
-            if (successCount > 0) {
-                // 성공 시 원본 데이터 업데이트
-                events = JSON.parse(JSON.stringify(localEvents));
-                
-                // 빈 배열 정리
-                Object.keys(events).forEach(key => {
-                    if (events[key].length === 0) {
-                        delete events[key];
-                        delete originalDateKeys[key];
-                    }
-                });
-                
-                markAsSaved();
-                showStatus(`All changes saved! (${successCount}/${totalDates} dates)`, 'saved');
-                
-                // UI 새로고침
-                setTimeout(() => {
-                    console.log('서버 동기화 확인을 위한 새로고침');
-                    generateCalendar();
-                }, 1000);
-                
-            } else {
-                showStatus('Save failed - no changes were saved', 'error');
-            }
-        }
-        
-        // 모달 열기
-        function openModal(dateKey) {
-            currentDate = dateKey;
-            editingEventIndex = null;
-            document.getElementById('modal-title').textContent = 'Add Event';
-            document.getElementById('event-input').value = '';
-            document.getElementById('delete-btn').style.display = 'none';
-            document.getElementById('event-modal').style.display = 'block';
-            document.getElementById('event-input').focus();
-        }
-        
-        // 일정 편집
-        function editEvent(dateKey, eventIndex) {
-            currentDate = dateKey;
-            editingEventIndex = eventIndex;
-            document.getElementById('modal-title').textContent = 'Edit Event';
-            document.getElementById('event-input').value = localEvents[dateKey][eventIndex];
-            document.getElementById('delete-btn').style.display = 'inline-block';
-            document.getElementById('event-modal').style.display = 'block';
-            document.getElementById('event-input').focus();
-        }
-        
-        // 모달 닫기
-        function closeModal() {
-            document.getElementById('event-modal').style.display = 'none';
-            currentDate = null;
-            editingEventIndex = null;
-        }
-        
-        // 일정 저장 - 로컬만 저장 ✅
-        function saveEvent() {
-            const eventText = document.getElementById('event-input').value.trim();
-            
-            if (!eventText) {
-                alert('Please enter an event!');
-                return;
-            }
-            
-            if (!currentDate) {
-                alert('Error: No date selected!');
-                return;
-            }
-            
-            // localEvents 초기화 (필요시)
-            if (!localEvents[currentDate]) {
-                localEvents[currentDate] = [];
-            }
-            
-            if (editingEventIndex !== null) {
-                // 수정
-                if (editingEventIndex < localEvents[currentDate].length) {
-                    localEvents[currentDate][editingEventIndex] = eventText;
-                } else {
-                    localEvents[currentDate].push(eventText);
-                }
-            } else {
-                // 추가
-                localEvents[currentDate].push(eventText);
-            }
-            
-            // 변경사항 표시
-            markAsChanged();
-            displayEvents(currentDate);
-            closeModal();
-            
-            console.log('로컬 저장 완료:', currentDate, localEvents[currentDate]);
-        }
-        
-        // 일정 삭제 - 로컬만 삭제 ✅
-        function deleteEvent() {
-            if (editingEventIndex === null || !currentDate) {
-                console.log('삭제 실패: editingEventIndex 또는 currentDate가 없음');
-                alert('Error: Cannot identify event to delete!');
-                return;
-            }
-            
-            if (!confirm('Are you sure you want to delete this event?')) return;
-            
-            console.log('삭제 시작:', currentDate, editingEventIndex);
-            console.log('삭제 전 localEvents:', localEvents[currentDate]);
-            
-            // localEvents에서 삭제
-            if (localEvents[currentDate] && localEvents[currentDate].length > editingEventIndex) {
-                const deletedEvent = localEvents[currentDate][editingEventIndex];
-                localEvents[currentDate].splice(editingEventIndex, 1);
-                
-                console.log('삭제된 이벤트:', deletedEvent);
-                console.log('삭제 후 localEvents:', localEvents[currentDate]);
-                
-                // 빈 배열이 된 경우에도 키는 유지 (완전 삭제는 서버 저장 시 처리)
-                if (localEvents[currentDate].length === 0) {
-                    localEvents[currentDate] = []; // 빈 배열로 유지
-                    console.log('해당 날짜의 모든 이벤트 삭제됨, 빈 배열로 설정');
-                }
-                
-                // 변경사항 표시
-                markAsChanged();
-                displayEvents(currentDate);
-                closeModal();
-                
-                console.log('로컬 삭제 완료');
-                
-            } else {
-                console.log('삭제 실패: 유효하지 않은 인덱스');
-                alert('Error: Invalid event index!');
-            }
-        }
-        
-        // 기존 Apps Script 액션을 사용하여 개별 저장하는 함수 ✅
-        async function saveChangesByBatch() {
-            console.log('기존 액션을 사용한 개별 저장 모드 시작');
-            
-            const year = document.getElementById('year-select').value;
-            const month = document.getElementById('month-select').value;
-            let successCount = 0;
-            let totalOperations = 0;
-            
-            // 처리할 날짜들 수집
-            const datesToProcess = new Set([
-                ...Object.keys(localEvents),
-                ...Object.keys(events)
-            ]);
-            
-            console.log('처리할 날짜들:', Array.from(datesToProcess));
-            
-            // 각 날짜별로 처리
-            for (const dateKey of datesToProcess) {
-                const localEventsForDate = localEvents[dateKey] || [];
-                const originalEventsForDate = events[dateKey] || [];
-                const originalKey = originalDateKeys[dateKey] || dateKey;
-                
-                console.log(`\n=== 처리 중: ${dateKey} ===`);
-                console.log(`- 원본 (${originalEventsForDate.length}개):`, originalEventsForDate);
-                console.log(`- 로컬 (${localEventsForDate.length}개):`, localEventsForDate);
-                console.log(`- 원본 키: ${originalKey}`);
-                
-                // 변경사항이 없으면 건너뛰기
-                if (!hasLocalChangesForDate(dateKey)) {
-                    console.log(`${dateKey}: 변경사항 없음, 건너뛰기`);
-                    continue;
-                }
-                
-                totalOperations++;
-                showStatus(`Processing ${dateKey}... (${totalOperations})`, 'syncing');
-                
-                try {
-                    // 1단계: 기존 이벤트들 모두 삭제 (항상 인덱스 0 삭제)
-                    if (originalEventsForDate.length > 0) {
-                        console.log(`${dateKey}: 기존 ${originalEventsForDate.length}개 이벤트 삭제 시작`);
-                        
-                        // 배열에서 요소 삭제 시 인덱스가 재조정되므로 항상 첫 번째(0번) 인덱스를 삭제
-                        for (let i = 0; i < originalEventsForDate.length; i++) {
-                            console.log(`  삭제 중: [0] "${originalEventsForDate[i]}" (원래 ${i}번째)`);
-                            
-                            const deleteUrl = `${SCRIPT_URL}?action=deleteEvent&year=${year}&month=${month}&date=${encodeURIComponent(originalKey)}&index=0`;
-                            
-                            try {
-                                const deleteResponse = await fetch(deleteUrl);
-                                const deleteResult = await deleteResponse.json();
-                                
-                                if (deleteResult.status === 'success') {
-                                    console.log(`  ✅ 삭제 성공: [0] (원래 ${i}번째)`);
-                                } else {
-                                    console.log(`  ⌀ 삭제 실패: [0] (원래 ${i}번째) - ${deleteResult.message}`);
-                                }
-                                
-                                await new Promise(resolve => setTimeout(resolve, 200));
-                                
-                            } catch (error) {
-                                console.error(`  ⌀ 삭제 오류: [0] (원래 ${i}번째) -`, error);
-                            }
-                        }
-                    }
-                    
-                    // 2단계: 새로운 이벤트들 추가
-                    if (localEventsForDate.length > 0) {
-                        console.log(`${dateKey}: 새로운 ${localEventsForDate.length}개 이벤트 추가 시작`);
-                        
-                        for (let i = 0; i < localEventsForDate.length; i++) {
-                            const eventText = localEventsForDate[i];
-                            console.log(`  추가 중: [${i}] "${eventText}"`);
-                            
-                            const addUrl = `${SCRIPT_URL}?action=addEvent&year=${year}&month=${month}&date=${encodeURIComponent(dateKey)}&event=${encodeURIComponent(eventText)}`;
-                            
-                            try {
-                                const addResponse = await fetch(addUrl);
-                                const addResult = await addResponse.json();
-                                
-                                if (addResult.status === 'success') {
-                                    console.log(`  ✅ 추가 성공: [${i}] "${eventText}"`);
-                                } else {
-                                    console.log(`  ⌀ 추가 실패: [${i}] "${eventText}" - ${addResult.message}`);
-                                }
-                                
-                                await new Promise(resolve => setTimeout(resolve, 200));
-                                
-                            } catch (error) {
-                                console.error(`  ⌀ 추가 오류: [${i}] "${eventText}" -`, error);
-                            }
-                        }
-                    }
-                    
-                    successCount++;
-                    console.log(`✅ ${dateKey} 처리 완료`);
-                    
-                } catch (error) {
-                    console.error(`⌀ ${dateKey} 처리 중 오류:`, error);
-                }
-                
-                // 다음 날짜 처리 전 잠시 대기
-                await new Promise(resolve => setTimeout(resolve, 300));
-            }
-            
-            console.log(`\n=== 저장 완료: ${successCount}/${totalOperations} ===`);
-            
-            if (successCount > 0) {
-                // 성공 시 원본 데이터 업데이트
-                events = JSON.parse(JSON.stringify(localEvents));
-                
-                // 빈 배열로 된 항목들 정리
-                Object.keys(events).forEach(key => {
-                    if (events[key].length === 0) {
-                        delete events[key];
-                        delete originalDateKeys[key];
-                    }
-                });
-                
-                markAsSaved();
-                showStatus(`All changes saved! (${successCount} dates processed)`, 'saved');
-                
-                // 현재 화면에 있는 날짜들만 UI 업데이트
-				Object.keys(localEvents).forEach(dateKey => {
-					const eventsContainer = document.getElementById(`events-${dateKey}`);
-					if (eventsContainer) {
-						displayEvents(dateKey);
-					}
-				});
-                
-                // 전체 새로고침으로 서버와 동기화 확인
-                setTimeout(() => {
-                    console.log('서버 동기화를 위한 새로고침 시작');
-                    generateCalendar();
-                }, 1000);
-                
-            } else {
-                showStatus('No changes were saved', 'error');
-            }
-        }
-        
-        // 캘린더 새로고침 ✅
-        function refreshCalendar() {
-            // 변경사항이 있는 경우 경고
-            if (hasChanges) {
-                if (!confirm('You have unsaved changes. Are you sure you want to refresh? All unsaved changes will be lost.')) {
-                    return;
-                }
-            }
-            
-            // 변경사항 초기화
-            hasChanges = false;
-            localEvents = {};
-            generateCalendar();
-        }
-        
-        // PDF로 저장 - A4 최적화 및 여백 개선 ✅
-        async function saveToPDF() {
-            const year = document.getElementById('year-select').value;
-            const month = String(document.getElementById('month-select').value).padStart(2, '0');
-            const filename = `ZENITH_${year}${month}.pdf`;
-            
-            const loadingOverlay = document.getElementById('loading-overlay');
-            loadingOverlay.style.display = 'flex';
-            
-            // 컨트롤과 상태 메시지 숨기기
-            const controls = document.querySelector('.controls');
-            const saveStatus = document.getElementById('save-status');
-            const connectionStatus = document.querySelector('.connection-status');
-            controls.style.display = 'none';
-            saveStatus.style.display = 'none';
-            connectionStatus.style.display = 'none';
-            
-            const addButtons = document.querySelectorAll('.add-event-btn, .clear-day-btn, .day-actions');
-            addButtons.forEach(btn => btn.style.display = 'none');
-            
-            const style = document.createElement('style');
-            style.textContent = `
-                * {
-                    -webkit-user-select: none !important;
-                    -moz-user-select: none !important;
-                    -ms-user-select: none !important;
-                    user-select: none !important;
-                }
-                ::selection {
-                    background: transparent !important;
-                }
-                ::-moz-selection {
-                    background: transparent !important;
-                }
-            `;
-            document.head.appendChild(style);
-            
-            try {
-                const element = document.getElementById('calendar-container');
-                const canvas = await html2canvas(element, {
-                    scale: 2,
-                    useCORS: true,
-                    logging: false,
-                    backgroundColor: '#ffffff',
-                    removeContainer: false,
-                    windowWidth: element.scrollWidth,
-                    windowHeight: element.scrollHeight,
-                    allowTaint: true,
-                    foreignObjectRendering: false
-                });
-                
-                const { jsPDF } = window.jspdf;
-                const pdf = new jsPDF({
-                    orientation: 'portrait',
-                    unit: 'mm',
-                    format: 'a4'
-                });
-                
-                const imgData = canvas.toDataURL('image/png');
-                const a4Width = 210; // A4 width in mm
-                const a4Height = 297; // A4 height in mm
-                const margin = 15; // 여백 15mm 설정
-                const printableWidth = a4Width - (margin * 2);
-                const printableHeight = a4Height - (margin * 2);
-                
-                // 이미지 크기 계산 (여백 고려)
-                const imgWidth = printableWidth;
-                const imgHeight = (canvas.height * imgWidth) / canvas.width;
-                
-                // 프린트 가능한 영역을 초과하는 경우 크기 조정
-                if (imgHeight > printableHeight) {
-                    const scaledHeight = printableHeight;
-                    const scaledWidth = (canvas.width * scaledHeight) / canvas.height;
-                    const xOffset = margin + (printableWidth - scaledWidth) / 2;
-                    pdf.addImage(imgData, 'PNG', xOffset, margin, scaledWidth, scaledHeight);
-                } else {
-                    const yOffset = margin + (printableHeight - imgHeight) / 2;
-                    pdf.addImage(imgData, 'PNG', margin, yOffset, imgWidth, imgHeight);
-                }
-                
-                pdf.save(filename);
-                
-                alert(`Saved as ${filename}!`);
-            } catch (error) {
-                console.error('PDF generation error:', error);
-                alert('An error occurred while generating PDF.');
-            } finally {
-                controls.style.display = 'flex';
-                saveStatus.style.display = 'flex';
-                connectionStatus.style.display = 'flex';
-                const addButtonsRestore = document.querySelectorAll('.add-event-btn, .clear-day-btn, .day-actions');
-                addButtonsRestore.forEach(btn => btn.style.display = '');
-                loadingOverlay.style.display = 'none';
-                style.remove();
-            }
-        }
-        
-        // 모달 외부 클릭 시 닫기
-        document.getElementById('event-modal').onclick = function(event) {
-            if (event.target === this) {
-                closeModal();
-            }
-        }
-        
-        // Enter 키로 저장
-        document.getElementById('event-input').addEventListener('keypress', function(event) {
-            if (event.key === 'Enter') {
-                saveEvent();
-            }
-        });
-        
-        // ESC 키로 모달 닫기
-        document.addEventListener('keydown', function(event) {
-            if (event.key === 'Escape') {
-                const modal = document.getElementById('event-modal');
-                if (modal.style.display === 'block') {
-                    closeModal();
-                }
-            }
-        });
-        
-        // 년/월 선택 시 캘린더 재생성
-        document.getElementById('year-select').addEventListener('change', generateCalendar);
-        document.getElementById('month-select').addEventListener('change', generateCalendar);
-        
-        // 페이지 떠나기 전 경고 ✅
-        window.addEventListener('beforeunload', function(event) {
-            if (hasChanges) {
-                event.preventDefault();
-                event.returnValue = 'You have unsaved changes. Are you sure you want to leave?';
-                return event.returnValue;
-            }
-        });
-        
-        // 초기화 실행
-        init();
-    </script>
+       function hasLocalChangesForDate(dateKey) {
+           const original = events[dateKey] || [];
+           const local = localEvents[dateKey] || [];
+           
+           if (original.length !== local.length) {
+               return true;
+           }
+           
+           for (let i = 0; i < original.length; i++) {
+               if (original[i] !== local[i]) {
+                   return true;
+               }
+           }
+           
+           return false;
+       }
+       
+       // 모든 변경사항을 Google Sheets에 저장 - 단순화된 버전 ✅
+       async function saveAllChanges() {
+           if (!hasChanges || isSyncing || !isOnline) {
+               if (!hasChanges) {
+                   alert('No changes to save!');
+               }
+               return;
+           }
+           
+           isSyncing = true;
+           showStatus('Saving all changes...', 'syncing');
+           
+           try {
+               await saveChangesSimplified();
+           } catch (error) {
+               console.error('Error saving all changes:', error);
+               showStatus('Save failed: ' + error.message, 'error');
+           } finally {
+               isSyncing = false;
+           }
+       }
+       
+       // 개별 날짜 저장 함수 ✅
+       async function saveEventsForDate(dateKey, year, month) {
+           console.log(`=== 개별 저장 시작: ${dateKey} ===`);
+           
+           const localEventsForDate = localEvents[dateKey] || [];
+           const originalEventsForDate = events[dateKey] || [];
+           const originalKey = originalDateKeys[dateKey] || dateKey;
+           
+           console.log(`- 원본 (${originalEventsForDate.length}개):`, originalEventsForDate);
+           console.log(`- 로컬 (${localEventsForDate.length}개):`, localEventsForDate);
+           console.log(`- 원본 키: ${originalKey}`);
+           
+           try {
+               // 1단계: 기존 이벤트들 모두 삭제 (항상 인덱스 0 삭제)
+               if (originalEventsForDate.length > 0) {
+                   console.log(`${dateKey}: 기존 ${originalEventsForDate.length}개 이벤트 삭제 시작`);
+                   
+                   for (let i = 0; i < originalEventsForDate.length; i++) {
+                       console.log(`  삭제 중: [0] "${originalEventsForDate[i]}" (원래 ${i}번째)`);
+                       
+                       const deleteUrl = `${SCRIPT_URL}?action=deleteEvent&year=${year}&month=${month}&date=${encodeURIComponent(originalKey)}&index=0`;
+                       
+                       try {
+                           const deleteResponse = await fetch(deleteUrl);
+                           const deleteResult = await deleteResponse.json();
+                           
+                           if (deleteResult.status !== 'success') {
+                               console.log(`  ⚪ 삭제 실패: [0] (원래 ${i}번째) - ${deleteResult.message}`);
+                           }
+                           
+                           await new Promise(resolve => setTimeout(resolve, 200));
+                           
+                       } catch (error) {
+                           console.error(`  ⚪ 삭제 오류: [0] (원래 ${i}번째) -`, error);
+                       }
+                   }
+               }
+               
+               // 2단계: 새로운 이벤트들 추가
+               if (localEventsForDate.length > 0) {
+                   console.log(`${dateKey}: 새로운 ${localEventsForDate.length}개 이벤트 추가 시작`);
+                   
+                   for (let i = 0; i < localEventsForDate.length; i++) {
+                       const eventText = localEventsForDate[i];
+                       console.log(`  추가 중: [${i}] "${eventText}"`);
+                       
+                       const addUrl = `${SCRIPT_URL}?action=addEvent&year=${year}&month=${month}&date=${encodeURIComponent(dateKey)}&event=${encodeURIComponent(eventText)}`;
+                       
+                       try {
+                           const addResponse = await fetch(addUrl);
+                           const addResult = await addResponse.json();
+                           
+                           if (addResult.status !== 'success') {
+                               console.log(`  ⚪ 추가 실패: [${i}] "${eventText}" - ${addResult.message}`);
+                               return false;
+                           }
+                           
+                           await new Promise(resolve => setTimeout(resolve, 200));
+                           
+                       } catch (error) {
+                           console.error(`  ⚪ 추가 오류: [${i}] "${eventText}" -`, error);
+                           return false;
+                       }
+                   }
+               }
+               
+               console.log(`✅ ${dateKey} 처리 완료`);
+               return true;
+               
+           } catch (error) {
+               console.error(`⚪ ${dateKey} 처리 중 오류:`, error);
+               return false;
+           }
+       }
+       
+       // 단순화된 저장 로직 ✅
+       async function saveChangesSimplified() {
+           console.log('=== 단순화된 저장 시작 ===');
+           
+           const year = document.getElementById('year-select').value;
+           const month = document.getElementById('month-select').value;
+           let successCount = 0;
+           let totalDates = 0;
+           
+           // 처리할 날짜들 수집 (변경된 날짜만)
+           const changedDates = [];
+           
+           // 로컬에서 변경된 날짜들
+           Object.keys(localEvents).forEach(dateKey => {
+               if (hasLocalChangesForDate(dateKey)) {
+                   changedDates.push(dateKey);
+               }
+           });
+           
+           // 완전히 삭제된 날짜들 (원본에는 있지만 로컬에 없거나 빈 배열)
+           Object.keys(events).forEach(dateKey => {
+               if (!localEvents[dateKey] || localEvents[dateKey].length === 0) {
+                   if (!changedDates.includes(dateKey)) {
+                       changedDates.push(dateKey);
+                   }
+               }
+           });
+           
+           totalDates = changedDates.length;
+           console.log(`처리할 날짜 수: ${totalDates}`, changedDates);
+           
+           if (totalDates === 0) {
+               showStatus('No changes to save', 'saved');
+               markAsSaved();
+               return;
+           }
+           
+           // 각 날짜별로 처리
+           for (let i = 0; i < changedDates.length; i++) {
+               const dateKey = changedDates[i];
+               const progress = i + 1;
+               
+               showStatus(`Saving ${progress}/${totalDates}: ${dateKey}`, 'syncing');
+               
+               try {
+                   const success = await saveEventsForDate(dateKey, year, month);
+                   if (success) {
+                       successCount++;
+                       console.log(`✅ ${dateKey} 저장 성공`);
+                   } else {
+                       console.log(`⚪ ${dateKey} 저장 실패`);
+                   }
+               } catch (error) {
+                   console.error(`⚪ ${dateKey} 저장 오류:`, error);
+               }
+               
+               // 진행률 표시를 위한 잠시 대기
+               await new Promise(resolve => setTimeout(resolve, 100));
+           }
+           
+           console.log(`=== 저장 완료: ${successCount}/${totalDates} ===`);
+           
+           if (successCount > 0) {
+               // 성공 시 원본 데이터 업데이트
+               events = JSON.parse(JSON.stringify(localEvents));
+               
+               // 빈 배열 정리
+               Object.keys(events).forEach(key => {
+                   if (events[key].length === 0) {
+                       delete events[key];
+                       delete originalDateKeys[key];
+                   }
+               });
+               
+               markAsSaved();
+               showStatus(`All changes saved! (${successCount}/${totalDates} dates)`, 'saved');
+               
+               // UI 새로고침
+               setTimeout(() => {
+                   console.log('서버 동기화 확인을 위한 새로고침');
+                   generateCalendar();
+               }, 1000);
+               
+           } else {
+               showStatus('Save failed - no changes were saved', 'error');
+           }
+       }
+       
+       // 모달 열기
+       function openModal(dateKey) {
+           currentDate = dateKey;
+           editingEventIndex = null;
+           document.getElementById('modal-title').textContent = 'Add Event';
+           document.getElementById('event-input').value = '';
+           document.getElementById('delete-btn').style.display = 'none';
+           document.getElementById('event-modal').style.display = 'block';
+           document.getElementById('event-input').focus();
+       }
+       
+       // 일정 편집
+       function editEvent(dateKey, eventIndex) {
+           currentDate = dateKey;
+           editingEventIndex = eventIndex;
+           document.getElementById('modal-title').textContent = 'Edit Event';
+           document.getElementById('event-input').value = localEvents[dateKey][eventIndex];
+           document.getElementById('delete-btn').style.display = 'inline-block';
+           document.getElementById('event-modal').style.display = 'block';
+           document.getElementById('event-input').focus();
+       }
+       
+       // 모달 닫기
+       function closeModal() {
+           document.getElementById('event-modal').style.display = 'none';
+           currentDate = null;
+           editingEventIndex = null;
+       }
+       
+       // 일정 저장 - 로컬만 저장 ✅
+       function saveEvent() {
+           const eventText = document.getElementById('event-input').value.trim();
+           
+           if (!eventText) {
+               alert('Please enter an event!');
+               return;
+           }
+           
+           if (!currentDate) {
+               alert('Error: No date selected!');
+               return;
+           }
+           
+           // localEvents 초기화 (필요시)
+           if (!localEvents[currentDate]) {
+               localEvents[currentDate] = [];
+           }
+           
+           if (editingEventIndex !== null) {
+               // 수정
+               if (editingEventIndex < localEvents[currentDate].length) {
+                   localEvents[currentDate][editingEventIndex] = eventText;
+               } else {
+                   localEvents[currentDate].push(eventText);
+               }
+           } else {
+               // 추가
+               localEvents[currentDate].push(eventText);
+           }
+           
+           // 변경사항 표시
+           markAsChanged();
+           displayEvents(currentDate);
+           closeModal();
+           
+           console.log('로컬 저장 완료:', currentDate, localEvents[currentDate]);
+       }
+       
+       // 일정 삭제 - 로컬만 삭제 ✅
+       function deleteEvent() {
+           if (editingEventIndex === null || !currentDate) {
+               console.log('삭제 실패: editingEventIndex 또는 currentDate가 없음');
+               alert('Error: Cannot identify event to delete!');
+               return;
+           }
+           
+           if (!confirm('Are you sure you want to delete this event?')) return;
+           
+           console.log('삭제 시작:', currentDate, editingEventIndex);
+           console.log('삭제 전 localEvents:', localEvents[currentDate]);
+           
+           // localEvents에서 삭제
+           if (localEvents[currentDate] && localEvents[currentDate].length > editingEventIndex) {
+               const deletedEvent = localEvents[currentDate][editingEventIndex];
+               localEvents[currentDate].splice(editingEventIndex, 1);
+               
+               console.log('삭제된 이벤트:', deletedEvent);
+               console.log('삭제 후 localEvents:', localEvents[currentDate]);
+               
+               // 빈 배열이 된 경우에도 키는 유지 (완전 삭제는 서버 저장 시 처리)
+               if (localEvents[currentDate].length === 0) {
+                   localEvents[currentDate] = []; // 빈 배열로 유지
+                   console.log('해당 날짜의 모든 이벤트 삭제됨, 빈 배열로 설정');
+               }
+               
+               // 변경사항 표시
+               markAsChanged();
+               displayEvents(currentDate);
+               closeModal();
+               
+               console.log('로컬 삭제 완료');
+               
+           } else {
+               console.log('삭제 실패: 유효하지 않은 인덱스');
+               alert('Error: Invalid event index!');
+           }
+       }
+       
+       // 캘린더 새로고침 ✅
+       function refreshCalendar() {
+           // 변경사항이 있는 경우 경고
+           if (hasChanges) {
+               if (!confirm('You have unsaved changes. Are you sure you want to refresh? All unsaved changes will be lost.')) {
+                   return;
+               }
+           }
+           
+           // 변경사항 초기화
+           hasChanges = false;
+           localEvents = {};
+           generateCalendar();
+       }
+       
+       // 저장 옵션 모달 표시
+       function showSaveOptions() {
+           const modal = document.getElementById('save-modal-overlay');
+           modal.style.display = 'flex';
+       }
+       
+       // 저장 옵션 모달 닫기
+       function closeSaveModal() {
+           const modal = document.getElementById('save-modal-overlay');
+           modal.style.display = 'none';
+       }
+       
+       // 파일 저장 (PDF 또는 PNG) - A4 비율 최적화
+       async function saveAs(format) {
+           closeSaveModal();
+           
+           const today = new Date();
+           const year = document.getElementById('year-select').value;
+           const month = String(document.getElementById('month-select').value).padStart(2, '0');
+           const filename = `ZENITH_Calendar_${year}_${month}`;
+           
+           const loadingOverlay = document.getElementById('loading-overlay');
+           const loadingText = document.getElementById('loading-text');
+           
+           if (format === 'pdf') {
+               loadingText.textContent = 'Generating PDF...';
+           } else {
+               loadingText.textContent = 'Generating PNG...';
+           }
+           
+           loadingOverlay.style.display = 'flex';
+           
+           try {
+               const element = document.getElementById('calendar-container');
+               
+               // 컨트롤과 상태 메시지 숨기기
+               const controls = document.querySelector('.controls');
+               const saveStatus = document.getElementById('save-status');
+               const connectionStatus = document.querySelector('.connection-status');
+               const addButtons = document.querySelectorAll('.add-event-btn, .clear-day-btn, .day-actions');
+               
+               // 임시 스타일 저장
+               const originalControlsDisplay = controls.style.display;
+               const originalStatusDisplay = saveStatus.style.display;
+               const originalConnectionDisplay = connectionStatus.style.display;
+               
+               // 요소들 숨기기
+               controls.style.display = 'none';
+               saveStatus.style.display = 'none';
+               connectionStatus.style.display = 'none';
+               addButtons.forEach(btn => btn.style.display = 'none');
+               
+               // 선택 방지 스타일 추가
+               const style = document.createElement('style');
+               style.textContent = `
+                   * {
+                       -webkit-user-select: none !important;
+                       -moz-user-select: none !important;
+                       -ms-user-select: none !important;
+                       user-select: none !important;
+                   }
+                   ::selection {
+                       background: transparent !important;
+                   }
+                   ::-moz-selection {
+                       background: transparent !important;
+                   }
+               `;
+               document.head.appendChild(style);
+               
+               // 임시로 border-radius 제거 (렌더링 최적화)
+               const originalBorderRadius = element.style.borderRadius;
+               element.style.borderRadius = '0';
+               
+               // A4 비율에 맞게 강제 크기 설정 (210mm : 297mm = 1 : 1.414)
+               const originalWidth = element.style.width;
+               const originalHeight = element.style.height;
+               const originalMaxWidth = element.style.maxWidth;
+               
+               // A4 비율로 강제 설정 (픽셀 기준)
+               const a4Width = 794; // 210mm at 96 DPI
+               const a4Height = 1123; // 297mm at 96 DPI
+               
+               element.style.width = `${a4Width}px`;
+               element.style.height = `${a4Height}px`;
+               element.style.maxWidth = `${a4Width}px`;
+               
+               // 모바일에서도 A4 비율 유지
+               const viewport = document.querySelector('meta[name="viewport"]');
+               const originalViewport = viewport.content;
+               viewport.content = `width=${a4Width}, initial-scale=1.0, user-scalable=no`;
+               
+               const canvas = await html2canvas(element, {
+                   scale: window.devicePixelRatio > 1 ? 2 : 3, // 고해상도
+                   useCORS: true,
+                   logging: false,
+                   backgroundColor: '#ffffff',
+                   width: a4Width,
+                   height: a4Height,
+                   windowWidth: a4Width,
+                   windowHeight: a4Height,
+                   scrollY: 0,
+                   scrollX: 0,
+                   letterRendering: true,
+                   allowTaint: false,
+                   foreignObjectRendering: false,
+                   removeContainer: false
+               });
+               
+               // 원래 크기와 뷰포트로 복원
+               element.style.width = originalWidth;
+               element.style.height = originalHeight;
+               element.style.maxWidth = originalMaxWidth;
+               element.style.borderRadius = originalBorderRadius;
+               viewport.content = originalViewport;
+               
+               // 요소들 다시 표시
+               controls.style.display = originalControlsDisplay;
+               saveStatus.style.display = originalStatusDisplay;
+               connectionStatus.style.display = originalConnectionDisplay;
+               addButtons.forEach(btn => btn.style.display = '');
+               
+               // 스타일 제거
+               style.remove();
+               
+               if (format === 'pdf') {
+                   // PDF 저장
+                   const { jsPDF } = window.jspdf;
+                   const pdf = new jsPDF({
+                       orientation: 'portrait',
+                       unit: 'mm',
+                       format: 'a4',
+                       compress: true
+                   });
+                   
+                   const imgData = canvas.toDataURL('image/png', 1.0);
+                   
+                   // A4 크기에 정확히 맞추기
+                   const pdfWidth = 210;
+                   const pdfHeight = 297;
+                   
+                   pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
+                   pdf.save(`${filename}.pdf`);
+                   
+                   alert(`PDF saved as ${filename}.pdf!`);
+               } else {
+                   // PNG 저장
+                   const link = document.createElement('a');
+                   link.download = `${filename}.png`;
+                   link.href = canvas.toDataURL('image/png', 1.0);
+                   
+                   // 임시로 DOM에 추가하여 클릭
+                   document.body.appendChild(link);
+                   link.click();
+                   document.body.removeChild(link);
+                   
+                   alert(`PNG saved as ${filename}.png!`);
+               }
+               
+           } catch (error) {
+               console.error(`${format.toUpperCase()} generation error:`, error);
+               alert(`An error occurred while generating ${format.toUpperCase()}.`);
+           } finally {
+               loadingOverlay.style.display = 'none';
+           }
+       }
+       
+       // 모달 외부 클릭 시 닫기
+       document.getElementById('event-modal').onclick = function(event) {
+           if (event.target === this) {
+               closeModal();
+           }
+       }
+       
+       // 저장 모달 외부 클릭 시 닫기
+       document.getElementById('save-modal-overlay').addEventListener('click', function(event) {
+           if (event.target === this) {
+               closeSaveModal();
+           }
+       });
+       
+       // Enter 키로 저장
+       document.getElementById('event-input').addEventListener('keypress', function(event) {
+           if (event.key === 'Enter') {
+               saveEvent();
+           }
+       });
+       
+       // ESC 키로 모달 닫기
+       document.addEventListener('keydown', function(event) {
+           if (event.key === 'Escape') {
+               const eventModal = document.getElementById('event-modal');
+               const saveModal = document.getElementById('save-modal-overlay');
+               
+               if (eventModal.style.display === 'block') {
+                   closeModal();
+               } else if (saveModal.style.display === 'flex') {
+                   closeSaveModal();
+               }
+           }
+       });
+       
+       // 년/월 선택 시 캘린더 재생성
+       document.getElementById('year-select').addEventListener('change', generateCalendar);
+       document.getElementById('month-select').addEventListener('change', generateCalendar);
+       
+       // 페이지 떠나기 전 경고 ✅
+       window.addEventListener('beforeunload', function(event) {
+           if (hasChanges) {
+               event.preventDefault();
+               event.returnValue = 'You have unsaved changes. Are you sure you want to leave?';
+               return event.returnValue;
+           }
+       });
+       
+       // 초기화 실행
+       init();
+   </script>
 </body>
 </html>

@@ -1,0 +1,280 @@
+/* February Theme - Valentine's Day & Love */
+
+/* CSS 변수 재정의 */
+:root {
+    --primary: #DC2626 !important;
+    --secondary: #EC4899 !important;
+    --accent: #F472B6 !important;
+    --success: #10B981 !important;
+    --danger: #EF4444 !important;
+    --warning: #F59E0B !important;
+    --dark: #1F2937 !important;
+    --light: #F9FAFB !important;
+    --bg-gradient: linear-gradient(135deg, #FFF1F2 0%, #FFE4E6 50%, #FECDD3 100%) !important;
+    --header-gradient: linear-gradient(135deg, #DC2626 0%, #EC4899 50%, #F472B6 100%) !important;
+}
+
+/* 배경 그라데이션 - 연한 핑크 */
+body {
+    background: linear-gradient(135deg, #FFF1F2 0%, #FFE4E6 50%, #FECDD3 100%) !important;
+    background-attachment: fixed !important;
+    min-height: 100vh !important;
+}
+
+/* 헤더 그라데이션 - 빨강/핑크 계열 */
+.header {
+    background: linear-gradient(135deg, #DC2626 0%, #EC4899 50%, #F472B6 100%) !important;
+    background-image: linear-gradient(135deg, #DC2626 0%, #EC4899 50%, #F472B6 100%) !important;
+    padding: 20px 15px !important;
+}
+
+/* 헤더 하단 라인 */
+.header::after {
+    content: '' !important;
+    position: absolute !important;
+    bottom: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    height: 3px !important;
+    background: linear-gradient(90deg, #FF69B4, #FF1493, #FF69B4, #FFB6C1, #FF69B4) !important;
+}
+
+/* 로고 스타일 - ZENITH */
+.logo-zenith {
+    background: linear-gradient(45deg, #FF1493, #FF69B4, #FFB6C1) !important;
+    -webkit-background-clip: text !important;
+    -webkit-text-fill-color: transparent !important;
+    background-clip: text !important;
+    text-shadow: none !important;
+    font-family: 'Fredoka', cursive !important;
+    font-weight: 700 !important;
+    transform: rotate(-2deg) !important;
+}
+
+/* 로고 스타일 - English */
+.logo-english {
+    color: #FFF0F5 !important;
+    text-shadow: 2px 2px 0px #DC2626, 3px 3px 8px rgba(0, 0, 0, 0.4) !important;
+    font-family: 'Pacifico', cursive !important;
+    transform: rotate(0deg) !important;
+}
+
+/* 로고 별 */
+.logo-star {
+    color: #FF69B4 !important;
+    text-shadow: 0 0 8px rgba(255, 105, 180, 0.8) !important;
+}
+
+/* 시즌 인디케이터 - 2월 하트 */
+.season-indicator {
+    font-size: 1.8rem !important;
+}
+
+.season-indicator::before {
+    content: "💝" !important;
+}
+
+/* 헤더 장식 요소 - 2월 발렌타인 테마 */
+.header-decoration {
+    opacity: 0.8 !important;
+}
+
+.header-decoration.deco-1::before { 
+    content: "❤️" !important; 
+}
+.header-decoration.deco-2::before { 
+    content: "💕" !important; 
+}
+.header-decoration.deco-3::before { 
+    content: "💖" !important; 
+}
+.header-decoration.deco-4::before { 
+    content: "🌹" !important; 
+}
+.header-decoration.deco-5::before { 
+    content: "💝" !important; 
+}
+
+/* 서브타이틀 */
+.subtitle {
+    background: rgba(0, 0, 0, 0.3) !important;
+    color: rgba(255, 255, 255, 0.95) !important;
+}
+
+/* 컨트롤 영역 */
+.controls {
+    background: #FFF0F5 !important;
+    border-bottom: 2px solid #DC2626 !important;
+}
+
+/* 셀렉트 박스 */
+select {
+    border: 2px solid #DC2626 !important;
+}
+
+select:focus {
+    border-color: #EC4899 !important;
+    box-shadow: 0 0 0 3px rgba(236, 72, 153, 0.1) !important;
+}
+
+.select-wrapper::after {
+    color: #DC2626 !important;
+}
+
+/* 버튼 스타일 */
+.btn-info {
+    background: #F472B6 !important;
+}
+
+.btn-info:hover {
+    background: #EC4899 !important;
+}
+
+.btn-save {
+    background: #10B981 !important;
+}
+
+.btn-save:hover {
+    background: #059669 !important;
+}
+
+.btn-warning {
+    background: #F59E0B !important;
+}
+
+.btn-warning:hover {
+    background: #D97706 !important;
+}
+
+/* 캘린더 영역 */
+.calendar {
+    padding: 15px !important;
+}
+
+/* 월 표시 */
+.month-year-display {
+    color: #DC2626 !important;
+    background: linear-gradient(90deg, transparent, rgba(220, 38, 38, 0.1), transparent) !important;
+}
+
+/* 월 장식 - 2월 테마 */
+.month-decoration {
+    font-size: 1.2rem !important;
+}
+
+.month-decoration::before,
+.month-decoration::after {
+    content: "💐" !important;
+}
+
+/* 요일 헤더 */
+.weekdays {
+    background: #FFE4E6 !important;
+}
+
+.weekday {
+    background: #DC2626 !important;
+    color: white !important;
+}
+
+.weekday:first-child {
+    background: #EF4444 !important;
+}
+
+.weekday:last-child {
+    background: #EC4899 !important;
+}
+
+/* 날짜 칸 */
+.day {
+    background: white !important;
+    border: 1px solid #FFE4E6 !important;
+}
+
+.day:hover {
+    background: #FFF0F5 !important;
+    border-color: #DC2626 !important;
+}
+
+.day.modified {
+    background: #FEF3C7 !important;
+    border-color: #F59E0B !important;
+}
+
+.day.modified:hover {
+    background: #FDE68A !important;
+}
+
+/* 날짜 숫자 */
+.day-number {
+    color: #1F2937 !important;
+}
+
+.day.other-month .day-number {
+    color: #FCA5A5 !important;
+}
+
+/* 이벤트 스타일 */
+.event {
+    background: linear-gradient(90deg, rgba(220, 38, 38, 0.1), rgba(236, 72, 153, 0.1)) !important;
+    border-left: 2px solid #DC2626 !important;
+}
+
+.event:hover {
+    background: linear-gradient(90deg, rgba(220, 38, 38, 0.2), rgba(236, 72, 153, 0.2)) !important;
+}
+
+.event.modified {
+    background: linear-gradient(90deg, rgba(245, 158, 11, 0.2), rgba(251, 191, 36, 0.2)) !important;
+    border-left-color: #F59E0B !important;
+}
+
+/* 추가/삭제 버튼 */
+.add-event-btn {
+    background: #10B981 !important;
+}
+
+.clear-day-btn {
+    background: #EF4444 !important;
+}
+
+/* 푸터 */
+.footer {
+    background: linear-gradient(90deg, #FFF0F5, #FFE4E6, #FFF0F5) !important;
+    color: #DC2626 !important;
+    border-top: 2px solid #DC2626 !important;
+}
+
+/* 모달 */
+.modal-content {
+    background: white !important;
+}
+
+.modal h3 {
+    color: #DC2626 !important;
+}
+
+.btn-primary {
+    background: #DC2626 !important;
+}
+
+.btn-primary:hover {
+    background: #EC4899 !important;
+}
+
+/* 저장 상태 메시지 */
+.save-status.saved {
+    color: #10B981 !important;
+}
+
+.save-status.syncing {
+    color: #F59E0B !important;
+}
+
+.save-status.error {
+    color: #EF4444 !important;
+}
+
+.save-status.modified {
+    color: #F59E0B !important;
+}

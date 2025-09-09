@@ -1,0 +1,53 @@
+/* July Theme - Hot Summer & Vacation (Print Static) */
+:root {
+    --primary: #FB923C;
+    --secondary: #FBBF24;
+    --accent: #EF4444;
+    --bg-gradient: linear-gradient(135deg, #FEF3C7 0%, #FED7AA 50%, #FECACA 100%);
+    --header-gradient: linear-gradient(135deg, #FB923C 0%, #FBBF24 50%, #EF4444 100%);
+}
+
+.logo-zenith {
+    background: linear-gradient(45deg, #FB923C, #FBBF24, #EF4444);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-shadow: none;
+    font-family: 'Fredoka', cursive;
+    font-weight: 700;
+    transform: rotate(-2deg);
+}
+
+.logo-english {
+    color: #FEF3C7;
+    text-shadow: 2px 2px 0px #FB923C, 3px 3px 8px rgba(0, 0, 0, 0.4);
+    font-family: 'Pacifico', cursive;
+    transform: rotate(-1.5deg);
+}
+
+.logo-english::before {
+    content: "Bright ";
+    font-size: 0.8rem;
+    color: #FBBF24;
+}
+
+.logo-english::after {
+    content: " Future";
+    font-size: 0.8rem;
+    color: #FBBF24;
+}
+
+.season-indicator::before {
+    content: "July 2025";
+    font-size: 0.8rem;
+    color: white;
+    background: rgba(0, 0, 0, 0.3);
+    padding: 4px 8px;
+    border-radius: 10px;
+}
+
+.header-decoration.deco-1::before { content: "☀️"; }
+.header-decoration.deco-2::before { content: "📚"; }
+.header-decoration.deco-3::before { content: "✏️"; }
+.header-decoration.deco-4::before { content: "📖"; }
+.header-decoration.deco-5::before { content: "🌞"; }

@@ -1,0 +1,53 @@
+/* June Theme - Summer Start & Ocean (Print Static) */
+:root {
+    --primary: #0EA5E9;
+    --secondary: #38BDF8;
+    --accent: #FDE047;
+    --bg-gradient: linear-gradient(135deg, #E0F2FE 0%, #BAE6FD 50%, #FEF9C3 100%);
+    --header-gradient: linear-gradient(135deg, #0EA5E9 0%, #38BDF8 50%, #FDE047 100%);
+}
+
+.logo-zenith {
+    background: linear-gradient(45deg, #0EA5E9, #38BDF8, #FDE047);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-shadow: none;
+    font-family: 'Fredoka', cursive;
+    font-weight: 700;
+    transform: rotate(-2deg);
+}
+
+.logo-english {
+    color: #E0F2FE;
+    text-shadow: 2px 2px 0px #0EA5E9, 3px 3px 8px rgba(0, 0, 0, 0.4);
+    font-family: 'Pacifico', cursive;
+    transform: rotate(0.5deg);
+}
+
+.logo-english::before {
+    content: "Summer ";
+    font-size: 0.8rem;
+    color: #0EA5E9;
+}
+
+.logo-english::after {
+    content: " Learning";
+    font-size: 0.8rem;
+    color: #0EA5E9;
+}
+
+.season-indicator::before {
+    content: "June 2025";
+    font-size: 0.8rem;
+    color: white;
+    background: rgba(0, 0, 0, 0.3);
+    padding: 4px 8px;
+    border-radius: 10px;
+}
+
+.header-decoration.deco-1::before { content: "☀️"; }
+.header-decoration.deco-2::before { content: "📚"; }
+.header-decoration.deco-3::before { content: "✏️"; }
+.header-decoration.deco-4::before { content: "📖"; }
+.header-decoration.deco-5::before { content: "🌊"; }

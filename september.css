@@ -1,0 +1,53 @@
+/* September Theme - Back to School & Autumn (Print Static) */
+:root {
+    --primary: #DC2626;
+    --secondary: #F97316;
+    --accent: #FBBF24;
+    --bg-gradient: linear-gradient(135deg, #FEF2F2 0%, #FED7AA 50%, #FEF3C7 100%);
+    --header-gradient: linear-gradient(135deg, #DC2626 0%, #F97316 50%, #FBBF24 100%);
+}
+
+.logo-zenith {
+    background: linear-gradient(45deg, #DC2626, #F97316, #FBBF24);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-shadow: none;
+    font-family: 'Fredoka', cursive;
+    font-weight: 700;
+    transform: rotate(-2deg);
+}
+
+.logo-english {
+    color: #FEF2F2;
+    text-shadow: 2px 2px 0px #DC2626, 3px 3px 8px rgba(0, 0, 0, 0.4);
+    font-family: 'Pacifico', cursive;
+    transform: rotate(-0.5deg);
+}
+
+.logo-english::before {
+    content: "Study ";
+    font-size: 0.8rem;
+    color: #F97316;
+}
+
+.logo-english::after {
+    content: " Success";
+    font-size: 0.8rem;
+    color: #F97316;
+}
+
+.season-indicator::before {
+    content: "September 2025";
+    font-size: 0.8rem;
+    color: white;
+    background: rgba(0, 0, 0, 0.3);
+    padding: 4px 8px;
+    border-radius: 10px;
+}
+
+.header-decoration.deco-1::before { content: "📖"; }
+.header-decoration.deco-2::before { content: "🍁"; }
+.header-decoration.deco-3::before { content: "✏️"; }
+.header-decoration.deco-4::before { content: "📚"; }
+.header-decoration.deco-5::before { content: "🎒"; }

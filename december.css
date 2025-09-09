@@ -1,0 +1,53 @@
+/* December Theme - Christmas & Winter Wonder (Print Static) */
+:root {
+    --primary: #DC2626;
+    --secondary: #10B981;
+    --accent: #FFD700;
+    --bg-gradient: linear-gradient(135deg, #FEF2F2 0%, #ECFDF5 50%, #FFFBEB 100%);
+    --header-gradient: linear-gradient(135deg, #DC2626 0%, #10B981 50%, #FFD700 100%);
+}
+
+.logo-zenith {
+    background: linear-gradient(45deg, #DC2626, #10B981, #FFD700);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-shadow: none;
+    font-family: 'Fredoka', cursive;
+    font-weight: 700;
+    transform: rotate(-2deg);
+}
+
+.logo-english {
+    color: #FEF2F2;
+    text-shadow: 2px 2px 0px #DC2626, 3px 3px 8px rgba(0, 0, 0, 0.4);
+    font-family: 'Pacifico', cursive;
+    transform: rotate(-1deg);
+}
+
+.logo-english::before {
+    content: "Joyful ";
+    font-size: 0.8rem;
+    color: #10B981;
+}
+
+.logo-english::after {
+    content: " Learning";
+    font-size: 0.8rem;
+    color: #10B981;
+}
+
+.season-indicator::before {
+    content: "December 2025";
+    font-size: 0.8rem;
+    color: white;
+    background: rgba(0, 0, 0, 0.3);
+    padding: 4px 8px;
+    border-radius: 10px;
+}
+
+.header-decoration.deco-1::before { content: "⭐"; }
+.header-decoration.deco-2::before { content: "📚"; }
+.header-decoration.deco-3::before { content: "✏️"; }
+.header-decoration.deco-4::before { content: "❄️"; }
+.header-decoration.deco-5::before { content: "📖"; }"; }

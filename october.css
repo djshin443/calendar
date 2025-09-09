@@ -1,0 +1,455 @@
+/* October Theme - Halloween Spooky Edition (Fixed) */
+
+/* CSS 변수 재정의 - 할로윈 색상 */
+:root {
+    --primary: #7C2D12 !important;
+    --secondary: #EA580C !important;
+    --accent: #FB923C !important;
+    --success: #DC2626 !important;
+    --danger: #991B1B !important;
+    --warning: #FCD34D !important;
+    --dark: #18181B !important;
+    --light: #FEF3C7 !important;
+    --bg-gradient: linear-gradient(135deg, #18181B 0%, #451A03 50%, #92400E 100%) !important;
+    --header-gradient: linear-gradient(135deg, #000000 0%, #7C2D12 30%, #EA580C 60%, #FB923C 100%) !important;
+}
+
+/* 배경 그라데이션 - 어둡고 으스스한 할로윈 밤 */
+body {
+    background: linear-gradient(135deg, #18181B 0%, #451A03 50%, #92400E 100%) !important;
+    background-attachment: fixed !important;
+    min-height: 100vh !important;
+}
+
+/* 헤더 그라데이션 - 검정에서 주황으로 */
+.header {
+    background: linear-gradient(135deg, #000000 0%, #7C2D12 30%, #EA580C 60%, #FB923C 100%) !important;
+    background-image: linear-gradient(135deg, #000000 0%, #7C2D12 30%, #EA580C 60%, #FB923C 100%) !important;
+    padding: 20px 15px !important;
+    box-shadow: inset 0 0 50px rgba(0, 0, 0, 0.5) !important;
+    overflow: visible !important;  /* 추가 */
+}
+
+/* 헤더 하단 라인 - 할로윈 그라데이션 */
+.header::after {
+    content: '' !important;
+    position: absolute !important;
+    bottom: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    height: 4px !important;
+    background: linear-gradient(90deg, #000000, #EA580C, #FB923C, #EA580C, #000000) !important;
+}
+
+/* 로고 스타일 - ZENITH 할로윈 버전 (회전 제거) */
+.logo-zenith {
+    background: linear-gradient(45deg, #FB923C, #EA580C, #DC2626, #991B1B) !important;
+    -webkit-background-clip: text !important;
+    -webkit-text-fill-color: transparent !important;
+    background-clip: text !important;
+    text-shadow: none !important;
+    filter: drop-shadow(3px 3px 0px #000000) drop-shadow(0 0 15px rgba(234, 88, 12, 0.8)) !important;
+    font-family: 'Creepster', 'Fredoka', cursive !important;
+    font-weight: 700 !important;
+    /* transform: rotate(-3deg) 제거 */
+    font-size: 2.6rem !important;
+    display: inline-block !important;  /* 추가 */
+}
+
+/* 로고 스타일 - English 할로윈 버전 (회전 제거) */
+.logo-english {
+    color: #FED7AA !important;
+    text-shadow: 2px 2px 0px #EA580C, 3px 3px 0px #000000, 4px 4px 10px rgba(220, 38, 38, 0.8) !important;
+    font-family: 'Nosifer', 'Pacifico', cursive !important;
+    /* transform: rotate(2deg) 제거 */
+    font-size: 1.7rem !important;
+    display: inline-block !important;  /* 추가 */
+}
+
+/* 로고 별 - 할로윈 호박색 */
+.logo-star {
+    color: #FB923C !important;
+    text-shadow: 0 0 12px rgba(251, 146, 60, 0.9) !important;
+    font-size: 1.6rem !important;
+}
+
+/* 시즌 인디케이터 - 완전 숨김 */
+.season-indicator {
+    display: none !important;
+}
+
+/* 헤더 장식 요소 - 할로윈 테마 (크기 조정) */
+.header-decoration {
+    opacity: 0.9 !important;
+    font-size: 1.1rem !important;  /* 크기 축소 */
+}
+
+.header-decoration.deco-1::before { 
+    content: "👻" !important; 
+}
+.header-decoration.deco-2::before { 
+    content: "🕷️" !important; 
+}
+.header-decoration.deco-3::before { 
+    content: "🦇" !important; 
+}
+.header-decoration.deco-4::before { 
+    content: "🕸️" !important; 
+}
+.header-decoration.deco-5::before { 
+    content: "💀" !important; 
+}
+
+/* 서브타이틀 - 할로윈 스타일 */
+.subtitle {
+    background: linear-gradient(90deg, rgba(0,0,0,0.8), rgba(124,45,18,0.8), rgba(0,0,0,0.8)) !important;
+    color: #FB923C !important;
+    border: 1px solid #EA580C !important;
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.5), 0 0 15px rgba(234, 88, 12, 0.4) !important;
+    font-weight: 600 !important;
+    letter-spacing: 1.5px !important;
+}
+
+/* 컨트롤 영역 */
+.controls {
+    background: linear-gradient(90deg, #1F0A00, #451A03, #1F0A00) !important;
+    border-bottom: 3px solid #EA580C !important;
+}
+
+/* 셀렉트 박스 - 할로윈 스타일 */
+select {
+    border: 2px solid #EA580C !important;
+    background: #2D1810 !important;
+    color: #FED7AA !important;
+}
+
+select:focus {
+    border-color: #FB923C !important;
+    box-shadow: 0 0 0 3px rgba(234, 88, 12, 0.3) !important;
+}
+
+.select-wrapper::after {
+    color: #FB923C !important;
+}
+
+/* 버튼 스타일 - 할로윈 버전 */
+.btn-info {
+    background: linear-gradient(135deg, #EA580C, #FB923C) !important;
+    border: 1px solid #7C2D12 !important;
+}
+
+.btn-info:hover {
+    background: linear-gradient(135deg, #DC2626, #EA580C) !important;
+    box-shadow: 0 0 10px rgba(234, 88, 12, 0.5) !important;
+}
+
+.btn-save {
+    background: linear-gradient(135deg, #7C2D12, #EA580C) !important;
+    color: #FED7AA !important;
+}
+
+.btn-save:hover {
+    background: linear-gradient(135deg, #581C0C, #DC2626) !important;
+    box-shadow: 0 0 10px rgba(220, 38, 38, 0.5) !important;
+}
+
+.btn-warning {
+    background: linear-gradient(135deg, #FB923C, #FED7AA) !important;
+    color: #7C2D12 !important;
+}
+
+.btn-warning:hover {
+    background: linear-gradient(135deg, #EA580C, #FB923C) !important;
+    color: white !important;
+}
+
+/* 캘린더 영역 */
+.calendar {
+    padding: 15px !important;
+    background: rgba(254, 243, 199, 0.05) !important;
+    border-radius: 8px !important;
+}
+
+/* 월 표시 */
+.month-year-display {
+    color: #EA580C !important;
+    background: linear-gradient(90deg, transparent, rgba(234, 88, 12, 0.2), transparent) !important;
+    font-weight: 800 !important;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5) !important;
+}
+
+/* 월 장식 - 할로윈 호박 */
+.month-decoration {
+    font-size: 1.3rem !important;
+}
+
+.month-decoration::before,
+.month-decoration::after {
+    content: "🎃" !important;
+}
+
+/* 요일 헤더 */
+.weekdays {
+    background: #18181B !important;
+    padding: 2px !important;
+    border-radius: 8px !important;
+}
+
+.weekday {
+    background: linear-gradient(135deg, #7C2D12, #EA580C) !important;
+    color: #FED7AA !important;
+    font-weight: 700 !important;
+    text-transform: uppercase !important;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8) !important;
+}
+
+.weekday:first-child {
+    background: linear-gradient(135deg, #DC2626, #991B1B) !important;
+}
+
+.weekday:last-child {
+    background: linear-gradient(135deg, #EA580C, #FB923C) !important;
+}
+
+/* 날짜 칸 - 할로윈 스타일 */
+.day {
+    background: #FEF3C7 !important;
+    border: 1px solid #D97706 !important;
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1) !important;
+}
+
+.day:hover {
+    background: linear-gradient(135deg, #FED7AA 0%, #FDBA74 100%) !important;
+    border-color: #EA580C !important;
+    box-shadow: 0 4px 8px rgba(234, 88, 12, 0.3) !important;
+    transform: translateY(-2px) !important;
+}
+
+.day.modified {
+    background: #FDBA74 !important;
+    border-color: #DC2626 !important;
+    box-shadow: 0 0 8px rgba(220, 38, 38, 0.3) !important;
+}
+
+.day.modified:hover {
+    background: #FB923C !important;
+}
+
+/* 날짜 숫자 */
+.day-number {
+    color: #7C2D12 !important;
+    font-weight: 700 !important;
+}
+
+.day.other-month .day-number {
+    color: #D97706 !important;
+    opacity: 0.5 !important;
+}
+
+/* 이벤트 스타일 - 할로윈 버전 */
+.event {
+    background: linear-gradient(90deg, rgba(234, 88, 12, 0.2), rgba(251, 146, 60, 0.2)) !important;
+    border-left: 3px solid #EA580C !important;
+    color: #451A03 !important;
+    font-weight: 500 !important;
+}
+
+.event:hover {
+    background: linear-gradient(90deg, rgba(234, 88, 12, 0.35), rgba(251, 146, 60, 0.35)) !important;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2) !important;
+}
+
+.event.modified {
+    background: linear-gradient(90deg, rgba(220, 38, 38, 0.3), rgba(239, 68, 68, 0.3)) !important;
+    border-left-color: #DC2626 !important;
+}
+
+/* 추가/삭제 버튼 */
+.add-event-btn {
+    background: #EA580C !important;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3) !important;
+}
+
+.add-event-btn:hover {
+    background: #DC2626 !important;
+}
+
+.clear-day-btn {
+    background: #991B1B !important;
+}
+
+.clear-day-btn:hover {
+    background: #7F1D1D !important;
+}
+
+/* 푸터 - 할로윈 스타일 (이모지 제거) */
+.footer {
+    background: linear-gradient(90deg, #18181B, #7C2D12, #18181B) !important;
+    color: #FB923C !important;
+    border-top: 4px solid #EA580C !important;
+    font-weight: 700 !important;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.8) !important;
+}
+
+/* 푸터 이모지 제거 
+.footer::before {
+    content: "🎃 " !important;
+}
+
+.footer::after {
+    content: " 🎃" !important;
+}
+*/
+
+/* 모달 - 할로윈 스타일 */
+.modal-content {
+    background: linear-gradient(135deg, #FEF3C7, #FED7AA) !important;
+    border: 3px solid #EA580C !important;
+    box-shadow: 0 20px 40px rgba(124, 45, 18, 0.5) !important;
+}
+
+.modal h3 {
+    color: #7C2D12 !important;
+    font-weight: 800 !important;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2) !important;
+}
+
+.modal input {
+    border: 2px solid #EA580C !important;
+    background: #FFFBF0 !important;
+}
+
+.modal input:focus {
+    border-color: #7C2D12 !important;
+    box-shadow: 0 0 0 3px rgba(234, 88, 12, 0.2) !important;
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, #7C2D12, #EA580C) !important;
+}
+
+.btn-primary:hover {
+    background: linear-gradient(135deg, #581C0C, #DC2626) !important;
+}
+
+/* 저장 상태 메시지 */
+.save-status.saved {
+    color: #7C2D12 !important;
+    font-weight: 600 !important;
+}
+
+.save-status.syncing {
+    color: #FB923C !important;
+}
+
+.save-status.error {
+    color: #DC2626 !important;
+}
+
+.save-status.modified {
+    color: #EA580C !important;
+    font-weight: 700 !important;
+}
+
+/* 연결 상태 */
+.connection-status {
+    background: rgba(124, 45, 18, 0.5) !important;
+    border: 1px solid #EA580C !important;
+}
+
+/* 오늘 날짜 특별 표시 */
+.day.today {
+    position: relative !important;
+    background: linear-gradient(135deg, #FEF3C7, #FED7AA) !important;
+    border: 2px solid #EA580C !important;
+}
+
+.day.today::after {
+    content: "🎃" !important;
+    position: absolute !important;
+    top: 2px !important;
+    right: 2px !important;
+    font-size: 0.7rem !important;
+    opacity: 0.5 !important;
+}
+
+/* 프린트 및 JPG 변환용 스타일 */
+@media print {
+    /* 전체 레이아웃 고정 */
+    body {
+        margin: 0 !important;
+        padding: 0 !important;
+        width: 100% !important;
+        height: 100% !important;
+        overflow: hidden !important;
+    }
+    
+    /* 헤더 고정 */
+    .header {
+        background: linear-gradient(135deg, #000000 0%, #7C2D12 30%, #EA580C 60%, #FB923C 100%) !important;
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+        position: relative !important;
+        overflow: visible !important;
+        page-break-inside: avoid !important;
+    }
+    
+    /* 로고 회전 제거 */
+    .logo-zenith,
+    .logo-english {
+        transform: none !important;
+        display: inline-block !important;
+    }
+    
+    /* 불필요한 요소 숨김 */
+    .connection-status {
+        display: none !important;
+    }
+    
+    .season-indicator {
+        display: none !important;
+    }
+    
+    /* 푸터 이모지 제거 */
+    .footer::before,
+    .footer::after {
+        content: none !important;
+    }
+    
+    /* 텍스트 그림자 단순화 */
+    .logo-zenith {
+        filter: none !important;
+        text-shadow: 2px 2px 0px #7C2D12 !important;
+    }
+    
+    .logo-english {
+        text-shadow: 2px 2px 0px #7C2D12 !important;
+    }
+    
+    /* 요일 배경색 */
+    .weekday {
+        background: #EA580C !important;
+        color: white !important;
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+    }
+    
+    /* 날짜 칸 배경색 */
+    .day {
+        background: #FEF3C7 !important;
+        border: 1px solid #EA580C !important;
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+    }
+    
+    /* 캘린더 영역 고정 */
+    .calendar {
+        page-break-inside: avoid !important;
+    }
+    
+    /* 모든 변환 효과 제거 */
+    * {
+        transform: none !important;
+        animation: none !important;
+    }
+}

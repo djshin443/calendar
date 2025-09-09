@@ -1,0 +1,53 @@
+/* March Theme - Spring Awakening (Print Static) */
+:root {
+    --primary: #10B981;
+    --secondary: #34D399;
+    --accent: #F59E0B;
+    --bg-gradient: linear-gradient(135deg, #F0FDF4 0%, #DCFCE7 50%, #FEF3C7 100%);
+    --header-gradient: linear-gradient(135deg, #10B981 0%, #34D399 50%, #F59E0B 100%);
+}
+
+.logo-zenith {
+    background: linear-gradient(45deg, #22C55E, #84CC16, #EAB308);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-shadow: none;
+    font-family: 'Fredoka', cursive;
+    font-weight: 700;
+    transform: rotate(-2deg);
+}
+
+.logo-english {
+    color: #F0FDF4;
+    text-shadow: 2px 2px 0px #10B981, 3px 3px 8px rgba(0, 0, 0, 0.4);
+    font-family: 'Pacifico', cursive;
+    transform: rotate(-1deg);
+}
+
+.logo-english::before {
+    content: "Spring ";
+    font-size: 0.8rem;
+    color: #22C55E;
+}
+
+.logo-english::after {
+    content: " Growth";
+    font-size: 0.8rem;
+    color: #22C55E;
+}
+
+.season-indicator::before {
+    content: "March 2025";
+    font-size: 0.8rem;
+    color: white;
+    background: rgba(0, 0, 0, 0.3);
+    padding: 4px 8px;
+    border-radius: 10px;
+}
+
+.header-decoration.deco-1::before { content: "🌺"; }
+.header-decoration.deco-2::before { content: "📖"; }
+.header-decoration.deco-3::before { content: "✏️"; }
+.header-decoration.deco-4::before { content: "🌼"; }
+.header-decoration.deco-5::before { content: "📚"; }

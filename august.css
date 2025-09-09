@@ -1,0 +1,53 @@
+/* August Theme - Late Summer & Festival (Print Static) */
+:root {
+    --primary: #8B5CF6;
+    --secondary: #A78BFA;
+    --accent: #F59E0B;
+    --bg-gradient: linear-gradient(135deg, #F3E8FF 0%, #E9D5FF 50%, #FEF3C7 100%);
+    --header-gradient: linear-gradient(135deg, #8B5CF6 0%, #A78BFA 50%, #F59E0B 100%);
+}
+
+.logo-zenith {
+    background: linear-gradient(45deg, #8B5CF6, #A78BFA, #F59E0B);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-shadow: none;
+    font-family: 'Fredoka', cursive;
+    font-weight: 700;
+    transform: rotate(-2deg);
+}
+
+.logo-english {
+    color: #F3E8FF;
+    text-shadow: 2px 2px 0px #8B5CF6, 3px 3px 8px rgba(0, 0, 0, 0.4);
+    font-family: 'Pacifico', cursive;
+    transform: rotate(1deg);
+}
+
+.logo-english::before {
+    content: "Creative ";
+    font-size: 0.8rem;
+    color: #A78BFA;
+}
+
+.logo-english::after {
+    content: " Minds";
+    font-size: 0.8rem;
+    color: #A78BFA;
+}
+
+.season-indicator::before {
+    content: "August 2025";
+    font-size: 0.8rem;
+    color: white;
+    background: rgba(0, 0, 0, 0.3);
+    padding: 4px 8px;
+    border-radius: 10px;
+}
+
+.header-decoration.deco-1::before { content: "📚"; }
+.header-decoration.deco-2::before { content: "✨"; }
+.header-decoration.deco-3::before { content: "✏️"; }
+.header-decoration.deco-4::before { content: "📖"; }
+.header-decoration.deco-5::before { content: "🎨"; }
