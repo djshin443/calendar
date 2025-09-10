@@ -1,36 +1,36 @@
-/* October Theme - Korean Chuseok (한가위) Harvest Festival Edition 2025 */
+/* October Theme - Korean Chuseok (Harvest Moon Festival) Edition */
 
-/* CSS 변수 재정의 - 추석 색상 팔레트 */
+/* CSS 변수 재정의 - 추석 전통 색상 */
 :root {
-    --primary: #8B4513 !important;     /* 갈색 - 가을 나무 */
-    --secondary: #FFD700 !important;   /* 금색 - 보름달 */
-    --accent: #CD853F !important;      /* 밀색 - 수확 */
-    --success: #228B22 !important;     /* 녹색 - 송편 솔잎 */
-    --danger: #B22222 !important;      /* 붉은색 - 단풍 */
-    --warning: #FFA500 !important;     /* 주황 - 감 */
-    --dark: #2F4F4F !important;        /* 짙은 청록 - 한옥 기와 */
-    --light: #FFFACD !important;       /* 연한 노랑 - 달빛 */
-    --bg-gradient: linear-gradient(135deg, #1a1a2e 0%, #16213e 30%, #0f3460 60%, #533483 100%) !important;
-    --header-gradient: linear-gradient(135deg, #2F4F4F 0%, #8B4513 30%, #CD853F 60%, #FFD700 100%) !important;
+    --primary: #8B4513 !important;        /* 고동색 (전통 한복색) */
+    --secondary: #DAA520 !important;      /* 황금색 (보름달) */
+    --accent: #CD853F !important;         /* 황토색 */
+    --success: #228B22 !important;        /* 청록색 (송편 솔잎) */
+    --danger: #DC143C !important;         /* 진홍색 (전통 홍색) */
+    --warning: #FFD700 !important;        /* 금색 (수확의 풍요) */
+    --dark: #2F4F4F !important;           /* 먹색 */
+    --light: #FFF8DC !important;          /* 한지색 */
+    --bg-gradient: linear-gradient(135deg, #1C3A52 0%, #2F4F4F 30%, #4A6741 60%, #8B7355 100%) !important;
+    --header-gradient: linear-gradient(135deg, #2F4F4F 0%, #8B4513 30%, #DAA520 60%, #FFD700 100%) !important;
 }
 
-/* 배경 그라데이션 - 추석 밤하늘 */
+/* 배경 그라데이션 - 가을 밤하늘과 들판 */
 body {
-    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 30%, #0f3460 60%, #533483 100%) !important;
+    background: linear-gradient(135deg, #1C3A52 0%, #2F4F4F 30%, #4A6741 60%, #8B7355 100%) !important;
     background-attachment: fixed !important;
     min-height: 100vh !important;
 }
 
-/* 헤더 그라데이션 - 한옥 기와에서 보름달로 */
+/* 헤더 그라데이션 - 추석 보름달의 황금빛 */
 .header {
-    background: linear-gradient(135deg, #2F4F4F 0%, #8B4513 30%, #CD853F 60%, #FFD700 100%) !important;
-    background-image: linear-gradient(135deg, #2F4F4F 0%, #8B4513 30%, #CD853F 60%, #FFD700 100%) !important;
+    background: linear-gradient(135deg, #2F4F4F 0%, #8B4513 30%, #DAA520 60%, #FFD700 100%) !important;
+    background-image: linear-gradient(135deg, #2F4F4F 0%, #8B4513 30%, #DAA520 60%, #FFD700 100%) !important;
     padding: 20px 15px !important;
-    box-shadow: inset 0 0 50px rgba(255, 215, 0, 0.2) !important;
+    box-shadow: inset 0 0 30px rgba(218, 165, 32, 0.3) !important;
     overflow: visible !important;
 }
 
-/* 헤더 하단 라인 - 추석 그라데이션 */
+/* 헤더 하단 라인 - 오방색 그라데이션 */
 .header::after {
     content: '' !important;
     position: absolute !important;
@@ -38,191 +38,151 @@ body {
     left: 0 !important;
     right: 0 !important;
     height: 4px !important;
-    background: linear-gradient(90deg, #8B4513, #CD853F, #FFD700, #CD853F, #8B4513) !important;
+    background: linear-gradient(90deg, #FF0000, #FFD700, #228B22, #0000FF, #8B4513) !important;
 }
 
-/* 로고 스타일 - ZENITH 추석 버전 (선택 방지) */
+/* 로고 스타일 - ZENITH 추석 버전 */
 .logo-zenith {
-    color: #FFD700 !important;
-    text-shadow: 
-        3px 3px 0px #8B4513,
-        2px 2px 0px #CD853F,
-        4px 4px 8px rgba(139, 69, 19, 0.4) !important;
+    background: linear-gradient(45deg, #FFD700, #DAA520, #B8860B, #8B4513) !important;
+    -webkit-background-clip: text !important;
+    -webkit-text-fill-color: transparent !important;
+    background-clip: text !important;
+    text-shadow: none !important;
+    filter: drop-shadow(3px 3px 0px #2F4F4F) drop-shadow(0 0 12px rgba(255, 215, 0, 0.6)) !important;
     font-family: 'Fredoka', cursive !important;
     font-weight: 700 !important;
     font-size: 2.6rem !important;
     display: inline-block !important;
-    letter-spacing: 2px !important;
-    -webkit-user-select: none !important;
-    -moz-user-select: none !important;
-    -ms-user-select: none !important;
-    user-select: none !important;
-    cursor: default !important;
 }
 
-/* 로고 스타일 - English 추석 버전 (선택 방지) */
+/* 로고 스타일 - English 추석 버전 */
 .logo-english {
-    color: #FFFACD !important;
-    text-shadow: 2px 2px 0px #CD853F, 3px 3px 0px #8B4513, 4px 4px 10px rgba(255, 215, 0, 0.5) !important;
+    color: #FFF8DC !important;
+    text-shadow: 2px 2px 0px #8B4513, 3px 3px 0px #2F4F4F, 0 0 15px rgba(218, 165, 32, 0.5) !important;
     font-family: 'Pacifico', cursive !important;
     font-size: 1.7rem !important;
     display: inline-block !important;
-    -webkit-user-select: none !important;
-    -moz-user-select: none !important;
-    -ms-user-select: none !important;
-    user-select: none !important;
-    cursor: default !important;
 }
 
-/* 로고 컨테이너 - 선택 방지 */
-.logo-container {
-    display: flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-    gap: 10px !important;
-    margin-bottom: 10px !important;
-    -webkit-user-select: none !important;
-    -moz-user-select: none !important;
-    -ms-user-select: none !important;
-    user-select: none !important;
-}
-
-.logo-main {
-    display: flex !important;
-    flex-direction: column !important;
-    align-items: center !important;
-    gap: 2px !important;
-    -webkit-user-select: none !important;
-    -moz-user-select: none !important;
-    -ms-user-select: none !important;
-    user-select: none !important;
-}
-
-/* 로고 별 - 보름달 색상 (선택 방지) */
+/* 로고 별 - 보름달 색상 */
 .logo-star {
     color: #FFD700 !important;
-    text-shadow: 0 0 12px rgba(255, 215, 0, 0.9) !important;
+    text-shadow: 0 0 15px rgba(255, 215, 0, 0.8) !important;
     font-size: 1.6rem !important;
-    -webkit-user-select: none !important;
-    -moz-user-select: none !important;
-    -ms-user-select: none !important;
-    user-select: none !important;
-    cursor: default !important;
 }
 
-/* 시즌 인디케이터 - 완전 숨김 */
+/* 시즌 인디케이터 - 숨김 */
 .season-indicator {
     display: none !important;
 }
 
 /* 헤더 장식 요소 - 추석 테마 */
 .header-decoration {
-    opacity: 0.9 !important;
+    opacity: 0.85 !important;
     font-size: 1.1rem !important;
 }
 
 .header-decoration.deco-1::before { 
-    content: "🌕" !important;  /* 보름달 */
+    content: "🌾" !important;  /* 벼 이삭 */
 }
 .header-decoration.deco-2::before { 
-    content: "🌾" !important;  /* 벼 */
+    content: "🌕" !important;  /* 보름달 */
 }
 .header-decoration.deco-3::before { 
-    content: "🍂" !important;  /* 낙엽 */
+    content: "🍂" !important;  /* 단풍잎 */
 }
 .header-decoration.deco-4::before { 
-    content: "🍃" !important;  /* 나뭇잎 */
+    content: "🌰" !important;  /* 밤 */
 }
 .header-decoration.deco-5::before { 
-    content: "🌙" !important;  /* 초승달 */
+    content: "🍁" !important;  /* 단풍 */
 }
 
-/* 서브타이틀 - 추석 스타일 */
+/* 서브타이틀 - 추석 전통 스타일 */
 .subtitle {
-    background: linear-gradient(90deg, rgba(47,79,79,0.8), rgba(139,69,19,0.8), rgba(47,79,79,0.8)) !important;
+    background: linear-gradient(90deg, rgba(47,79,79,0.7), rgba(139,69,19,0.7), rgba(47,79,79,0.7)) !important;
     color: #FFD700 !important;
-    border: 1px solid #CD853F !important;
-    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.3), 0 0 15px rgba(255, 215, 0, 0.3) !important;
+    border: 1px solid #DAA520 !important;
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.3), 0 0 12px rgba(218, 165, 32, 0.3) !important;
     font-weight: 600 !important;
     letter-spacing: 1.5px !important;
 }
 
 /* 컨트롤 영역 */
 .controls {
-    background: linear-gradient(90deg, #2F4F4F, #8B4513, #2F4F4F) !important;
-    border-bottom: 3px solid #CD853F !important;
+    background: linear-gradient(90deg, #3D3D3D, #4A4A4A, #3D3D3D) !important;
+    border-bottom: 3px solid #DAA520 !important;
 }
 
-/* 셀렉트 박스 - 추석 스타일 */
+/* 셀렉트 박스 - 전통 스타일 */
 select {
-    border: 2px solid #CD853F !important;
-    background: #FFFAF0 !important;
-    color: #8B4513 !important;
+    border: 2px solid #DAA520 !important;
+    background: #FFF8DC !important;
+    color: #2F4F4F !important;
 }
 
 select:focus {
     border-color: #FFD700 !important;
-    box-shadow: 0 0 0 3px rgba(255, 215, 0, 0.3) !important;
+    box-shadow: 0 0 0 3px rgba(218, 165, 32, 0.2) !important;
 }
 
 .select-wrapper::after {
-    color: #CD853F !important;
+    color: #8B4513 !important;
 }
 
 /* 버튼 스타일 - 추석 버전 */
 .btn-info {
-    background: linear-gradient(135deg, #8B4513, #CD853F) !important;
-    border: 1px solid #8B4513 !important;
-    color: white !important;
+    background: linear-gradient(135deg, #228B22, #4A6741) !important;
+    border: 1px solid #2F4F4F !important;
 }
 
 .btn-info:hover {
-    background: linear-gradient(135deg, #A0522D, #DEB887) !important;
-    box-shadow: 0 0 10px rgba(205, 133, 63, 0.5) !important;
+    background: linear-gradient(135deg, #1F5F1F, #228B22) !important;
+    box-shadow: 0 0 8px rgba(34, 139, 34, 0.4) !important;
 }
 
 .btn-save {
-    background: linear-gradient(135deg, #228B22, #32CD32) !important;
-    color: white !important;
+    background: linear-gradient(135deg, #8B4513, #DAA520) !important;
+    color: #FFF8DC !important;
 }
 
 .btn-save:hover {
-    background: linear-gradient(135deg, #006400, #228B22) !important;
-    box-shadow: 0 0 10px rgba(34, 139, 34, 0.5) !important;
+    background: linear-gradient(135deg, #6B3410, #B8860B) !important;
+    box-shadow: 0 0 8px rgba(218, 165, 32, 0.4) !important;
 }
 
 .btn-warning {
     background: linear-gradient(135deg, #FFD700, #FFA500) !important;
-    color: #8B4513 !important;
+    color: #2F4F4F !important;
 }
 
 .btn-warning:hover {
-    background: linear-gradient(135deg, #FFA500, #FF8C00) !important;
-    color: white !important;
+    background: linear-gradient(135deg, #DAA520, #FFD700) !important;
+    color: #1C1C1C !important;
 }
 
 /* 캘린더 영역 */
 .calendar {
     padding: 15px !important;
-    background: rgba(255, 250, 205, 0.05) !important;
+    background: rgba(255, 248, 220, 0.03) !important;
     border-radius: 8px !important;
 }
 
 /* 월 표시 */
 .month-year-display {
-    color: #FFD700 !important;
-    background: linear-gradient(90deg, transparent, rgba(255, 215, 0, 0.2), transparent) !important;
+    color: #DAA520 !important;
+    background: linear-gradient(90deg, transparent, rgba(218, 165, 32, 0.15), transparent) !important;
     font-weight: 800 !important;
-    text-shadow: 2px 2px 4px rgba(47, 79, 79, 0.5) !important;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4) !important;
 }
 
-/* 월 장식 - 추석 보름달과 송편 */
+/* 월 장식 - 추석 송편과 보름달 */
 .month-decoration {
     font-size: 1.3rem !important;
 }
 
 .month-decoration:first-child::before {
-    content: "🥮" !important;  /* 송편/월병 */
+    content: "🥮" !important;  /* 송편 */
 }
 
 .month-decoration:last-child::before {
@@ -237,130 +197,130 @@ select:focus {
 }
 
 .weekday {
-    background: linear-gradient(135deg, #8B4513, #CD853F) !important;
-    color: #FFFACD !important;
+    background: linear-gradient(135deg, #4A6741, #5A7751) !important;
+    color: #FFF8DC !important;
     font-weight: 700 !important;
     text-transform: uppercase !important;
-    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5) !important;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.6) !important;
 }
 
 .weekday:first-child {
-    background: linear-gradient(135deg, #B22222, #CD5C5C) !important;
+    background: linear-gradient(135deg, #8B4513, #A0522D) !important;
 }
 
 .weekday:last-child {
-    background: linear-gradient(135deg, #FFD700, #FFA500) !important;
+    background: linear-gradient(135deg, #DAA520, #B8860B) !important;
 }
 
-/* 날짜 칸 - 추석 스타일 */
+/* 날짜 칸 - 한지 느낌 */
 .day {
-    background: #FFFACD !important;
-    border: 1px solid #CD853F !important;
-    box-shadow: inset 0 1px 3px rgba(139, 69, 19, 0.1) !important;
+    background: #FFF8DC !important;
+    border: 1px solid #D2B48C !important;
+    box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.05) !important;
 }
 
 .day:hover {
-    background: linear-gradient(135deg, #FFF8DC 0%, #FFE4B5 100%) !important;
-    border-color: #FFD700 !important;
-    box-shadow: 0 4px 8px rgba(255, 215, 0, 0.3) !important;
+    background: linear-gradient(135deg, #FAFAD2 0%, #F0E68C 100%) !important;
+    border-color: #DAA520 !important;
+    box-shadow: 0 3px 6px rgba(218, 165, 32, 0.25) !important;
     transform: translateY(-2px) !important;
 }
 
 .day.modified {
-    background: #FFE4B5 !important;
-    border-color: #FFA500 !important;
-    box-shadow: 0 0 8px rgba(255, 165, 0, 0.3) !important;
+    background: #F0E68C !important;
+    border-color: #B8860B !important;
+    box-shadow: 0 0 6px rgba(184, 134, 11, 0.2) !important;
 }
 
 .day.modified:hover {
-    background: #FFDAB9 !important;
+    background: #FFE4B5 !important;
 }
 
 /* 날짜 숫자 */
 .day-number {
-    color: #8B4513 !important;
+    color: #2F4F4F !important;
     font-weight: 700 !important;
 }
 
 .day.other-month .day-number {
-    color: #CD853F !important;
+    color: #8B7D6B !important;
     opacity: 0.5 !important;
 }
 
 /* 이벤트 스타일 - 추석 버전 */
 .event {
-    background: linear-gradient(90deg, rgba(255, 215, 0, 0.2), rgba(205, 133, 63, 0.2)) !important;
-    border-left: 3px solid #CD853F !important;
-    color: #8B4513 !important;
+    background: linear-gradient(90deg, rgba(218, 165, 32, 0.15), rgba(255, 215, 0, 0.15)) !important;
+    border-left: 3px solid #DAA520 !important;
+    color: #2F4F4F !important;
     font-weight: 500 !important;
 }
 
 .event:hover {
-    background: linear-gradient(90deg, rgba(255, 215, 0, 0.35), rgba(205, 133, 63, 0.35)) !important;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2) !important;
+    background: linear-gradient(90deg, rgba(218, 165, 32, 0.25), rgba(255, 215, 0, 0.25)) !important;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15) !important;
 }
 
 .event.modified {
-    background: linear-gradient(90deg, rgba(255, 165, 0, 0.3), rgba(255, 140, 0, 0.3)) !important;
-    border-left-color: #FFA500 !important;
+    background: linear-gradient(90deg, rgba(139, 69, 19, 0.2), rgba(160, 82, 45, 0.2)) !important;
+    border-left-color: #8B4513 !important;
 }
 
 /* 추가/삭제 버튼 */
 .add-event-btn {
     background: #228B22 !important;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3) !important;
+    box-shadow: 0 2px 3px rgba(0, 0, 0, 0.2) !important;
 }
 
 .add-event-btn:hover {
-    background: #32CD32 !important;
+    background: #1F5F1F !important;
 }
 
 .clear-day-btn {
-    background: #B22222 !important;
+    background: #8B4513 !important;
 }
 
 .clear-day-btn:hover {
-    background: #DC143C !important;
+    background: #6B3410 !important;
 }
 
-/* 푸터 - 추석 스타일 */
+/* 푸터 - 추석 전통 스타일 */
 .footer {
     background: linear-gradient(90deg, #2F4F4F, #8B4513, #2F4F4F) !important;
     color: #FFD700 !important;
-    border-top: 4px solid #CD853F !important;
+    border-top: 4px solid #DAA520 !important;
     font-weight: 700 !important;
-    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5) !important;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.6) !important;
 }
 
 /* 모달 - 추석 스타일 */
 .modal-content {
-    background: linear-gradient(135deg, #FFFACD, #FFF8DC) !important;
-    border: 3px solid #CD853F !important;
+    background: linear-gradient(135deg, #FFF8DC, #FAFAD2) !important;
+    border: 3px solid #DAA520 !important;
     box-shadow: 0 20px 40px rgba(139, 69, 19, 0.3) !important;
 }
 
 .modal h3 {
     color: #8B4513 !important;
     font-weight: 800 !important;
-    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2) !important;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1) !important;
 }
 
 .modal input {
-    border: 2px solid #CD853F !important;
-    background: #FFFFF0 !important;
+    border: 2px solid #DAA520 !important;
+    background: #FFFEF0 !important;
 }
 
 .modal input:focus {
-    border-color: #FFD700 !important;
-    box-shadow: 0 0 0 3px rgba(255, 215, 0, 0.2) !important;
+    border-color: #8B4513 !important;
+    box-shadow: 0 0 0 3px rgba(218, 165, 32, 0.15) !important;
 }
 
 .btn-primary {
-    background: linear-gradient(135deg, #8B4513, #CD853F) !important;
+    background: linear-gradient(135deg, #8B4513, #DAA520) !important;
 }
 
 .btn-primary:hover {
-    background: linear-gradient(135deg, #A0522D, #DEB887) !important;
+    background: linear-gradient(135deg, #6B3410, #B8860B) !important;
 }
 
 /* 저장 상태 메시지 */
@@ -370,29 +330,29 @@ select:focus {
 }
 
 .save-status.syncing {
-    color: #FFD700 !important;
+    color: #DAA520 !important;
 }
 
 .save-status.error {
-    color: #B22222 !important;
+    color: #DC143C !important;
 }
 
 .save-status.modified {
-    color: #FFA500 !important;
+    color: #8B4513 !important;
     font-weight: 700 !important;
 }
 
 /* 연결 상태 */
 .connection-status {
-    background: rgba(139, 69, 19, 0.5) !important;
-    border: 1px solid #CD853F !important;
+    background: rgba(139, 69, 19, 0.4) !important;
+    border: 1px solid #DAA520 !important;
 }
 
-/* 오늘 날짜 특별 표시 - 추석 보름달 */
+/* 오늘 날짜 특별 표시 */
 .day.today {
     position: relative !important;
-    background: linear-gradient(135deg, #FFFACD, #FFE4B5) !important;
-    border: 2px solid #FFD700 !important;
+    background: linear-gradient(135deg, #FFF8DC, #F0E68C) !important;
+    border: 2px solid #DAA520 !important;
 }
 
 .day.today::after {
@@ -417,7 +377,7 @@ select:focus {
     
     /* 헤더 고정 */
     .header {
-        background: linear-gradient(135deg, #2F4F4F 0%, #8B4513 30%, #CD853F 60%, #FFD700 100%) !important;
+        background: linear-gradient(135deg, #2F4F4F 0%, #8B4513 30%, #DAA520 60%, #FFD700 100%) !important;
         -webkit-print-color-adjust: exact !important;
         print-color-adjust: exact !important;
         position: relative !important;
@@ -441,32 +401,25 @@ select:focus {
         display: none !important;
     }
     
-    /* 텍스트 그림자 단순화 및 선택 방지 */
+    /* 푸터 이모지 제거 */
+    .footer::before,
+    .footer::after {
+        content: none !important;
+    }
+    
+    /* 텍스트 그림자 단순화 */
     .logo-zenith {
-        color: #FFD700 !important;
-        text-shadow: 2px 2px 0px #8B4513 !important;
-        -webkit-user-select: none !important;
-        -moz-user-select: none !important;
-        -ms-user-select: none !important;
-        user-select: none !important;
-        background: none !important;
-        -webkit-background-clip: unset !important;
-        -webkit-text-fill-color: unset !important;
         filter: none !important;
+        text-shadow: 2px 2px 0px #8B4513 !important;
     }
     
     .logo-english {
-        color: #FFFACD !important;
         text-shadow: 2px 2px 0px #8B4513 !important;
-        -webkit-user-select: none !important;
-        -moz-user-select: none !important;
-        -ms-user-select: none !important;
-        user-select: none !important;
     }
     
     /* 요일 배경색 */
     .weekday {
-        background: #CD853F !important;
+        background: #4A6741 !important;
         color: white !important;
         -webkit-print-color-adjust: exact !important;
         print-color-adjust: exact !important;
@@ -474,8 +427,8 @@ select:focus {
     
     /* 날짜 칸 배경색 */
     .day {
-        background: #FFFACD !important;
-        border: 1px solid #CD853F !important;
+        background: #FFF8DC !important;
+        border: 1px solid #DAA520 !important;
         -webkit-print-color-adjust: exact !important;
         print-color-adjust: exact !important;
     }
@@ -489,38 +442,5 @@ select:focus {
     * {
         transform: none !important;
         animation: none !important;
-    }
-}
-
-/* 추석 특별 이벤트 스타일 */
-/* 추석 연휴 날짜 강조 (예: 10월 5-7일) */
-.day[data-date="2025-10-5"],
-.day[data-date="2025-10-6"],
-.day[data-date="2025-10-7"] {
-    background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%) !important;
-    border: 2px solid #8B4513 !important;
-}
-
-.day[data-date="2025-10-6"] {
-    /* 추석 당일 특별 효과 */
-    box-shadow: 0 0 15px rgba(255, 215, 0, 0.5) !important;
-}
-
-/* 모바일 최적화 */
-@media (max-width: 480px) {
-    .header-decoration {
-        font-size: 0.9rem !important;
-    }
-    
-    .month-decoration {
-        font-size: 1rem !important;
-    }
-    
-    .logo-zenith {
-        font-size: 2rem !important;
-    }
-    
-    .logo-english {
-        font-size: 1.4rem !important;
     }
 }
