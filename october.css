@@ -41,38 +41,35 @@ body {
     background: linear-gradient(90deg, #FF0000, #FFD700, #228B22, #0000FF, #8B4513) !important;
 }
 
-/* 로고 스타일 - ZENITH 추석 버전 */
+/* ★ 로고 스타일 - ZENITH 추석 버전 (원본 스타일 유지하면서 단순화) */
 .logo-zenith {
-    background: linear-gradient(45deg, #FFD700, #DAA520, #B8860B, #8B4513) !important;
-    -webkit-background-clip: text !important;
-    -webkit-text-fill-color: transparent !important;
-    background-clip: text !important;
-    text-shadow: none !important;
-    /* filter 제거 - html2canvas 문제 해결 */
-    /* filter: drop-shadow(3px 3px 0px #2F4F4F) drop-shadow(0 0 12px rgba(255, 215, 0, 0.6)) !important; */
     font-family: 'Fredoka', cursive !important;
-    font-weight: 700 !important;
     font-size: 2.6rem !important;
+    font-weight: 700 !important;
+    color: #FFD700 !important;  /* 황금색 단색 */
+    text-shadow: 
+        3px 3px 0px #8B4513,
+        2px 2px 0px #2F4F4F,
+        1px 1px 0px #654321,
+        3px 3px 6px rgba(0, 0, 0, 0.3) !important;
+    letter-spacing: 2px !important;
+    transform: rotate(-2deg) !important;
     display: inline-block !important;
+    margin-bottom: -8px !important;
 }
 
-/* 대체: 부모 컨테이너에 그림자 효과 */
-.logo-main {
-    filter: drop-shadow(3px 3px 0px #2F4F4F) drop-shadow(0 0 12px rgba(255, 215, 0, 0.6));
-}
-
-/* 부모 요소에 glow 효과 추가 (선택사항) */
-.logo-container {
-    filter: drop-shadow(0 0 8px rgba(255, 215, 0, 0.4));
-}
-
-/* 로고 스타일 - English 추석 버전 */
+/* ★ 로고 스타일 - English 추석 버전 (원본 스타일 유지하면서 단순화) */
 .logo-english {
-    color: #FFF8DC !important;
-    text-shadow: 2px 2px 0px #8B4513, 3px 3px 0px #2F4F4F, 0 0 15px rgba(218, 165, 32, 0.5) !important;
     font-family: 'Pacifico', cursive !important;
     font-size: 1.7rem !important;
+    color: #FFF8DC !important;  /* 한지색 */
+    text-shadow: 
+        2px 2px 0px #8B4513,
+        2px 2px 6px rgba(0, 0, 0, 0.5) !important;
+    letter-spacing: 3px !important;
+    transform: rotate(1deg) !important;
     display: inline-block !important;
+    margin-top: -3px !important;
 }
 
 /* 로고 별 - 보름달 색상 */
@@ -375,7 +372,7 @@ select:focus {
     opacity: 0.6 !important;
 }
 
-/* 프린트 및 JPG 변환용 스타일 */
+/* ★ 프린트 및 파일 출력용 스타일 - 원본 스타일 유지 ★ */
 @media print {
     /* 전체 레이아웃 고정 */
     body {
@@ -396,26 +393,32 @@ select:focus {
         page-break-inside: avoid !important;
     }
 
-    /* ★ Gradient Text 대신 단색으로 출력 ★ */
+    /* ★ 헤더 텍스트 스타일 유지 - 복잡한 효과는 단순화하되 색상 유지 ★ */
     .logo-zenith {
-        color: #DAA520 !important;             /* 황금색 단색 */
-        -webkit-text-fill-color: initial !important;
-        background: none !important;
-        text-shadow: none !important;
         font-family: 'Fredoka', cursive !important;
-        font-weight: 700 !important;
         font-size: 2.6rem !important;
+        font-weight: 700 !important;
+        color: #FFD700 !important;
+        text-shadow: 
+            2px 2px 0px #8B4513,
+            1px 1px 0px #654321 !important;
+        letter-spacing: 2px !important;
+        transform: rotate(-2deg) !important;
         display: inline-block !important;
+        margin-bottom: -8px !important;
     }
 
     .logo-english {
-        color: #8B4513 !important;             /* 고동색 단색 */
-        -webkit-text-fill-color: initial !important;
-        background: none !important;
-        text-shadow: none !important;
         font-family: 'Pacifico', cursive !important;
         font-size: 1.7rem !important;
+        color: #FFF8DC !important;
+        text-shadow: 
+            1px 1px 0px #8B4513,
+            1px 1px 3px rgba(0, 0, 0, 0.4) !important;
+        letter-spacing: 3px !important;
+        transform: rotate(1deg) !important;
         display: inline-block !important;
+        margin-top: -3px !important;
     }
 
     /* 불필요한 요소 숨김 */
@@ -423,42 +426,4 @@ select:focus {
     .season-indicator {
         display: none !important;
     }
-}
-
-/* ==== Export-safe overrides for html2canvas ==== */
-body.exporting .logo-zenith {
-    /* gradient text 끄기 */
-    -webkit-background-clip: initial !important;
-    background-clip: initial !important;
-    -webkit-text-fill-color: initial !important;
-    background: none !important;
-
-    /* 단색 + 효과 최소화 (네모박스 방지) */
-    color: #DAA520 !important;
-    text-shadow: none !important;
-    transform: none !important;
-}
-
-body.exporting .logo-english {
-    -webkit-background-clip: initial !important;
-    background-clip: initial !important;
-    -webkit-text-fill-color: initial !important;
-    background: none !important;
-
-    color: #8B4513 !important;
-    text-shadow: none !important;
-    transform: none !important;
-}
-
-/* exporting 모드에서 부모 필터도 끄기 */
-body.exporting .logo-main,
-body.exporting .logo-container {
-    filter: none !important;
-}
-
-/* 시각 잡음 줄이기(선택): 아이콘/데코 효과 캡처 시 네모/깨짐 방지 */
-body.exporting .header-decoration,
-body.exporting .connection-status,
-body.exporting .season-indicator {
-    display: none !important;
 }
