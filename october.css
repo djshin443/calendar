@@ -1,6 +1,6 @@
-/* October Theme - Korean Chuseok (Harvest Moon Festival) Edition */
+/* October Theme - Korean Chuseok (한가위) Harvest Festival Edition 2025 */
 
-/* CSS 변수 재정의 - 추석 색상 (달빛, 한복, 가을 수확) */
+/* CSS 변수 재정의 - 추석 색상 팔레트 */
 :root {
     --primary: #8B4513 !important;     /* 갈색 - 가을 나무 */
     --secondary: #FFD700 !important;   /* 금색 - 보름달 */
@@ -41,34 +41,73 @@ body {
     background: linear-gradient(90deg, #8B4513, #CD853F, #FFD700, #CD853F, #8B4513) !important;
 }
 
-/* 로고 스타일 - ZENITH 추석 버전 */
+/* 로고 스타일 - ZENITH 추석 버전 (선택 방지) */
 .logo-zenith {
-    background: linear-gradient(45deg, #FFD700, #FFA500, #CD853F, #8B4513) !important;
-    -webkit-background-clip: text !important;
-    -webkit-text-fill-color: transparent !important;
-    background-clip: text !important;
-    text-shadow: none !important;
-    filter: drop-shadow(3px 3px 0px #2F4F4F) drop-shadow(0 0 15px rgba(255, 215, 0, 0.6)) !important;
+    color: #FFD700 !important;
+    text-shadow: 
+        3px 3px 0px #8B4513,
+        2px 2px 0px #CD853F,
+        4px 4px 8px rgba(139, 69, 19, 0.4) !important;
     font-family: 'Fredoka', cursive !important;
     font-weight: 700 !important;
     font-size: 2.6rem !important;
     display: inline-block !important;
+    letter-spacing: 2px !important;
+    -webkit-user-select: none !important;
+    -moz-user-select: none !important;
+    -ms-user-select: none !important;
+    user-select: none !important;
+    cursor: default !important;
 }
 
-/* 로고 스타일 - English 추석 버전 */
+/* 로고 스타일 - English 추석 버전 (선택 방지) */
 .logo-english {
     color: #FFFACD !important;
     text-shadow: 2px 2px 0px #CD853F, 3px 3px 0px #8B4513, 4px 4px 10px rgba(255, 215, 0, 0.5) !important;
     font-family: 'Pacifico', cursive !important;
     font-size: 1.7rem !important;
     display: inline-block !important;
+    -webkit-user-select: none !important;
+    -moz-user-select: none !important;
+    -ms-user-select: none !important;
+    user-select: none !important;
+    cursor: default !important;
 }
 
-/* 로고 별 - 보름달 색상 */
+/* 로고 컨테이너 - 선택 방지 */
+.logo-container {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 10px !important;
+    margin-bottom: 10px !important;
+    -webkit-user-select: none !important;
+    -moz-user-select: none !important;
+    -ms-user-select: none !important;
+    user-select: none !important;
+}
+
+.logo-main {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    gap: 2px !important;
+    -webkit-user-select: none !important;
+    -moz-user-select: none !important;
+    -ms-user-select: none !important;
+    user-select: none !important;
+}
+
+/* 로고 별 - 보름달 색상 (선택 방지) */
 .logo-star {
     color: #FFD700 !important;
     text-shadow: 0 0 12px rgba(255, 215, 0, 0.9) !important;
     font-size: 1.6rem !important;
+    -webkit-user-select: none !important;
+    -moz-user-select: none !important;
+    -ms-user-select: none !important;
+    user-select: none !important;
+    cursor: default !important;
 }
 
 /* 시즌 인디케이터 - 완전 숨김 */
@@ -402,14 +441,27 @@ select:focus {
         display: none !important;
     }
     
-    /* 텍스트 그림자 단순화 */
+    /* 텍스트 그림자 단순화 및 선택 방지 */
     .logo-zenith {
-        filter: none !important;
+        color: #FFD700 !important;
         text-shadow: 2px 2px 0px #8B4513 !important;
+        -webkit-user-select: none !important;
+        -moz-user-select: none !important;
+        -ms-user-select: none !important;
+        user-select: none !important;
+        background: none !important;
+        -webkit-background-clip: unset !important;
+        -webkit-text-fill-color: unset !important;
+        filter: none !important;
     }
     
     .logo-english {
+        color: #FFFACD !important;
         text-shadow: 2px 2px 0px #8B4513 !important;
+        -webkit-user-select: none !important;
+        -moz-user-select: none !important;
+        -ms-user-select: none !important;
+        user-select: none !important;
     }
     
     /* 요일 배경색 */
