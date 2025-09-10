@@ -1,53 +1,619 @@
-/* October Theme - Halloween & Fall Colors (Print Static) */
+/* November Theme - 가을 우체국 앞에서 (Autumn Post Office) Edition */
+
+/* CSS 변수 재정의 - 가을 우체국의 낭만적 색상 */
 :root {
-    --primary: #EA580C;
-    --secondary: #FB923C;
-    --accent: #8B5A2B;
-    --bg-gradient: linear-gradient(135deg, #FED7AA 0%, #FDBA74 50%, #92400E 100%);
-    --header-gradient: linear-gradient(135deg, #EA580C 0%, #FB923C 50%, #8B5A2B 100%);
+    --primary: #8B4513 !important;     /* 짙은 갈색 - 우체국 나무 간판 */
+    --secondary: #CD853F !important;    /* 황토색 - 오래된 벽돌 */
+    --accent: #DAA520 !important;      /* 골든로드 - 은행잎 */
+    --success: #556B2F !important;     /* 올리브 그린 - 우체통 */
+    --danger: #A0522D !important;      /* 시에나 - 낙엽 */
+    --warning: #FF8C00 !important;     /* 진한 주황 - 석양 */
+    --dark: #2F4F4F !important;        /* 짙은 청록 - 오래된 기와 */
+    --light: #FFF8DC !important;       /* 크림색 - 편지지 */
+    --bg-gradient: linear-gradient(135deg, #3E5151 0%, #DECBA4 100%) !important;
+    --header-gradient: linear-gradient(135deg, #8B7355 0%, #CD853F 30%, #DAA520 60%, #FFE4B5 100%) !important;
 }
 
+/* 배경 그라데이션 - 가을 저녁 하늘 */
+body {
+    background: linear-gradient(135deg, #3E5151 0%, #DECBA4 100%) !important;
+    background-attachment: fixed !important;
+    min-height: 100vh !important;
+    position: relative !important;
+}
+
+/* 가을 낙엽 효과를 위한 의사 요소 */
+body::before {
+    content: '' !important;
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    bottom: 0 !important;
+    background-image: 
+        radial-gradient(circle at 20% 50%, rgba(255, 140, 0, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 80% 80%, rgba(218, 165, 32, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 40% 20%, rgba(160, 82, 45, 0.1) 0%, transparent 50%) !important;
+    pointer-events: none !important;
+    z-index: 1 !important;
+}
+
+.container {
+    position: relative !important;
+    z-index: 2 !important;
+}
+
+/* 헤더 그라데이션 - 우체국 지붕에서 석양으로 */
+.header {
+    background: linear-gradient(135deg, #8B7355 0%, #CD853F 30%, #DAA520 60%, #FFE4B5 100%) !important;
+    background-image: linear-gradient(135deg, #8B7355 0%, #CD853F 30%, #DAA520 60%, #FFE4B5 100%) !important;
+    padding: 20px 15px !important;
+    box-shadow: 
+        inset 0 0 30px rgba(139, 69, 19, 0.2),
+        0 5px 15px rgba(0, 0, 0, 0.3) !important;
+    overflow: visible !important;
+    position: relative !important;
+}
+
+/* 헤더 하단 라인 - 우편함 색상 */
+.header::after {
+    content: '' !important;
+    position: absolute !important;
+    bottom: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    height: 4px !important;
+    background: linear-gradient(90deg, #556B2F, #8B4513, #CD853F, #8B4513, #556B2F) !important;
+}
+
+/* 로고 스타일 - ZENITH 가을 우체국 버전 */
 .logo-zenith {
-    background: linear-gradient(45deg, #EA580C, #FB923C, #8B5A2B);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    text-shadow: none;
-    font-family: 'Fredoka', cursive;
-    font-weight: 700;
-    transform: rotate(-2deg);
+    color: #FFF8DC !important;
+    text-shadow: 
+        3px 3px 0px #8B4513,
+        4px 4px 0px #A0522D,
+        5px 5px 8px rgba(139, 69, 19, 0.5),
+        0 0 20px rgba(255, 248, 220, 0.3) !important;
+    font-family: 'Fredoka', cursive !important;
+    font-weight: 700 !important;
+    font-size: 2.6rem !important;
+    display: inline-block !important;
+    letter-spacing: 2px !important;
+    -webkit-user-select: none !important;
+    -moz-user-select: none !important;
+    -ms-user-select: none !important;
+    user-select: none !important;
+    cursor: default !important;
 }
 
+/* 로고 스타일 - English 편지 봉투 느낌 */
 .logo-english {
-    color: #FED7AA;
-    text-shadow: 2px 2px 0px #EA580C, 3px 3px 8px rgba(0, 0, 0, 0.4);
-    font-family: 'Pacifico', cursive;
-    transform: rotate(-2deg);
+    color: #FAEBD7 !important;
+    text-shadow: 
+        2px 2px 0px #CD853F, 
+        3px 3px 0px #8B4513, 
+        4px 4px 10px rgba(160, 82, 45, 0.5) !important;
+    font-family: 'Pacifico', cursive !important;
+    font-size: 1.7rem !important;
+    font-style: italic !important;
+    display: inline-block !important;
+    -webkit-user-select: none !important;
+    -moz-user-select: none !important;
+    -ms-user-select: none !important;
+    user-select: none !important;
+    cursor: default !important;
 }
 
-.logo-english::before {
-    content: "Autumn ";
-    font-size: 0.8rem;
-    color: #FB923C;
+/* 로고 컨테이너 - 선택 방지 */
+.logo-container {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 10px !important;
+    margin-bottom: 10px !important;
+    -webkit-user-select: none !important;
+    -moz-user-select: none !important;
+    -ms-user-select: none !important;
+    user-select: none !important;
 }
 
-.logo-english::after {
-    content: " Academy";
-    font-size: 0.8rem;
-    color: #FB923C;
+.logo-main {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    gap: 2px !important;
+    -webkit-user-select: none !important;
+    -moz-user-select: none !important;
+    -ms-user-select: none !important;
+    user-select: none !important;
 }
 
-.season-indicator::before {
-    content: "October 2025";
-    font-size: 0.8rem;
-    color: white;
-    background: rgba(0, 0, 0, 0.3);
-    padding: 4px 8px;
-    border-radius: 10px;
+/* 로고 별 - 가을 별 */
+.logo-star {
+    color: #DAA520 !important;
+    text-shadow: 0 0 10px rgba(218, 165, 32, 0.8) !important;
+    font-size: 1.6rem !important;
+    -webkit-user-select: none !important;
+    -moz-user-select: none !important;
+    -ms-user-select: none !important;
+    user-select: none !important;
+    cursor: default !important;
 }
 
-.header-decoration.deco-1::before { content: "🍂"; }
-.header-decoration.deco-2::before { content: "📚"; }
-.header-decoration.deco-3::before { content: "✏️"; }
-.header-decoration.deco-4::before { content: "🍁"; }
-.header-decoration.deco-5::before { content: "📖"; }
+/* 시즌 인디케이터 - 숨김 */
+.season-indicator {
+    display: none !important;
+}
+
+/* 헤더 장식 요소 - 가을 우체국 테마 */
+.header-decoration {
+    opacity: 0.8 !important;
+    font-size: 1.1rem !important;
+}
+
+.header-decoration.deco-1::before { 
+    content: "🍂" !important;  /* 낙엽 */
+}
+.header-decoration.deco-2::before { 
+    content: "✉️" !important;  /* 편지 */
+}
+.header-decoration.deco-3::before { 
+    content: "🍁" !important;  /* 단풍잎 */
+}
+.header-decoration.deco-4::before { 
+    content: "📮" !important;  /* 우체통 */
+}
+.header-decoration.deco-5::before { 
+    content: "🌰" !important;  /* 밤 */
+}
+
+/* 서브타이틀 - 편지 봉투 스타일 */
+.subtitle {
+    background: linear-gradient(90deg, rgba(255, 248, 220, 0.9), rgba(250, 235, 215, 0.9)) !important;
+    color: #8B4513 !important;
+    border: 1px solid #CD853F !important;
+    box-shadow: 
+        inset 0 1px 3px rgba(139, 69, 19, 0.2),
+        0 2px 5px rgba(0, 0, 0, 0.1) !important;
+    font-weight: 600 !important;
+    letter-spacing: 1.5px !important;
+    font-family: 'Fredoka', sans-serif !important;
+}
+
+/* 컨트롤 영역 - 우체국 카운터 느낌 */
+.controls {
+    background: linear-gradient(90deg, #8B7355, #A0826D, #8B7355) !important;
+    border-bottom: 3px solid #556B2F !important;
+}
+
+/* 셀렉트 박스 - 빈티지 스타일 */
+select {
+    border: 2px solid #8B4513 !important;
+    background: #FFF8DC !important;
+    color: #2F4F4F !important;
+    font-weight: 500 !important;
+}
+
+select:focus {
+    border-color: #CD853F !important;
+    box-shadow: 0 0 0 3px rgba(205, 133, 63, 0.2) !important;
+}
+
+.select-wrapper::after {
+    color: #8B4513 !important;
+}
+
+/* 버튼 스타일 - 우표 느낌 */
+.btn-info {
+    background: linear-gradient(135deg, #556B2F, #6B8E23) !important;
+    border: 1px solid #556B2F !important;
+    color: white !important;
+}
+
+.btn-info:hover {
+    background: linear-gradient(135deg, #6B8E23, #8FBC8F) !important;
+    box-shadow: 0 0 8px rgba(85, 107, 47, 0.4) !important;
+}
+
+.btn-save {
+    background: linear-gradient(135deg, #8B4513, #A0522D) !important;
+    color: #FFF8DC !important;
+}
+
+.btn-save:hover {
+    background: linear-gradient(135deg, #A0522D, #CD853F) !important;
+    box-shadow: 0 0 8px rgba(139, 69, 19, 0.4) !important;
+}
+
+.btn-warning {
+    background: linear-gradient(135deg, #DAA520, #FFD700) !important;
+    color: #2F4F4F !important;
+}
+
+.btn-warning:hover {
+    background: linear-gradient(135deg, #FFD700, #FFEA00) !important;
+    color: #2F4F4F !important;
+}
+
+/* 캘린더 영역 */
+.calendar {
+    padding: 15px !important;
+    background: rgba(255, 248, 220, 0.08) !important;
+    border-radius: 8px !important;
+}
+
+/* 월 표시 - 편지 제목처럼 */
+.month-year-display {
+    color: #8B4513 !important;
+    background: linear-gradient(90deg, transparent, rgba(205, 133, 63, 0.15), transparent) !important;
+    font-weight: 800 !important;
+    text-shadow: 2px 2px 4px rgba(255, 248, 220, 0.5) !important;
+    font-family: 'Fredoka', sans-serif !important;
+}
+
+/* 월 장식 - 우체국과 편지 */
+.month-decoration {
+    font-size: 1.3rem !important;
+}
+
+.month-decoration:first-child::before {
+    content: "📬" !important;  /* 우편함 */
+}
+
+.month-decoration:last-child::before {
+    content: "💌" !important;  /* 러브레터 */
+}
+
+/* 요일 헤더 */
+.weekdays {
+    background: #2F4F4F !important;
+    padding: 2px !important;
+    border-radius: 8px !important;
+}
+
+.weekday {
+    background: linear-gradient(135deg, #556B2F, #6B8E23) !important;
+    color: #FFF8DC !important;
+    font-weight: 700 !important;
+    text-transform: uppercase !important;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.4) !important;
+}
+
+.weekday:first-child {
+    background: linear-gradient(135deg, #A0522D, #CD853F) !important;
+}
+
+.weekday:last-child {
+    background: linear-gradient(135deg, #8B4513, #A0522D) !important;
+}
+
+/* 날짜 칸 - 편지지 스타일 */
+.day {
+    background: #FFF8DC !important;
+    border: 1px solid #DEB887 !important;
+    box-shadow: 
+        inset 0 1px 2px rgba(139, 69, 19, 0.1),
+        0 1px 3px rgba(0, 0, 0, 0.05) !important;
+    position: relative !important;
+}
+
+/* 편지지 줄 효과 */
+.day::before {
+    content: '' !important;
+    position: absolute !important;
+    top: 25px !important;
+    left: 0 !important;
+    right: 0 !important;
+    height: 1px !important;
+    background: repeating-linear-gradient(
+        90deg,
+        transparent,
+        transparent 10px,
+        rgba(205, 133, 63, 0.1) 10px,
+        rgba(205, 133, 63, 0.1) 11px
+    ) !important;
+    pointer-events: none !important;
+}
+
+.day:hover {
+    background: linear-gradient(135deg, #FAEBD7 0%, #FFE4B5 100%) !important;
+    border-color: #CD853F !important;
+    box-shadow: 0 4px 8px rgba(139, 69, 19, 0.2) !important;
+    transform: translateY(-2px) !important;
+}
+
+.day.modified {
+    background: #FFE4B5 !important;
+    border-color: #DAA520 !important;
+    box-shadow: 0 0 8px rgba(218, 165, 32, 0.2) !important;
+}
+
+.day.modified:hover {
+    background: #FFDAB9 !important;
+}
+
+/* 날짜 숫자 */
+.day-number {
+    color: #2F4F4F !important;
+    font-weight: 700 !important;
+    position: relative !important;
+    z-index: 1 !important;
+}
+
+.day.other-month .day-number {
+    color: #BDB76B !important;
+    opacity: 0.5 !important;
+}
+
+/* 이벤트 스타일 - 우표처럼 */
+.event {
+    background: linear-gradient(90deg, rgba(85, 107, 47, 0.15), rgba(107, 142, 35, 0.15)) !important;
+    border-left: 3px solid #556B2F !important;
+    color: #2F4F4F !important;
+    font-weight: 500 !important;
+    position: relative !important;
+    padding-right: 18px !important;
+}
+
+/* 우표 perforated edge 효과 */
+.event::after {
+    content: '' !important;
+    position: absolute !important;
+    right: 2px !important;
+    top: 50% !important;
+    transform: translateY(-50%) !important;
+    width: 10px !important;
+    height: 10px !important;
+    background: radial-gradient(circle, transparent 3px, rgba(85, 107, 47, 0.2) 3px) !important;
+}
+
+.event:hover {
+    background: linear-gradient(90deg, rgba(85, 107, 47, 0.25), rgba(107, 142, 35, 0.25)) !important;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1) !important;
+}
+
+.event.modified {
+    background: linear-gradient(90deg, rgba(218, 165, 32, 0.2), rgba(255, 215, 0, 0.2)) !important;
+    border-left-color: #DAA520 !important;
+}
+
+/* 추가/삭제 버튼 */
+.add-event-btn {
+    background: #556B2F !important;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2) !important;
+}
+
+.add-event-btn:hover {
+    background: #6B8E23 !important;
+}
+
+.clear-day-btn {
+    background: #A0522D !important;
+}
+
+.clear-day-btn:hover {
+    background: #8B4513 !important;
+}
+
+/* 푸터 - 우체국 바닥 느낌 */
+.footer {
+    background: linear-gradient(90deg, #2F4F4F, #556B2F, #2F4F4F) !important;
+    color: #FFF8DC !important;
+    border-top: 4px solid #8B4513 !important;
+    font-weight: 700 !important;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5) !important;
+    font-family: 'Fredoka', sans-serif !important;
+}
+
+/* 모달 - 편지 봉투 스타일 */
+.modal-content {
+    background: linear-gradient(135deg, #FFF8DC, #FAEBD7) !important;
+    border: 3px solid #8B4513 !important;
+    box-shadow: 
+        0 20px 40px rgba(139, 69, 19, 0.3),
+        inset 0 2px 5px rgba(255, 248, 220, 0.8) !important;
+}
+
+.modal h3 {
+    color: #2F4F4F !important;
+    font-weight: 800 !important;
+    text-shadow: 1px 1px 2px rgba(255, 248, 220, 0.5) !important;
+}
+
+.modal input {
+    border: 2px solid #CD853F !important;
+    background: #FFFFF0 !important;
+}
+
+.modal input:focus {
+    border-color: #8B4513 !important;
+    box-shadow: 0 0 0 3px rgba(139, 69, 19, 0.2) !important;
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, #556B2F, #6B8E23) !important;
+}
+
+.btn-primary:hover {
+    background: linear-gradient(135deg, #6B8E23, #8FBC8F) !important;
+}
+
+/* 저장 상태 메시지 */
+.save-status.saved {
+    color: #556B2F !important;
+    font-weight: 600 !important;
+}
+
+.save-status.syncing {
+    color: #DAA520 !important;
+}
+
+.save-status.error {
+    color: #A0522D !important;
+}
+
+.save-status.modified {
+    color: #CD853F !important;
+    font-weight: 700 !important;
+}
+
+/* 연결 상태 */
+.connection-status {
+    background: rgba(139, 69, 19, 0.4) !important;
+    border: 1px solid #CD853F !important;
+}
+
+/* 오늘 날짜 특별 표시 - 소인이 찍힌 것처럼 */
+.day.today {
+    position: relative !important;
+    background: linear-gradient(135deg, #FFF8DC, #FFE4B5) !important;
+    border: 2px solid #8B4513 !important;
+}
+
+.day.today::after {
+    content: "📪" !important;  /* 깃발 올린 우체통 */
+    position: absolute !important;
+    top: 2px !important;
+    right: 2px !important;
+    font-size: 0.7rem !important;
+    opacity: 0.7 !important;
+}
+
+/* 프린트 및 PDF 변환용 스타일 */
+@media print {
+    /* 전체 레이아웃 고정 */
+    body {
+        margin: 0 !important;
+        padding: 0 !important;
+        width: 100% !important;
+        height: 100% !important;
+        overflow: hidden !important;
+        background: white !important;
+    }
+    
+    body::before {
+        display: none !important;
+    }
+    
+    /* 헤더 고정 */
+    .header {
+        background: linear-gradient(135deg, #8B7355 0%, #CD853F 30%, #DAA520 60%, #FFE4B5 100%) !important;
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+        position: relative !important;
+        overflow: visible !important;
+        page-break-inside: avoid !important;
+    }
+    
+    /* 로고 스타일 유지 */
+    .logo-zenith {
+        color: #8B4513 !important;
+        text-shadow: 2px 2px 0px #CD853F !important;
+        -webkit-user-select: none !important;
+        -moz-user-select: none !important;
+        -ms-user-select: none !important;
+        user-select: none !important;
+    }
+    
+    .logo-english {
+        color: #2F4F4F !important;
+        text-shadow: 1px 1px 0px #CD853F !important;
+        -webkit-user-select: none !important;
+        -moz-user-select: none !important;
+        -ms-user-select: none !important;
+        user-select: none !important;
+    }
+    
+    /* 불필요한 요소 숨김 */
+    .connection-status {
+        display: none !important;
+    }
+    
+    .season-indicator {
+        display: none !important;
+    }
+    
+    .day::before {
+        display: none !important;
+    }
+    
+    /* 요일 배경색 */
+    .weekday {
+        background: #556B2F !important;
+        color: white !important;
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+    }
+    
+    /* 날짜 칸 배경색 */
+    .day {
+        background: #FFF8DC !important;
+        border: 1px solid #8B4513 !important;
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+    }
+    
+    /* 캘린더 영역 고정 */
+    .calendar {
+        page-break-inside: avoid !important;
+    }
+    
+    /* 모든 변환 효과 제거 */
+    * {
+        transform: none !important;
+        animation: none !important;
+    }
+}
+
+/* 모바일 최적화 */
+@media (max-width: 480px) {
+    .header-decoration {
+        font-size: 0.9rem !important;
+    }
+    
+    .month-decoration {
+        font-size: 1rem !important;
+    }
+    
+    .logo-zenith {
+        font-size: 2rem !important;
+    }
+    
+    .logo-english {
+        font-size: 1.4rem !important;
+    }
+    
+    .day::before {
+        display: none !important;
+    }
+}
+
+/* 낭만적인 가을 분위기 추가 효과 */
+.container {
+    box-shadow: 
+        0 15px 30px rgba(139, 69, 19, 0.2),
+        0 5px 15px rgba(0, 0, 0, 0.1) !important;
+}
+
+/* 헤더에 빈티지 효과 */
+.header {
+    position: relative !important;
+}
+
+.header::before {
+    content: '' !important;
+    position: absolute !important;
+    top: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    bottom: 0 !important;
+    background: 
+        repeating-linear-gradient(
+            90deg,
+            transparent,
+            transparent 100px,
+            rgba(255, 248, 220, 0.03) 100px,
+            rgba(255, 248, 220, 0.03) 200px
+        ) !important;
+    pointer-events: none !important;
+}
