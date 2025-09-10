@@ -2079,158 +2079,193 @@
        
        // 파일 저장 (PDF 또는 PNG) - A4 비율 최적화
        async function saveAs(format) {
-           closeSaveModal();
-           
-           const today = new Date();
-           const year = document.getElementById('year-select').value;
-           const month = String(document.getElementById('month-select').value).padStart(2, '0');
-           const filename = `ZENITH_Calendar_${year}_${month}`;
-           
-           const loadingOverlay = document.getElementById('loading-overlay');
-           const loadingText = document.getElementById('loading-text');
-           
-           if (format === 'pdf') {
-               loadingText.textContent = 'Generating PDF...';
-           } else {
-               loadingText.textContent = 'Generating PNG...';
-           }
-           
-           loadingOverlay.style.display = 'flex';
-           
-           try {
-               const element = document.getElementById('calendar-container');
-               
-               // 컨트롤과 상태 메시지 숨기기
-               const controls = document.querySelector('.controls');
-               const saveStatus = document.getElementById('save-status');
-               const connectionStatus = document.querySelector('.connection-status');
-               const addButtons = document.querySelectorAll('.add-event-btn, .clear-day-btn, .day-actions');
-               
-               // 임시 스타일 저장
-               const originalControlsDisplay = controls.style.display;
-               const originalStatusDisplay = saveStatus.style.display;
-               const originalConnectionDisplay = connectionStatus.style.display;
-               
-               // 요소들 숨기기
-               controls.style.display = 'none';
-               saveStatus.style.display = 'none';
-               connectionStatus.style.display = 'none';
-               addButtons.forEach(btn => btn.style.display = 'none');
-               
-               // 선택 방지 스타일 추가
-               const style = document.createElement('style');
-               style.textContent = `
-                   * {
-                       -webkit-user-select: none !important;
-                       -moz-user-select: none !important;
-                       -ms-user-select: none !important;
-                       user-select: none !important;
-                   }
-                   ::selection {
-                       background: transparent !important;
-                   }
-                   ::-moz-selection {
-                       background: transparent !important;
-                   }
-               `;
-               document.head.appendChild(style);
-               
-               // 임시로 border-radius 제거 (렌더링 최적화)
-               const originalBorderRadius = element.style.borderRadius;
-               element.style.borderRadius = '0';
-               
-               // A4 비율에 맞게 강제 크기 설정 (210mm : 297mm = 1 : 1.414)
-               const originalWidth = element.style.width;
-               const originalHeight = element.style.height;
-               const originalMaxWidth = element.style.maxWidth;
-               
-               // A4 비율로 강제 설정 (픽셀 기준)
-               const a4Width = 794; // 210mm at 96 DPI
-               const a4Height = 1123; // 297mm at 96 DPI
-               
-               element.style.width = `${a4Width}px`;
-               element.style.height = `${a4Height}px`;
-               element.style.maxWidth = `${a4Width}px`;
-               
-               // 모바일에서도 A4 비율 유지
-               const viewport = document.querySelector('meta[name="viewport"]');
-               const originalViewport = viewport.content;
-               viewport.content = `width=${a4Width}, initial-scale=1.0, user-scalable=no`;
-               
-               const canvas = await html2canvas(element, {
-                   scale: window.devicePixelRatio > 1 ? 2 : 3, // 고해상도
-                   useCORS: true,
-                   logging: false,
-                   backgroundColor: '#ffffff',
-                   width: a4Width,
-                   height: a4Height,
-                   windowWidth: a4Width,
-                   windowHeight: a4Height,
-                   scrollY: 0,
-                   scrollX: 0,
-                   letterRendering: true,
-                   allowTaint: false,
-                   foreignObjectRendering: false,
-                   removeContainer: false
-               });
-               
-               // 원래 크기와 뷰포트로 복원
-               element.style.width = originalWidth;
-               element.style.height = originalHeight;
-               element.style.maxWidth = originalMaxWidth;
-               element.style.borderRadius = originalBorderRadius;
-               viewport.content = originalViewport;
-               
-               // 요소들 다시 표시
-               controls.style.display = originalControlsDisplay;
-               saveStatus.style.display = originalStatusDisplay;
-               connectionStatus.style.display = originalConnectionDisplay;
-               addButtons.forEach(btn => btn.style.display = '');
-               
-               // 스타일 제거
-               style.remove();
-               
-               if (format === 'pdf') {
-                   // PDF 저장
-                   const { jsPDF } = window.jspdf;
-                   const pdf = new jsPDF({
-                       orientation: 'portrait',
-                       unit: 'mm',
-                       format: 'a4',
-                       compress: true
-                   });
-                   
-                   const imgData = canvas.toDataURL('image/png', 1.0);
-                   
-                   // A4 크기에 정확히 맞추기
-                   const pdfWidth = 210;
-                   const pdfHeight = 297;
-                   
-                   pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
-                   pdf.save(`${filename}.pdf`);
-                   
-                   alert(`PDF saved as ${filename}.pdf!`);
-               } else {
-                   // PNG 저장
-                   const link = document.createElement('a');
-                   link.download = `${filename}.png`;
-                   link.href = canvas.toDataURL('image/png', 1.0);
-                   
-                   // 임시로 DOM에 추가하여 클릭
-                   document.body.appendChild(link);
-                   link.click();
-                   document.body.removeChild(link);
-                   
-                   alert(`PNG saved as ${filename}.png!`);
-               }
-               
-           } catch (error) {
-               console.error(`${format.toUpperCase()} generation error:`, error);
-               alert(`An error occurred while generating ${format.toUpperCase()}.`);
-           } finally {
-               loadingOverlay.style.display = 'none';
-           }
-       }
+		  closeSaveModal();
+
+		  const year = document.getElementById('year-select').value;
+		  const month = String(document.getElementById('month-select').value).padStart(2, '0');
+		  const filename = `ZENITH_Calendar_${year}_${month}`;
+
+		  const loadingOverlay = document.getElementById('loading-overlay');
+		  const loadingText = document.getElementById('loading-text');
+
+		  loadingText.textContent = (format === 'pdf') ? 'Generating PDF...' : 'Generating PNG...';
+		  loadingOverlay.style.display = 'flex';
+
+		  // ★ exporting 모드 ON (CSS 오버라이드 동작)
+		  document.body.classList.add('exporting');
+
+		  try {
+			const element = document.getElementById('calendar-container');
+
+			// 컨트롤/버튼 숨김
+			const controls = document.querySelector('.controls');
+			const saveStatus = document.getElementById('save-status');
+			const connectionStatus = document.querySelector('.connection-status');
+			const addButtons = document.querySelectorAll('.add-event-btn, .clear-day-btn, .day-actions');
+
+			const originalControlsDisplay = controls.style.display;
+			const originalStatusDisplay = saveStatus.style.display;
+			const originalConnectionDisplay = connectionStatus.style.display;
+
+			controls.style.display = 'none';
+			saveStatus.style.display = 'none';
+			connectionStatus.style.display = 'none';
+			addButtons.forEach(btn => btn.style.display = 'none');
+
+			// ★ JS 레벨에서도 한 번 더 안전 장치 (로고 gradient 텍스트 → 단색)
+			const logoZenith = element.querySelector('.logo-zenith');
+			const logoEnglish = element.querySelector('.logo-english');
+			const logoMain = element.querySelector('.logo-main');
+			const logoContainer = element.querySelector('.logo-container');
+
+			const revert = []; // 나중에 원복할 inline 스타일 기록
+
+			function forceStyle(el, prop, value, important = false) {
+			  if (!el) return;
+			  const prev = el.style.getPropertyValue(prop);
+			  const prevImp = el.style.getPropertyPriority(prop);
+			  revert.push(() => {
+				if (prev) el.style.setProperty(prop, prev, prevImp);
+				else el.style.removeProperty(prop);
+			  });
+			  el.style.setProperty(prop, value, important ? 'important' : '');
+			}
+
+			// 부모 filter도 OFF (네모/깨짐 방지)
+			forceStyle(logoMain, 'filter', 'none', true);        // ★
+			forceStyle(logoContainer, 'filter', 'none', true);   // ★
+
+			// gradient 텍스트 끄고 단색 지정 (JS에서 추가 보강)
+			if (logoZenith) {
+			  forceStyle(logoZenith, '-webkit-text-fill-color', 'initial', true); // ★
+			  forceStyle(logoZenith, 'background', 'none', true);                 // ★
+			  forceStyle(logoZenith, 'background-clip', 'initial', true);         // ★
+			  forceStyle(logoZenith, 'color', '#DAA520', true);                   // ★
+			  forceStyle(logoZenith, 'text-shadow', 'none', true);                // ★
+			}
+			if (logoEnglish) {
+			  forceStyle(logoEnglish, '-webkit-text-fill-color', 'initial', true);// ★
+			  forceStyle(logoEnglish, 'background', 'none', true);                // ★
+			  forceStyle(logoEnglish, 'background-clip', 'initial', true);        // ★
+			  forceStyle(logoEnglish, 'color', '#8B4513', true);                  // ★
+			  forceStyle(logoEnglish, 'text-shadow', 'none', true);               // ★
+			}
+
+			// 선택 방지 스타일(그대로 OK)
+			const style = document.createElement('style');
+			style.textContent = `
+			  * { -webkit-user-select:none!important; user-select:none!important; }
+			  ::selection { background:transparent!important; }
+			  ::-moz-selection { background:transparent!important; }
+			`;
+			document.head.appendChild(style);
+
+			// A4 비율 고정(그대로 OK)
+			const originalBorderRadius = element.style.borderRadius;
+			element.style.borderRadius = '0';
+			const originalWidth = element.style.width;
+			const originalHeight = element.style.height;
+			const originalMaxWidth = element.style.maxWidth;
+
+			const a4Width = 794;
+			const a4Height = 1123;
+
+			element.style.width = `${a4Width}px`;
+			element.style.height = `${a4Height}px`;
+			element.style.maxWidth = `${a4Width}px`;
+
+			const viewport = document.querySelector('meta[name="viewport"]');
+			const originalViewport = viewport.content;
+			viewport.content = `width=${a4Width}, initial-scale=1.0, user-scalable=no`;
+
+			await new Promise(resolve => setTimeout(resolve, 200));
+
+			const canvas = await html2canvas(element, {
+			  scale: 3,
+			  useCORS: true,
+			  logging: false,
+			  backgroundColor: '#ffffff',
+			  width: a4Width,
+			  height: a4Height,
+			  windowWidth: a4Width,
+			  windowHeight: a4Height,
+			  scrollY: 0,
+			  scrollX: 0,
+			  letterRendering: true,
+			  allowTaint: false,
+			  foreignObjectRendering: false,
+			  removeContainer: false,
+			  onclone: function (clonedDoc) {
+				// ★ 혹시 몰라 클론에도 exporting 클래스 보장
+				clonedDoc.body.classList.add('exporting');
+				// ★ 로고 안전 스타일 재보강
+				const z = clonedDoc.querySelector('.logo-zenith');
+				const e = clonedDoc.querySelector('.logo-english');
+				const m = clonedDoc.querySelector('.logo-main');
+				const c = clonedDoc.querySelector('.logo-container');
+
+				if (m) m.style.setProperty('filter', 'none', 'important');
+				if (c) c.style.setProperty('filter', 'none', 'important');
+
+				if (z) {
+				  z.style.setProperty('-webkit-text-fill-color', 'initial', 'important');
+				  z.style.setProperty('background', 'none', 'important');
+				  z.style.setProperty('background-clip', 'initial', 'important');
+				  z.style.setProperty('color', '#DAA520', 'important');
+				  z.style.setProperty('text-shadow', 'none', 'important');
+				}
+				if (e) {
+				  e.style.setProperty('-webkit-text-fill-color', 'initial', 'important');
+				  e.style.setProperty('background', 'none', 'important');
+				  e.style.setProperty('background-clip', 'initial', 'important');
+				  e.style.setProperty('color', '#8B4513', 'important');
+				  e.style.setProperty('text-shadow', 'none', 'important');
+				}
+			  }
+			});
+
+			// 원복
+			element.style.width = originalWidth;
+			element.style.height = originalHeight;
+			element.style.maxWidth = originalMaxWidth;
+			element.style.borderRadius = originalBorderRadius;
+			viewport.content = originalViewport;
+
+			controls.style.display = originalControlsDisplay;
+			saveStatus.style.display = originalStatusDisplay;
+			connectionStatus.style.display = originalConnectionDisplay;
+			addButtons.forEach(btn => btn.style.display = '');
+
+			// inline 강제 스타일 원복
+			revert.reverse().forEach(fn => fn());
+			style.remove();
+
+			if (format === 'pdf') {
+			  const { jsPDF } = window.jspdf;
+			  const pdf = new jsPDF({ orientation: 'portrait', unit: 'mm', format: 'a4', compress: true });
+			  const imgData = canvas.toDataURL('image/png', 1.0);
+			  pdf.addImage(imgData, 'PNG', 0, 0, 210, 297);
+			  pdf.save(`${filename}.pdf`);
+			  alert(`PDF saved as ${filename}.pdf!`);
+			} else {
+			  const link = document.createElement('a');
+			  link.download = `${filename}.png`;
+			  link.href = canvas.toDataURL('image/png', 1.0);
+			  document.body.appendChild(link);
+			  link.click();
+			  document.body.removeChild(link);
+			  alert(`PNG saved as ${filename}.png!`);
+			}
+
+		  } catch (error) {
+			console.error(`${format.toUpperCase()} generation error:`, error);
+			alert(`An error occurred while generating ${format.toUpperCase()}.`);
+		  } finally {
+			loadingOverlay.style.display = 'none';
+			// ★ exporting 모드 OFF (항상 원복)
+			document.body.classList.remove('exporting');
+		  }
+		}
        
        // 모달 외부 클릭 시 닫기
        document.getElementById('event-modal').onclick = function(event) {
@@ -2284,4 +2319,5 @@
        init();
    </script>
 </body>
+
 </html>
