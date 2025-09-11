@@ -126,7 +126,7 @@
             top: 10px;
             right: 15px;
             font-size: 1.8rem;
-			display: none !important;  /* 이 줄 추가 */
+			display: none !important;
         }
         
         /* 로고 디자인 - 기본 스타일 */
@@ -817,6 +817,15 @@
             font-size: 1rem;
         }
         
+        /* PDF/PNG 출력 전용 스타일 */
+        .hide-for-capture {
+            display: none !important;
+            visibility: hidden !important;
+            opacity: 0 !important;
+            position: absolute !important;
+            left: -9999px !important;
+        }
+        
         /* 모바일 최적화 - 480px 이하 */
         @media (max-width: 480px) {
             body {
@@ -1034,22 +1043,15 @@
                 border-radius: 0;
             }
             
-            .controls {
-                display: none !important;
-            }
-            
+            .controls,
+            .save-status,
+            .connection-status,
             .add-event-btn,
             .clear-day-btn,
             .day-actions {
                 display: none !important;
-            }
-            
-            .connection-status {
-                display: none !important;
-            }
-            
-            .save-status {
-                display: none !important;
+                visibility: hidden !important;
+                opacity: 0 !important;
             }
             
             .header {
@@ -1102,7 +1104,7 @@
     
     <div class="container" id="calendar-container">
         <div class="header">
-            <div class="connection-status">
+            <div class="connection-status" id="connection-status">
                 <span class="status-dot" id="status-dot"></span>
                 <span id="status-text">Connecting...</span>
             </div>
@@ -1127,7 +1129,7 @@
             <div class="subtitle">✨ Excellence in English Education ✨</div>
         </div>
         
-        <div class="controls">
+        <div class="controls" id="controls">
             <div class="date-selector">
                 <div class="select-wrapper">
                     <select id="year-select">
@@ -2095,7 +2097,7 @@
            modal.style.display = 'none';
        }
        
-       // 파일 저장 (PDF 또는 PNG) - 백지 문제 해결 버전
+       // 파일 저장 (PDF 또는 PNG) - 완전히 새로운 접근법
        async function saveAs(format) {
            closeSaveModal();
 
@@ -2110,117 +2112,91 @@
            loadingOverlay.style.display = 'flex';
 
            try {
-               const element = document.getElementById('calendar-container');
+               const container = document.getElementById('calendar-container');
 
-               // 숨길 요소들 처리
-               const controls = document.querySelector('.controls');
-               const saveStatus = document.getElementById('save-status');
-               const connectionStatus = document.querySelector('.connection-status');
-               const addButtons = document.querySelectorAll('.add-event-btn, .clear-day-btn, .day-actions');
+               // 1. 불필요한 요소들에 클래스 추가
+               const elementsToHide = [
+                   'controls',
+                   'save-status', 
+                   'connection-status'
+               ];
 
-               const originalControlsDisplay = controls.style.display;
-               const originalStatusDisplay = saveStatus.style.display;
-               const originalConnectionDisplay = connectionStatus.style.display;
+               const buttonsToHide = document.querySelectorAll('.add-event-btn, .clear-day-btn, .day-actions');
 
-               controls.style.display = 'none';
-               saveStatus.style.display = 'none';
-               connectionStatus.style.display = 'none';
-               addButtons.forEach(btn => btn.style.display = 'none');
+               // 요소들 숨기기
+               elementsToHide.forEach(id => {
+                   const element = document.getElementById(id);
+                   if (element) {
+                       element.classList.add('hide-for-capture');
+                   }
+               });
 
-               // 텍스트 선택 방지 스타일
-               const style = document.createElement('style');
-               style.textContent = `
-                   * { -webkit-user-select: none !important; user-select: none !important; }
-                   ::selection { background: transparent !important; }
-                   ::-moz-selection { background: transparent !important; }
-               `;
-               document.head.appendChild(style);
+               buttonsToHide.forEach(btn => {
+                   btn.classList.add('hide-for-capture');
+               });
 
-               // 요소가 보이는지 확인
-               console.log('Element visibility:', element.offsetWidth, element.offsetHeight);
-               console.log('Element computed style:', window.getComputedStyle(element).display);
+               // 2. 컨테이너 크기 고정
+               const originalStyles = {
+                   width: container.style.width,
+                   maxWidth: container.style.maxWidth,
+                   height: container.style.height,
+                   borderRadius: container.style.borderRadius,
+                   boxShadow: container.style.boxShadow,
+                   overflow: container.style.overflow,
+                   margin: container.style.margin
+               };
 
-               // A4 비율 설정 (더 보수적으로)
-               const originalBorderRadius = element.style.borderRadius;
-               element.style.borderRadius = '0';
-               
-               const a4Width = 794;
-               const a4Height = 1123;
+               // A4 크기로 고정
+               container.style.width = '794px';
+               container.style.maxWidth = '794px';
+               container.style.height = 'auto';
+               container.style.borderRadius = '0';
+               container.style.boxShadow = 'none';
+               container.style.overflow = 'hidden';
+               container.style.margin = '0';
 
-               // DOM 업데이트를 위한 충분한 대기 시간
+               // 3. DOM 업데이트 대기
                await new Promise(resolve => setTimeout(resolve, 500));
 
-               // html2canvas 설정 - 가장 기본적이고 안전한 옵션
-               console.log('Starting html2canvas capture...');
-               const canvas = await html2canvas(element, {
-                   scale: 1.5,
+               // 4. html2canvas로 캡처
+               const canvas = await html2canvas(container, {
+                   scale: 2,
                    useCORS: true,
-                   logging: true, // 디버깅을 위해 로깅 활성화
+                   logging: false,
                    backgroundColor: '#ffffff',
-                   allowTaint: true,
-                   foreignObjectRendering: false, // 문제가 될 수 있으므로 비활성화
-                   removeContainer: false,
-                   imageTimeout: 30000,
-                   onclone: function(clonedDoc, element) {
-                       console.log('Clone created, element size:', element.offsetWidth, element.offsetHeight);
-                       
-                       // 클론에서 모든 불필요한 요소 확실히 제거
-                       const clonedControls = clonedDoc.querySelector('.controls');
-                       const clonedStatus = clonedDoc.querySelector('.save-status');
-                       const clonedConnection = clonedDoc.querySelector('.connection-status');
-                       const clonedButtons = clonedDoc.querySelectorAll('.add-event-btn, .clear-day-btn, .day-actions');
-                       
-                       if (clonedControls) clonedControls.remove();
-                       if (clonedStatus) clonedStatus.remove();
-                       if (clonedConnection) clonedConnection.remove();
-                       clonedButtons.forEach(btn => btn.remove());
-                       
-                       // 클론 문서의 스타일 확인
-                       const clonedElement = clonedDoc.getElementById('calendar-container');
-                       if (clonedElement) {
-                           clonedElement.style.width = a4Width + 'px';
-                           clonedElement.style.height = a4Height + 'px';
-                           clonedElement.style.maxWidth = a4Width + 'px';
-                           clonedElement.style.position = 'relative';
-                           clonedElement.style.display = 'block';
-                           clonedElement.style.visibility = 'visible';
-                           clonedElement.style.opacity = '1';
-                           console.log('Clone element styled, size:', clonedElement.offsetWidth, clonedElement.offsetHeight);
-                       }
+                   allowTaint: false,
+                   width: 794,
+                   height: container.scrollHeight,
+                   ignoreElements: (element) => {
+                       return element.classList.contains('hide-for-capture');
                    }
                });
 
                console.log('Canvas created, size:', canvas.width, canvas.height);
 
-               // 캔버스가 비어있는지 확인
-               if (canvas.width === 0 || canvas.height === 0) {
-                   throw new Error('Canvas is empty - no content captured');
-               }
+               // 5. 원본 스타일 복원
+               Object.keys(originalStyles).forEach(prop => {
+                   container.style[prop] = originalStyles[prop];
+               });
 
-               // 원본 스타일 복원
-               element.style.borderRadius = originalBorderRadius;
+               // 6. 숨긴 요소들 복원
+               elementsToHide.forEach(id => {
+                   const element = document.getElementById(id);
+                   if (element) {
+                       element.classList.remove('hide-for-capture');
+                   }
+               });
 
-               controls.style.display = originalControlsDisplay;
-               saveStatus.style.display = originalStatusDisplay;
-               connectionStatus.style.display = originalConnectionDisplay;
-               addButtons.forEach(btn => btn.style.display = '');
+               buttonsToHide.forEach(btn => {
+                   btn.classList.remove('hide-for-capture');
+               });
 
-               style.remove();
-
-               // 파일 저장
+               // 7. 파일 저장
                if (format === 'pdf') {
                    const { jsPDF } = window.jspdf;
-                   const pdf = new jsPDF({ 
-                       orientation: 'portrait', 
-                       unit: 'mm', 
-                       format: 'a4', 
-                       compress: false  // 압축 비활성화로 안정성 확보
-                   });
+                   const pdf = new jsPDF('portrait', 'mm', 'a4');
                    
                    const imgData = canvas.toDataURL('image/png', 1.0);
-                   console.log('Image data length:', imgData.length);
-                   
-                   // 이미지 크기 계산
                    const imgWidth = 210; // A4 width in mm
                    const imgHeight = (canvas.height * imgWidth) / canvas.width;
                    
@@ -2231,8 +2207,6 @@
                    const link = document.createElement('a');
                    link.download = `${filename}.png`;
                    link.href = canvas.toDataURL('image/png', 1.0);
-                   
-                   console.log('PNG data length:', link.href.length);
                    
                    document.body.appendChild(link);
                    link.click();
@@ -2300,6 +2274,4 @@
        init();
    </script>
 </body>
-
-
 </html>
