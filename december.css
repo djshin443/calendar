@@ -1,53 +1,578 @@
-/* December Theme - Christmas & Winter Wonder (Print Static) */
+/* December Theme - Christmas Snow Edition */
+
+/* CSS 변수 재정의 - 크리스마스 색상 */
 :root {
-    --primary: #DC2626;
-    --secondary: #10B981;
-    --accent: #FFD700;
-    --bg-gradient: linear-gradient(135deg, #FEF2F2 0%, #ECFDF5 50%, #FFFBEB 100%);
-    --header-gradient: linear-gradient(135deg, #DC2626 0%, #10B981 50%, #FFD700 100%);
+    --primary: #DC2626 !important;        /* 크리스마스 빨강 */
+    --secondary: #059669 !important;      /* 크리스마스 초록 */
+    --accent: #F59E0B !important;         /* 황금색 (별, 장식) */
+    --success: #10B981 !important;        /* 에메랄드 그린 */
+    --danger: #DC2626 !important;         /* 진한 빨강 */
+    --warning: #F59E0B !important;        /* 골드 */
+    --dark: #1F2937 !important;           /* 겨울 밤색 */
+    --light: #FEFEFE !important;          /* 눈 색상 */
+    --bg-gradient: linear-gradient(135deg, #1E293B 0%, #334155 20%, #0F766E 40%, #DC2626 60%, #1E293B 100%) !important;
+    --header-gradient: linear-gradient(135deg, #DC2626 0%, #B91C1C 25%, #059669 50%, #047857 75%, #F59E0B 100%) !important;
 }
 
+/* 배경 그라데이션 - 크리스마스 밤하늘 */
+body {
+    background: linear-gradient(135deg, #1E293B 0%, #334155 20%, #0F766E 40%, #DC2626 60%, #1E293B 100%) !important;
+    background-attachment: fixed !important;
+    min-height: 100vh !important;
+    position: relative !important;
+    overflow-x: hidden !important;
+}
+
+/* 눈 내리는 애니메이션 */
+body::before {
+    content: '' !important;
+    position: fixed !important;
+    top: -100px !important;
+    left: 0 !important;
+    width: 100% !important;
+    height: calc(100% + 100px) !important;
+    background-image: 
+        radial-gradient(2px 2px at 20% 30%, #fff, transparent),
+        radial-gradient(2px 2px at 40% 70%, rgba(255,255,255,0.8), transparent),
+        radial-gradient(1px 1px at 90% 40%, rgba(255,255,255,0.6), transparent),
+        radial-gradient(1px 1px at 50% 10%, #fff, transparent),
+        radial-gradient(2px 2px at 10% 80%, rgba(255,255,255,0.9), transparent),
+        radial-gradient(1px 1px at 80% 20%, rgba(255,255,255,0.7), transparent) !important;
+    background-repeat: repeat !important;
+    background-size: 550px 550px, 350px 350px, 250px 250px, 150px 150px, 400px 400px, 200px 200px !important;
+    animation: snow 20s linear infinite !important;
+    pointer-events: none !important;
+    z-index: 1 !important;
+    opacity: 0.8 !important;
+}
+
+@keyframes snow {
+    0% { transform: translateY(-100px) translateX(0px); }
+    100% { transform: translateY(calc(100vh + 100px)) translateX(100px); }
+}
+
+/* 컨테이너 z-index 조정 */
+.container {
+    position: relative !important;
+    z-index: 10 !important;
+}
+
+/* 헤더 그라데이션 - 크리스마스 색상 */
+.header {
+    background: linear-gradient(135deg, #DC2626 0%, #B91C1C 25%, #059669 50%, #047857 75%, #F59E0B 100%) !important;
+    background-image: linear-gradient(135deg, #DC2626 0%, #B91C1C 25%, #059669 50%, #047857 75%, #F59E0B 100%) !important;
+    padding: 20px 15px !important;
+    box-shadow: inset 0 0 30px rgba(220, 38, 38, 0.3) !important;
+    overflow: visible !important;
+    position: relative !important;
+    z-index: 20 !important;
+}
+
+/* 헤더 하단 라인 - 크리스마스 장식 */
+.header::after {
+    content: '' !important;
+    position: absolute !important;
+    bottom: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    height: 4px !important;
+    background: linear-gradient(90deg, #DC2626, #F59E0B, #059669, #F59E0B, #DC2626) !important;
+    animation: christmasGlow 3s ease-in-out infinite alternate !important;
+}
+
+@keyframes christmasGlow {
+    0% { box-shadow: 0 0 5px rgba(220, 38, 38, 0.5); }
+    100% { box-shadow: 0 0 20px rgba(245, 158, 11, 0.8); }
+}
+
+/* ★ 로고 스타일 - ZENITH 크리스마스 버전 (원본 스타일 유지하면서 단순화) */
 .logo-zenith {
-    background: linear-gradient(45deg, #DC2626, #10B981, #FFD700);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    text-shadow: none;
-    font-family: 'Fredoka', cursive;
-    font-weight: 700;
-    transform: rotate(-2deg);
+    font-family: 'Fredoka', cursive !important;
+    font-size: 2.6rem !important;
+    font-weight: 700 !important;
+    color: #FEFEFE !important;  /* 눈 색상 */
+    text-shadow: 
+        3px 3px 0px #DC2626,
+        2px 2px 0px #059669,
+        1px 1px 0px #F59E0B,
+        3px 3px 6px rgba(0, 0, 0, 0.3),
+        0 0 15px rgba(255, 255, 255, 0.5) !important;
+    letter-spacing: 2px !important;
+    transform: rotate(-2deg) !important;
+    display: inline-block !important;
+    margin-bottom: -8px !important;
+    animation: christmasSparkle 4s ease-in-out infinite !important;
 }
 
+@keyframes christmasSparkle {
+    0%, 100% { text-shadow: 
+        3px 3px 0px #DC2626,
+        2px 2px 0px #059669,
+        1px 1px 0px #F59E0B,
+        3px 3px 6px rgba(0, 0, 0, 0.3),
+        0 0 15px rgba(255, 255, 255, 0.5); }
+    50% { text-shadow: 
+        3px 3px 0px #DC2626,
+        2px 2px 0px #059669,
+        1px 1px 0px #F59E0B,
+        3px 3px 6px rgba(0, 0, 0, 0.3),
+        0 0 25px rgba(245, 158, 11, 0.8); }
+}
+
+/* ★ 로고 스타일 - English 크리스마스 버전 (원본 스타일 유지하면서 단순화) */
 .logo-english {
-    color: #FEF2F2;
-    text-shadow: 2px 2px 0px #DC2626, 3px 3px 8px rgba(0, 0, 0, 0.4);
-    font-family: 'Pacifico', cursive;
-    transform: rotate(-1deg);
+    font-family: 'Pacifico', cursive !important;
+    font-size: 1.7rem !important;
+    color: #F59E0B !important;  /* 황금색 */
+    text-shadow: 
+        2px 2px 0px #DC2626,
+        2px 2px 6px rgba(0, 0, 0, 0.5),
+        0 0 10px rgba(245, 158, 11, 0.6) !important;
+    letter-spacing: 3px !important;
+    transform: rotate(1deg) !important;
+    display: inline-block !important;
+    margin-top: -3px !important;
 }
 
-.logo-english::before {
-    content: "Joyful ";
-    font-size: 0.8rem;
-    color: #10B981;
+/* 로고 별 - 크리스마스 별 */
+.logo-star {
+    color: #F59E0B !important;
+    text-shadow: 0 0 15px rgba(245, 158, 11, 0.8) !important;
+    font-size: 1.6rem !important;
+    animation: starTwinkle 2s ease-in-out infinite alternate !important;
 }
 
-.logo-english::after {
-    content: " Learning";
-    font-size: 0.8rem;
-    color: #10B981;
+@keyframes starTwinkle {
+    0% { transform: scale(1) rotate(0deg); text-shadow: 0 0 15px rgba(245, 158, 11, 0.8); }
+    100% { transform: scale(1.1) rotate(5deg); text-shadow: 0 0 25px rgba(245, 158, 11, 1); }
 }
 
-.season-indicator::before {
-    content: "December 2025";
-    font-size: 0.8rem;
-    color: white;
-    background: rgba(0, 0, 0, 0.3);
-    padding: 4px 8px;
-    border-radius: 10px;
+/* 시즌 인디케이터 - 숨김 */
+.season-indicator {
+    display: none !important;
 }
 
-.header-decoration.deco-1::before { content: "⭐"; }
-.header-decoration.deco-2::before { content: "📚"; }
-.header-decoration.deco-3::before { content: "✏️"; }
-.header-decoration.deco-4::before { content: "❄️"; }
-.header-decoration.deco-5::before { content: "📖"; }"; }
+/* 헤더 장식 요소 - 크리스마스 테마 */
+.header-decoration {
+    opacity: 0.9 !important;
+    font-size: 1.2rem !important;
+    animation: decorationFloat 3s ease-in-out infinite alternate !important;
+}
+
+@keyframes decorationFloat {
+    0% { transform: translateY(0px); }
+    100% { transform: translateY(-5px); }
+}
+
+.header-decoration.deco-1::before { 
+    content: "🎄" !important;  /* 크리스마스 트리 */
+    animation: decorationFloat 2.5s ease-in-out infinite alternate !important;
+}
+.header-decoration.deco-2::before { 
+    content: "⭐" !important;  /* 별 */
+    animation: starTwinkle 2s ease-in-out infinite alternate !important;
+}
+.header-decoration.deco-3::before { 
+    content: "🎁" !important;  /* 선물 */
+    animation: decorationFloat 3.5s ease-in-out infinite alternate !important;
+}
+.header-decoration.deco-4::before { 
+    content: "❄️" !important;  /* 눈송이 */
+    animation: decorationFloat 2s ease-in-out infinite alternate !important;
+}
+.header-decoration.deco-5::before { 
+    content: "🔔" !important;  /* 종 */
+    animation: decorationFloat 4s ease-in-out infinite alternate !important;
+}
+
+/* 서브타이틀 - 크리스마스 스타일 */
+.subtitle {
+    background: linear-gradient(90deg, rgba(220,38,38,0.8), rgba(5,150,105,0.8), rgba(220,38,38,0.8)) !important;
+    color: #FEFEFE !important;
+    border: 1px solid #F59E0B !important;
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.3), 0 0 12px rgba(245, 158, 11, 0.4) !important;
+    font-weight: 600 !important;
+    letter-spacing: 1.5px !important;
+}
+
+/* 컨트롤 영역 */
+.controls {
+    background: linear-gradient(90deg, #374151, #4B5563, #374151) !important;
+    border-bottom: 3px solid #F59E0B !important;
+}
+
+/* 셀렉트 박스 - 크리스마스 스타일 */
+select {
+    border: 2px solid #F59E0B !important;
+    background: #FEFEFE !important;
+    color: #1F2937 !important;
+}
+
+select:focus {
+    border-color: #DC2626 !important;
+    box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.2) !important;
+}
+
+.select-wrapper::after {
+    color: #DC2626 !important;
+}
+
+/* 버튼 스타일 - 크리스마스 버전 */
+.btn-info {
+    background: linear-gradient(135deg, #059669, #047857) !important;
+    border: 1px solid #F59E0B !important;
+}
+
+.btn-info:hover {
+    background: linear-gradient(135deg, #047857, #065F46) !important;
+    box-shadow: 0 0 8px rgba(5, 150, 105, 0.4) !important;
+}
+
+.btn-save {
+    background: linear-gradient(135deg, #DC2626, #F59E0B) !important;
+    color: #FEFEFE !important;
+}
+
+.btn-save:hover {
+    background: linear-gradient(135deg, #B91C1C, #D97706) !important;
+    box-shadow: 0 0 8px rgba(220, 38, 38, 0.4) !important;
+}
+
+.btn-warning {
+    background: linear-gradient(135deg, #F59E0B, #D97706) !important;
+    color: #1F2937 !important;
+}
+
+.btn-warning:hover {
+    background: linear-gradient(135deg, #D97706, #B45309) !important;
+    color: #FEFEFE !important;
+}
+
+/* 캘린더 영역 */
+.calendar {
+    padding: 15px !important;
+    background: rgba(254, 254, 254, 0.05) !important;
+    border-radius: 8px !important;
+    backdrop-filter: blur(5px) !important;
+}
+
+/* 월 표시 */
+.month-year-display {
+    color: #F59E0B !important;
+    background: linear-gradient(90deg, transparent, rgba(245, 158, 11, 0.2), transparent) !important;
+    font-weight: 800 !important;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4) !important;
+}
+
+/* 월 장식 - 크리스마스 관련 */
+.month-decoration {
+    font-size: 1.4rem !important;
+    animation: decorationFloat 3s ease-in-out infinite alternate !important;
+}
+
+.month-decoration:first-child::before {
+    content: "🎅" !important;  /* 산타 */
+}
+
+.month-decoration:last-child::before {
+    content: "🎄" !important;  /* 크리스마스 트리 */
+}
+
+/* 요일 헤더 */
+.weekdays {
+    background: #1F2937 !important;
+    padding: 2px !important;
+    border-radius: 8px !important;
+}
+
+.weekday {
+    background: linear-gradient(135deg, #059669, #047857) !important;
+    color: #FEFEFE !important;
+    font-weight: 700 !important;
+    text-transform: uppercase !important;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.6) !important;
+}
+
+.weekday:first-child {
+    background: linear-gradient(135deg, #DC2626, #B91C1C) !important;
+}
+
+.weekday:last-child {
+    background: linear-gradient(135deg, #F59E0B, #D97706) !important;
+}
+
+/* 날짜 칸 - 눈 덮인 느낌 */
+.day {
+    background: #FEFEFE !important;
+    border: 1px solid #E5E7EB !important;
+    box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.05) !important;
+    position: relative !important;
+}
+
+.day::before {
+    content: '' !important;
+    position: absolute !important;
+    top: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    bottom: 0 !important;
+    background: linear-gradient(45deg, transparent 30%, rgba(245, 158, 11, 0.05) 50%, transparent 70%) !important;
+    pointer-events: none !important;
+}
+
+.day:hover {
+    background: linear-gradient(135deg, #F9FAFB 0%, #F3F4F6 100%) !important;
+    border-color: #F59E0B !important;
+    box-shadow: 0 3px 6px rgba(245, 158, 11, 0.25) !important;
+    transform: translateY(-2px) !important;
+}
+
+.day.modified {
+    background: #FEF3C7 !important;
+    border-color: #D97706 !important;
+    box-shadow: 0 0 6px rgba(217, 119, 6, 0.2) !important;
+}
+
+.day.modified:hover {
+    background: #FDE68A !important;
+}
+
+/* 날짜 숫자 */
+.day-number {
+    color: #1F2937 !important;
+    font-weight: 700 !important;
+    position: relative !important;
+    z-index: 2 !important;
+}
+
+.day.other-month .day-number {
+    color: #9CA3AF !important;
+    opacity: 0.5 !important;
+}
+
+/* 특별한 날 (크리스마스) 표시 */
+.day[data-date="25"]::after {
+    content: "🎄" !important;
+    position: absolute !important;
+    top: 2px !important;
+    right: 2px !important;
+    font-size: 0.8rem !important;
+    animation: christmasTreeGlow 2s ease-in-out infinite alternate !important;
+}
+
+@keyframes christmasTreeGlow {
+    0% { transform: scale(1); opacity: 0.7; }
+    100% { transform: scale(1.1); opacity: 1; }
+}
+
+/* 이벤트 스타일 - 크리스마스 버전 */
+.event {
+    background: linear-gradient(90deg, rgba(245, 158, 11, 0.15), rgba(220, 38, 38, 0.15)) !important;
+    border-left: 3px solid #F59E0B !important;
+    color: #1F2937 !important;
+    font-weight: 500 !important;
+    position: relative !important;
+    z-index: 2 !important;
+}
+
+.event:hover {
+    background: linear-gradient(90deg, rgba(245, 158, 11, 0.25), rgba(220, 38, 38, 0.25)) !important;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15) !important;
+}
+
+.event.modified {
+    background: linear-gradient(90deg, rgba(220, 38, 38, 0.2), rgba(185, 28, 28, 0.2)) !important;
+    border-left-color: #DC2626 !important;
+}
+
+/* 추가/삭제 버튼 */
+.add-event-btn {
+    background: #059669 !important;
+    box-shadow: 0 2px 3px rgba(0, 0, 0, 0.2) !important;
+    position: relative !important;
+    z-index: 2 !important;
+}
+
+.add-event-btn:hover {
+    background: #047857 !important;
+}
+
+.clear-day-btn {
+    background: #DC2626 !important;
+    position: relative !important;
+    z-index: 2 !important;
+}
+
+.clear-day-btn:hover {
+    background: #B91C1C !important;
+}
+
+/* 푸터 - 크리스마스 스타일 */
+.footer {
+    background: linear-gradient(90deg, #1F2937, #DC2626, #059669, #1F2937) !important;
+    color: #F59E0B !important;
+    border-top: 4px solid #F59E0B !important;
+    font-weight: 700 !important;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.6) !important;
+    position: relative !important;
+    z-index: 20 !important;
+}
+
+/* 모달 - 크리스마스 스타일 */
+.modal {
+    z-index: 2000 !important;
+}
+
+.modal-content {
+    background: linear-gradient(135deg, #FEFEFE, #F9FAFB) !important;
+    border: 3px solid #F59E0B !important;
+    box-shadow: 0 20px 40px rgba(220, 38, 38, 0.3) !important;
+}
+
+.modal h3 {
+    color: #DC2626 !important;
+    font-weight: 800 !important;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1) !important;
+}
+
+.modal input {
+    border: 2px solid #F59E0B !important;
+    background: #FEFEFE !important;
+}
+
+.modal input:focus {
+    border-color: #DC2626 !important;
+    box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.15) !important;
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, #DC2626, #F59E0B) !important;
+}
+
+.btn-primary:hover {
+    background: linear-gradient(135deg, #B91C1C, #D97706) !important;
+}
+
+/* 저장 상태 메시지 */
+.save-status.saved {
+    color: #059669 !important;
+    font-weight: 600 !important;
+}
+
+.save-status.syncing {
+    color: #F59E0B !important;
+}
+
+.save-status.error {
+    color: #DC2626 !important;
+}
+
+.save-status.modified {
+    color: #DC2626 !important;
+    font-weight: 700 !important;
+}
+
+/* 연결 상태 */
+.connection-status {
+    background: rgba(220, 38, 38, 0.4) !important;
+    border: 1px solid #F59E0B !important;
+    z-index: 30 !important;
+}
+
+/* 오늘 날짜 특별 표시 */
+.day.today {
+    position: relative !important;
+    background: linear-gradient(135deg, #FEFEFE, #FEF3C7) !important;
+    border: 2px solid #F59E0B !important;
+}
+
+.day.today::after {
+    content: "⭐" !important;  /* 별 */
+    position: absolute !important;
+    top: 2px !important;
+    right: 2px !important;
+    font-size: 0.7rem !important;
+    opacity: 0.8 !important;
+    animation: starTwinkle 2s ease-in-out infinite alternate !important;
+}
+
+/* 저장 모달 z-index */
+.save-modal-overlay {
+    z-index: 3000 !important;
+}
+
+.loading-overlay {
+    z-index: 2000 !important;
+}
+
+/* ★ 프린트 및 파일 출력용 스타일 - 원본 스타일 유지 ★ */
+@media print {
+    /* 전체 레이아웃 고정 */
+    body {
+        margin: 0 !important;
+        padding: 0 !important;
+        width: 100% !important;
+        height: 100% !important;
+        overflow: hidden !important;
+    }
+
+    /* 눈 효과 숨김 */
+    body::before {
+        display: none !important;
+    }
+
+    /* 헤더 고정 */
+    .header {
+        background: linear-gradient(135deg, #DC2626 0%, #B91C1C 25%, #059669 50%, #047857 75%, #F59E0B 100%) !important;
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+        position: relative !important;
+        overflow: visible !important;
+        page-break-inside: avoid !important;
+    }
+
+    /* ★ 헤더 텍스트 스타일 유지 - 복잡한 효과는 단순화하되 색상 유지 ★ */
+    .logo-zenith {
+        font-family: 'Fredoka', cursive !important;
+        font-size: 2.6rem !important;
+        font-weight: 700 !important;
+        color: #FEFEFE !important;
+        text-shadow: 
+            2px 2px 0px #DC2626,
+            1px 1px 0px #059669 !important;
+        letter-spacing: 2px !important;
+        transform: rotate(-2deg) !important;
+        display: inline-block !important;
+        margin-bottom: -8px !important;
+        animation: none !important;
+    }
+
+    .logo-english {
+        font-family: 'Pacifico', cursive !important;
+        font-size: 1.7rem !important;
+        color: #F59E0B !important;
+        text-shadow: 
+            1px 1px 0px #DC2626,
+            1px 1px 3px rgba(0, 0, 0, 0.4) !important;
+        letter-spacing: 3px !important;
+        transform: rotate(1deg) !important;
+        display: inline-block !important;
+        margin-top: -3px !important;
+    }
+
+    /* 애니메이션 제거 */
+    *, *::before, *::after {
+        animation: none !important;
+        transition: none !important;
+    }
+
+    /* 불필요한 요소 숨김 */
+    .connection-status {
+        display: none !important;
+        visibility: hidden !important;
+        opacity: 0 !important;
+    }
+    .season-indicator {
+        display: none !important;
+    }
+}
