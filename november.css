@@ -1,61 +1,36 @@
-/* November Theme - 가을 우체국 앞에서 (Autumn Post Office) Edition */
+/* November Theme - Korean CSAT (College Scholastic Ability Test) Edition */
 
-/* CSS 변수 재정의 - 가을 우체국의 낭만적 색상 */
+/* CSS 변수 재정의 - 수능 시즌 색상 */
 :root {
-    --primary: #8B4513 !important;     /* 짙은 갈색 - 우체국 나무 간판 */
-    --secondary: #CD853F !important;    /* 황토색 - 오래된 벽돌 */
-    --accent: #DAA520 !important;      /* 골든로드 - 은행잎 */
-    --success: #556B2F !important;     /* 올리브 그린 - 우체통 */
-    --danger: #A0522D !important;      /* 시에나 - 낙엽 */
-    --warning: #FF8C00 !important;     /* 진한 주황 - 석양 */
-    --dark: #2F4F4F !important;        /* 짙은 청록 - 오래된 기와 */
-    --light: #FFF8DC !important;       /* 크림색 - 편지지 */
-    --bg-gradient: linear-gradient(135deg, #3E5151 0%, #DECBA4 100%) !important;
-    --header-gradient: linear-gradient(135deg, #8B7355 0%, #CD853F 30%, #DAA520 60%, #FFE4B5 100%) !important;
+    --primary: #1E3A8A !important;        /* 진한 네이비 블루 (집중력) */
+    --secondary: #F59E0B !important;      /* 황금색 (합격의 희망) */
+    --accent: #6366F1 !important;         /* 인디고 (학문적 분위기) */
+    --success: #10B981 !important;        /* 초록색 (성공) */
+    --danger: #EF4444 !important;         /* 빨간색 (중요 일정) */
+    --warning: #F59E0B !important;        /* 주황색 (주의 사항) */
+    --dark: #1F2937 !important;           /* 다크 그레이 */
+    --light: #F8FAFC !important;          /* 연한 회색 (깨끗한 느낌) */
+    --bg-gradient: linear-gradient(135deg, #1E293B 0%, #334155 30%, #475569 60%, #64748B 100%) !important;
+    --header-gradient: linear-gradient(135deg, #1E3A8A 0%, #3730A3 30%, #4338CA 60%, #6366F1 100%) !important;
 }
 
-/* 배경 그라데이션 - 가을 저녁 하늘 */
+/* 배경 그라데이션 - 차분한 공부 환경 */
 body {
-    background: linear-gradient(135deg, #3E5151 0%, #DECBA4 100%) !important;
+    background: linear-gradient(135deg, #1E293B 0%, #334155 30%, #475569 60%, #64748B 100%) !important;
     background-attachment: fixed !important;
     min-height: 100vh !important;
-    position: relative !important;
 }
 
-/* 가을 낙엽 효과를 위한 의사 요소 */
-body::before {
-    content: '' !important;
-    position: fixed !important;
-    top: 0 !important;
-    left: 0 !important;
-    right: 0 !important;
-    bottom: 0 !important;
-    background-image: 
-        radial-gradient(circle at 20% 50%, rgba(255, 140, 0, 0.1) 0%, transparent 50%),
-        radial-gradient(circle at 80% 80%, rgba(218, 165, 32, 0.1) 0%, transparent 50%),
-        radial-gradient(circle at 40% 20%, rgba(160, 82, 45, 0.1) 0%, transparent 50%) !important;
-    pointer-events: none !important;
-    z-index: 1 !important;
-}
-
-.container {
-    position: relative !important;
-    z-index: 2 !important;
-}
-
-/* 헤더 그라데이션 - 우체국 지붕에서 석양으로 */
+/* 헤더 그라데이션 - 학문적 권위와 신뢰감 */
 .header {
-    background: linear-gradient(135deg, #8B7355 0%, #CD853F 30%, #DAA520 60%, #FFE4B5 100%) !important;
-    background-image: linear-gradient(135deg, #8B7355 0%, #CD853F 30%, #DAA520 60%, #FFE4B5 100%) !important;
+    background: linear-gradient(135deg, #1E3A8A 0%, #3730A3 30%, #4338CA 60%, #6366F1 100%) !important;
+    background-image: linear-gradient(135deg, #1E3A8A 0%, #3730A3 30%, #4338CA 60%, #6366F1 100%) !important;
     padding: 20px 15px !important;
-    box-shadow: 
-        inset 0 0 30px rgba(139, 69, 19, 0.2),
-        0 5px 15px rgba(0, 0, 0, 0.3) !important;
+    box-shadow: inset 0 0 30px rgba(99, 102, 241, 0.3) !important;
     overflow: visible !important;
-    position: relative !important;
 }
 
-/* 헤더 하단 라인 - 우편함 색상 */
+/* 헤더 하단 라인 - 성공과 희망의 그라데이션 */
 .header::after {
     content: '' !important;
     position: absolute !important;
@@ -63,81 +38,45 @@ body::before {
     left: 0 !important;
     right: 0 !important;
     height: 4px !important;
-    background: linear-gradient(90deg, #556B2F, #8B4513, #CD853F, #8B4513, #556B2F) !important;
+    background: linear-gradient(90deg, #1E3A8A, #F59E0B, #10B981, #6366F1, #F59E0B) !important;
 }
 
-/* 로고 스타일 - ZENITH 가을 우체국 버전 */
+/* ★ 로고 스타일 - ZENITH 수능 버전 (원본 스타일 유지하면서 단순화) */
 .logo-zenith {
-    color: #FFF8DC !important;
-    text-shadow: 
-        3px 3px 0px #8B4513,
-        4px 4px 0px #A0522D,
-        5px 5px 8px rgba(139, 69, 19, 0.5),
-        0 0 20px rgba(255, 248, 220, 0.3) !important;
     font-family: 'Fredoka', cursive !important;
-    font-weight: 700 !important;
     font-size: 2.6rem !important;
-    display: inline-block !important;
+    font-weight: 700 !important;
+    color: #F59E0B !important;  /* 황금색 */
+    text-shadow: 
+        3px 3px 0px #1E3A8A,
+        2px 2px 0px #1F2937,
+        1px 1px 0px #374151,
+        3px 3px 6px rgba(0, 0, 0, 0.3) !important;
     letter-spacing: 2px !important;
-    -webkit-user-select: none !important;
-    -moz-user-select: none !important;
-    -ms-user-select: none !important;
-    user-select: none !important;
-    cursor: default !important;
+    transform: rotate(-2deg) !important;
+    display: inline-block !important;
+    margin-bottom: -8px !important;
 }
 
-/* 로고 스타일 - English 편지 봉투 느낌 */
+/* ★ 로고 스타일 - English 수능 버전 (원본 스타일 유지하면서 단순화) */
 .logo-english {
-    color: #FAEBD7 !important;
-    text-shadow: 
-        2px 2px 0px #CD853F, 
-        3px 3px 0px #8B4513, 
-        4px 4px 10px rgba(160, 82, 45, 0.5) !important;
     font-family: 'Pacifico', cursive !important;
     font-size: 1.7rem !important;
-    font-style: italic !important;
+    color: #F8FAFC !important;  /* 깨끗한 흰색 */
+    text-shadow: 
+        2px 2px 0px #1E3A8A,
+        2px 2px 6px rgba(0, 0, 0, 0.5) !important;
+    letter-spacing: 3px !important;
+    transform: rotate(1deg) !important;
     display: inline-block !important;
-    -webkit-user-select: none !important;
-    -moz-user-select: none !important;
-    -ms-user-select: none !important;
-    user-select: none !important;
-    cursor: default !important;
+    margin-top: -3px !important;
 }
 
-/* 로고 컨테이너 - 선택 방지 */
-.logo-container {
-    display: flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-    gap: 10px !important;
-    margin-bottom: 10px !important;
-    -webkit-user-select: none !important;
-    -moz-user-select: none !important;
-    -ms-user-select: none !important;
-    user-select: none !important;
-}
-
-.logo-main {
-    display: flex !important;
-    flex-direction: column !important;
-    align-items: center !important;
-    gap: 2px !important;
-    -webkit-user-select: none !important;
-    -moz-user-select: none !important;
-    -ms-user-select: none !important;
-    user-select: none !important;
-}
-
-/* 로고 별 - 가을 별 */
+/* 로고 별 - 희망의 별 */
 .logo-star {
-    color: #DAA520 !important;
-    text-shadow: 0 0 10px rgba(218, 165, 32, 0.8) !important;
+    color: #F59E0B !important;
+    text-shadow: 0 0 15px rgba(245, 158, 11, 0.8) !important;
     font-size: 1.6rem !important;
-    -webkit-user-select: none !important;
-    -moz-user-select: none !important;
-    -ms-user-select: none !important;
-    user-select: none !important;
-    cursor: default !important;
 }
 
 /* 시즌 인디케이터 - 숨김 */
@@ -145,341 +84,295 @@ body::before {
     display: none !important;
 }
 
-/* 헤더 장식 요소 - 가을 우체국 테마 */
+/* 헤더 장식 요소 - 수능 테마 */
 .header-decoration {
-    opacity: 0.8 !important;
+    opacity: 0.85 !important;
     font-size: 1.1rem !important;
 }
 
 .header-decoration.deco-1::before { 
-    content: "🍂" !important;  /* 낙엽 */
+    content: "📚" !important;  /* 책 */
 }
 .header-decoration.deco-2::before { 
-    content: "✉️" !important;  /* 편지 */
+    content: "✏️" !important;  /* 연필 */
 }
 .header-decoration.deco-3::before { 
-    content: "🍁" !important;  /* 단풍잎 */
+    content: "🎯" !important;  /* 목표 */
 }
 .header-decoration.deco-4::before { 
-    content: "📮" !important;  /* 우체통 */
+    content: "⏰" !important;  /* 시계 */
 }
 .header-decoration.deco-5::before { 
-    content: "🌰" !important;  /* 밤 */
+    content: "🌟" !important;  /* 별 */
 }
 
-/* 서브타이틀 - 편지 봉투 스타일 */
+/* 서브타이틀 - 수능 응원 스타일 */
 .subtitle {
-    background: linear-gradient(90deg, rgba(255, 248, 220, 0.9), rgba(250, 235, 215, 0.9)) !important;
-    color: #8B4513 !important;
-    border: 1px solid #CD853F !important;
-    box-shadow: 
-        inset 0 1px 3px rgba(139, 69, 19, 0.2),
-        0 2px 5px rgba(0, 0, 0, 0.1) !important;
+    background: linear-gradient(90deg, rgba(30,58,138,0.7), rgba(55,48,163,0.7), rgba(30,58,138,0.7)) !important;
+    color: #F59E0B !important;
+    border: 1px solid #6366F1 !important;
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.3), 0 0 12px rgba(99, 102, 241, 0.3) !important;
     font-weight: 600 !important;
     letter-spacing: 1.5px !important;
-    font-family: 'Fredoka', sans-serif !important;
 }
 
-/* 컨트롤 영역 - 우체국 카운터 느낌 */
+/* 컨트롤 영역 */
 .controls {
-    background: linear-gradient(90deg, #8B7355, #A0826D, #8B7355) !important;
-    border-bottom: 3px solid #556B2F !important;
+    background: linear-gradient(90deg, #374151, #4B5563, #374151) !important;
+    border-bottom: 3px solid #6366F1 !important;
 }
 
-/* 셀렉트 박스 - 빈티지 스타일 */
+/* 셀렉트 박스 - 학습 환경 스타일 */
 select {
-    border: 2px solid #8B4513 !important;
-    background: #FFF8DC !important;
-    color: #2F4F4F !important;
-    font-weight: 500 !important;
+    border: 2px solid #6366F1 !important;
+    background: #F8FAFC !important;
+    color: #1F2937 !important;
 }
 
 select:focus {
-    border-color: #CD853F !important;
-    box-shadow: 0 0 0 3px rgba(205, 133, 63, 0.2) !important;
+    border-color: #F59E0B !important;
+    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2) !important;
 }
 
 .select-wrapper::after {
-    color: #8B4513 !important;
+    color: #1E3A8A !important;
 }
 
-/* 버튼 스타일 - 우표 느낌 */
+/* 버튼 스타일 - 수능 버전 */
 .btn-info {
-    background: linear-gradient(135deg, #556B2F, #6B8E23) !important;
-    border: 1px solid #556B2F !important;
-    color: white !important;
+    background: linear-gradient(135deg, #10B981, #059669) !important;
+    border: 1px solid #1F2937 !important;
 }
 
 .btn-info:hover {
-    background: linear-gradient(135deg, #6B8E23, #8FBC8F) !important;
-    box-shadow: 0 0 8px rgba(85, 107, 47, 0.4) !important;
+    background: linear-gradient(135deg, #059669, #047857) !important;
+    box-shadow: 0 0 8px rgba(16, 185, 129, 0.4) !important;
 }
 
 .btn-save {
-    background: linear-gradient(135deg, #8B4513, #A0522D) !important;
-    color: #FFF8DC !important;
+    background: linear-gradient(135deg, #1E3A8A, #6366F1) !important;
+    color: #F8FAFC !important;
 }
 
 .btn-save:hover {
-    background: linear-gradient(135deg, #A0522D, #CD853F) !important;
-    box-shadow: 0 0 8px rgba(139, 69, 19, 0.4) !important;
+    background: linear-gradient(135deg, #1E40AF, #4338CA) !important;
+    box-shadow: 0 0 8px rgba(99, 102, 241, 0.4) !important;
 }
 
 .btn-warning {
-    background: linear-gradient(135deg, #DAA520, #FFD700) !important;
-    color: #2F4F4F !important;
+    background: linear-gradient(135deg, #F59E0B, #D97706) !important;
+    color: #1F2937 !important;
 }
 
 .btn-warning:hover {
-    background: linear-gradient(135deg, #FFD700, #FFEA00) !important;
-    color: #2F4F4F !important;
+    background: linear-gradient(135deg, #D97706, #B45309) !important;
+    color: #F8FAFC !important;
 }
 
 /* 캘린더 영역 */
 .calendar {
     padding: 15px !important;
-    background: rgba(255, 248, 220, 0.08) !important;
+    background: rgba(248, 250, 252, 0.03) !important;
     border-radius: 8px !important;
 }
 
-/* 월 표시 - 편지 제목처럼 */
+/* 월 표시 */
 .month-year-display {
-    color: #8B4513 !important;
-    background: linear-gradient(90deg, transparent, rgba(205, 133, 63, 0.15), transparent) !important;
+    color: #6366F1 !important;
+    background: linear-gradient(90deg, transparent, rgba(99, 102, 241, 0.15), transparent) !important;
     font-weight: 800 !important;
-    text-shadow: 2px 2px 4px rgba(255, 248, 220, 0.5) !important;
-    font-family: 'Fredoka', sans-serif !important;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4) !important;
 }
 
-/* 월 장식 - 우체국과 편지 */
+/* 월 장식 - 수능 관련 */
 .month-decoration {
     font-size: 1.3rem !important;
 }
 
 .month-decoration:first-child::before {
-    content: "📬" !important;  /* 우편함 */
+    content: "📝" !important;  /* 시험지 */
 }
 
 .month-decoration:last-child::before {
-    content: "💌" !important;  /* 러브레터 */
+    content: "🏆" !important;  /* 트로피 */
 }
 
 /* 요일 헤더 */
 .weekdays {
-    background: #2F4F4F !important;
+    background: #1F2937 !important;
     padding: 2px !important;
     border-radius: 8px !important;
 }
 
 .weekday {
-    background: linear-gradient(135deg, #556B2F, #6B8E23) !important;
-    color: #FFF8DC !important;
+    background: linear-gradient(135deg, #374151, #4B5563) !important;
+    color: #F8FAFC !important;
     font-weight: 700 !important;
     text-transform: uppercase !important;
-    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.4) !important;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.6) !important;
 }
 
 .weekday:first-child {
-    background: linear-gradient(135deg, #A0522D, #CD853F) !important;
+    background: linear-gradient(135deg, #1E3A8A, #3730A3) !important;
 }
 
 .weekday:last-child {
-    background: linear-gradient(135deg, #8B4513, #A0522D) !important;
+    background: linear-gradient(135deg, #6366F1, #4338CA) !important;
 }
 
-/* 날짜 칸 - 편지지 스타일 */
+/* 날짜 칸 - 깨끗한 학습 환경 */
 .day {
-    background: #FFF8DC !important;
-    border: 1px solid #DEB887 !important;
-    box-shadow: 
-        inset 0 1px 2px rgba(139, 69, 19, 0.1),
-        0 1px 3px rgba(0, 0, 0, 0.05) !important;
-    position: relative !important;
-}
-
-/* 편지지 줄 효과 */
-.day::before {
-    content: '' !important;
-    position: absolute !important;
-    top: 25px !important;
-    left: 0 !important;
-    right: 0 !important;
-    height: 1px !important;
-    background: repeating-linear-gradient(
-        90deg,
-        transparent,
-        transparent 10px,
-        rgba(205, 133, 63, 0.1) 10px,
-        rgba(205, 133, 63, 0.1) 11px
-    ) !important;
-    pointer-events: none !important;
+    background: #F8FAFC !important;
+    border: 1px solid #E2E8F0 !important;
+    box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.05) !important;
 }
 
 .day:hover {
-    background: linear-gradient(135deg, #FAEBD7 0%, #FFE4B5 100%) !important;
-    border-color: #CD853F !important;
-    box-shadow: 0 4px 8px rgba(139, 69, 19, 0.2) !important;
+    background: linear-gradient(135deg, #F1F5F9 0%, #E2E8F0 100%) !important;
+    border-color: #6366F1 !important;
+    box-shadow: 0 3px 6px rgba(99, 102, 241, 0.25) !important;
     transform: translateY(-2px) !important;
 }
 
 .day.modified {
-    background: #FFE4B5 !important;
-    border-color: #DAA520 !important;
-    box-shadow: 0 0 8px rgba(218, 165, 32, 0.2) !important;
+    background: #FEF3C7 !important;
+    border-color: #D97706 !important;
+    box-shadow: 0 0 6px rgba(217, 119, 6, 0.2) !important;
 }
 
 .day.modified:hover {
-    background: #FFDAB9 !important;
+    background: #FDE68A !important;
 }
 
 /* 날짜 숫자 */
 .day-number {
-    color: #2F4F4F !important;
+    color: #1F2937 !important;
     font-weight: 700 !important;
-    position: relative !important;
-    z-index: 1 !important;
 }
 
 .day.other-month .day-number {
-    color: #BDB76B !important;
+    color: #9CA3AF !important;
     opacity: 0.5 !important;
 }
 
-/* 이벤트 스타일 - 우표처럼 */
+/* 이벤트 스타일 - 수능 버전 */
 .event {
-    background: linear-gradient(90deg, rgba(85, 107, 47, 0.15), rgba(107, 142, 35, 0.15)) !important;
-    border-left: 3px solid #556B2F !important;
-    color: #2F4F4F !important;
+    background: linear-gradient(90deg, rgba(99, 102, 241, 0.15), rgba(245, 158, 11, 0.15)) !important;
+    border-left: 3px solid #6366F1 !important;
+    color: #1F2937 !important;
     font-weight: 500 !important;
-    position: relative !important;
-    padding-right: 18px !important;
-}
-
-/* 우표 perforated edge 효과 */
-.event::after {
-    content: '' !important;
-    position: absolute !important;
-    right: 2px !important;
-    top: 50% !important;
-    transform: translateY(-50%) !important;
-    width: 10px !important;
-    height: 10px !important;
-    background: radial-gradient(circle, transparent 3px, rgba(85, 107, 47, 0.2) 3px) !important;
 }
 
 .event:hover {
-    background: linear-gradient(90deg, rgba(85, 107, 47, 0.25), rgba(107, 142, 35, 0.25)) !important;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1) !important;
+    background: linear-gradient(90deg, rgba(99, 102, 241, 0.25), rgba(245, 158, 11, 0.25)) !important;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15) !important;
 }
 
 .event.modified {
-    background: linear-gradient(90deg, rgba(218, 165, 32, 0.2), rgba(255, 215, 0, 0.2)) !important;
-    border-left-color: #DAA520 !important;
+    background: linear-gradient(90deg, rgba(30, 58, 138, 0.2), rgba(55, 48, 163, 0.2)) !important;
+    border-left-color: #1E3A8A !important;
 }
 
 /* 추가/삭제 버튼 */
 .add-event-btn {
-    background: #556B2F !important;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2) !important;
+    background: #10B981 !important;
+    box-shadow: 0 2px 3px rgba(0, 0, 0, 0.2) !important;
 }
 
 .add-event-btn:hover {
-    background: #6B8E23 !important;
+    background: #059669 !important;
 }
 
 .clear-day-btn {
-    background: #A0522D !important;
+    background: #1E3A8A !important;
 }
 
 .clear-day-btn:hover {
-    background: #8B4513 !important;
+    background: #1E40AF !important;
 }
 
-/* 푸터 - 우체국 바닥 느낌 */
+/* 푸터 - 수능 응원 스타일 */
 .footer {
-    background: linear-gradient(90deg, #2F4F4F, #556B2F, #2F4F4F) !important;
-    color: #FFF8DC !important;
-    border-top: 4px solid #8B4513 !important;
+    background: linear-gradient(90deg, #1F2937, #1E3A8A, #1F2937) !important;
+    color: #F59E0B !important;
+    border-top: 4px solid #6366F1 !important;
     font-weight: 700 !important;
-    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5) !important;
-    font-family: 'Fredoka', sans-serif !important;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.6) !important;
 }
 
-/* 모달 - 편지 봉투 스타일 */
+/* 모달 - 수능 스타일 */
 .modal-content {
-    background: linear-gradient(135deg, #FFF8DC, #FAEBD7) !important;
-    border: 3px solid #8B4513 !important;
-    box-shadow: 
-        0 20px 40px rgba(139, 69, 19, 0.3),
-        inset 0 2px 5px rgba(255, 248, 220, 0.8) !important;
+    background: linear-gradient(135deg, #F8FAFC, #F1F5F9) !important;
+    border: 3px solid #6366F1 !important;
+    box-shadow: 0 20px 40px rgba(30, 58, 138, 0.3) !important;
 }
 
 .modal h3 {
-    color: #2F4F4F !important;
+    color: #1E3A8A !important;
     font-weight: 800 !important;
-    text-shadow: 1px 1px 2px rgba(255, 248, 220, 0.5) !important;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1) !important;
 }
 
 .modal input {
-    border: 2px solid #CD853F !important;
-    background: #FFFFF0 !important;
+    border: 2px solid #6366F1 !important;
+    background: #FEFEFE !important;
 }
 
 .modal input:focus {
-    border-color: #8B4513 !important;
-    box-shadow: 0 0 0 3px rgba(139, 69, 19, 0.2) !important;
+    border-color: #1E3A8A !important;
+    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.15) !important;
 }
 
 .btn-primary {
-    background: linear-gradient(135deg, #556B2F, #6B8E23) !important;
+    background: linear-gradient(135deg, #1E3A8A, #6366F1) !important;
 }
 
 .btn-primary:hover {
-    background: linear-gradient(135deg, #6B8E23, #8FBC8F) !important;
+    background: linear-gradient(135deg, #1E40AF, #4338CA) !important;
 }
 
 /* 저장 상태 메시지 */
 .save-status.saved {
-    color: #556B2F !important;
+    color: #10B981 !important;
     font-weight: 600 !important;
 }
 
 .save-status.syncing {
-    color: #DAA520 !important;
+    color: #6366F1 !important;
 }
 
 .save-status.error {
-    color: #A0522D !important;
+    color: #EF4444 !important;
 }
 
 .save-status.modified {
-    color: #CD853F !important;
+    color: #1E3A8A !important;
     font-weight: 700 !important;
 }
 
 /* 연결 상태 */
 .connection-status {
-    background: rgba(139, 69, 19, 0.4) !important;
-    border: 1px solid #CD853F !important;
+    background: rgba(30, 58, 138, 0.4) !important;
+    border: 1px solid #6366F1 !important;
 }
 
-/* 오늘 날짜 특별 표시 - 소인이 찍힌 것처럼 */
+/* 오늘 날짜 특별 표시 */
 .day.today {
     position: relative !important;
-    background: linear-gradient(135deg, #FFF8DC, #FFE4B5) !important;
-    border: 2px solid #8B4513 !important;
+    background: linear-gradient(135deg, #F8FAFC, #FEF3C7) !important;
+    border: 2px solid #6366F1 !important;
 }
 
 .day.today::after {
-    content: "📪" !important;  /* 깃발 올린 우체통 */
+    content: "📚" !important;  /* 책 */
     position: absolute !important;
     top: 2px !important;
     right: 2px !important;
     font-size: 0.7rem !important;
-    opacity: 0.7 !important;
+    opacity: 0.6 !important;
 }
 
-/* 프린트 및 PDF 변환용 스타일 */
+/* ★ 프린트 및 파일 출력용 스타일 - 원본 스타일 유지 ★ */
 @media print {
     /* 전체 레이아웃 고정 */
     body {
@@ -488,132 +381,53 @@ select:focus {
         width: 100% !important;
         height: 100% !important;
         overflow: hidden !important;
-        background: white !important;
     }
-    
-    body::before {
-        display: none !important;
-    }
-    
+
     /* 헤더 고정 */
     .header {
-        background: linear-gradient(135deg, #8B7355 0%, #CD853F 30%, #DAA520 60%, #FFE4B5 100%) !important;
+        background: linear-gradient(135deg, #1E3A8A 0%, #3730A3 30%, #4338CA 60%, #6366F1 100%) !important;
         -webkit-print-color-adjust: exact !important;
         print-color-adjust: exact !important;
         position: relative !important;
         overflow: visible !important;
         page-break-inside: avoid !important;
     }
-    
-    /* 로고 스타일 유지 */
+
+    /* ★ 헤더 텍스트 스타일 유지 - 복잡한 효과는 단순화하되 색상 유지 ★ */
     .logo-zenith {
-        color: #8B4513 !important;
-        text-shadow: 2px 2px 0px #CD853F !important;
-        -webkit-user-select: none !important;
-        -moz-user-select: none !important;
-        -ms-user-select: none !important;
-        user-select: none !important;
+        font-family: 'Fredoka', cursive !important;
+        font-size: 2.6rem !important;
+        font-weight: 700 !important;
+        color: #F59E0B !important;
+        text-shadow: 
+            2px 2px 0px #1E3A8A,
+            1px 1px 0px #374151 !important;
+        letter-spacing: 2px !important;
+        transform: rotate(-2deg) !important;
+        display: inline-block !important;
+        margin-bottom: -8px !important;
     }
-    
+
     .logo-english {
-        color: #2F4F4F !important;
-        text-shadow: 1px 1px 0px #CD853F !important;
-        -webkit-user-select: none !important;
-        -moz-user-select: none !important;
-        -ms-user-select: none !important;
-        user-select: none !important;
+        font-family: 'Pacifico', cursive !important;
+        font-size: 1.7rem !important;
+        color: #F8FAFC !important;
+        text-shadow: 
+            1px 1px 0px #1E3A8A,
+            1px 1px 3px rgba(0, 0, 0, 0.4) !important;
+        letter-spacing: 3px !important;
+        transform: rotate(1deg) !important;
+        display: inline-block !important;
+        margin-top: -3px !important;
     }
-    
+
     /* 불필요한 요소 숨김 */
     .connection-status {
         display: none !important;
+        visibility: hidden !important;
+        opacity: 0 !important;
     }
-    
     .season-indicator {
         display: none !important;
     }
-    
-    .day::before {
-        display: none !important;
-    }
-    
-    /* 요일 배경색 */
-    .weekday {
-        background: #556B2F !important;
-        color: white !important;
-        -webkit-print-color-adjust: exact !important;
-        print-color-adjust: exact !important;
-    }
-    
-    /* 날짜 칸 배경색 */
-    .day {
-        background: #FFF8DC !important;
-        border: 1px solid #8B4513 !important;
-        -webkit-print-color-adjust: exact !important;
-        print-color-adjust: exact !important;
-    }
-    
-    /* 캘린더 영역 고정 */
-    .calendar {
-        page-break-inside: avoid !important;
-    }
-    
-    /* 모든 변환 효과 제거 */
-    * {
-        transform: none !important;
-        animation: none !important;
-    }
-}
-
-/* 모바일 최적화 */
-@media (max-width: 480px) {
-    .header-decoration {
-        font-size: 0.9rem !important;
-    }
-    
-    .month-decoration {
-        font-size: 1rem !important;
-    }
-    
-    .logo-zenith {
-        font-size: 2rem !important;
-    }
-    
-    .logo-english {
-        font-size: 1.4rem !important;
-    }
-    
-    .day::before {
-        display: none !important;
-    }
-}
-
-/* 낭만적인 가을 분위기 추가 효과 */
-.container {
-    box-shadow: 
-        0 15px 30px rgba(139, 69, 19, 0.2),
-        0 5px 15px rgba(0, 0, 0, 0.1) !important;
-}
-
-/* 헤더에 빈티지 효과 */
-.header {
-    position: relative !important;
-}
-
-.header::before {
-    content: '' !important;
-    position: absolute !important;
-    top: 0 !important;
-    left: 0 !important;
-    right: 0 !important;
-    bottom: 0 !important;
-    background: 
-        repeating-linear-gradient(
-            90deg,
-            transparent,
-            transparent 100px,
-            rgba(255, 248, 220, 0.03) 100px,
-            rgba(255, 248, 220, 0.03) 200px
-        ) !important;
-    pointer-events: none !important;
 }
