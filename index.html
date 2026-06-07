@@ -5,9 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ZENITH ENGLISH - 캘린더</title>
 
-    <!-- 2026 캘린더로 즉시 리다이렉트 -->
+    <!-- 오늘 날짜의 연도 캘린더로 즉시 리다이렉트 (JS 비활성 시 2026 폴백) -->
     <meta http-equiv="refresh" content="0; url=https://calendar.zenith-english.co.kr/2026/index.html">
-    <link rel="canonical" href="https://calendar.zenith-english.co.kr/2026/index.html">
 
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600&family=Noto+Sans+KR:wght@400;500;700&display=swap');
@@ -83,8 +82,20 @@
     </style>
 
     <script>
-        // 즉시 리다이렉트 (meta refresh 백업)
-        window.location.replace("https://calendar.zenith-english.co.kr/2026/index.html");
+        // 오늘 날짜의 연도에 맞춰 해당 연도 캘린더로 이동
+        var year = new Date().getFullYear();
+        var target = "https://calendar.zenith-english.co.kr/" + year + "/index.html";
+        // 수동 링크도 같은 주소로 맞춰줌
+        document.addEventListener("DOMContentLoaded", function () {
+            var link = document.getElementById("go-link");
+            if (link) {
+                link.href = target;
+                link.textContent = year + " 캘린더 바로 가기 →";
+            }
+            var msg = document.getElementById("go-msg");
+            if (msg) msg.textContent = year + " 캘린더로 이동 중입니다...";
+        });
+        window.location.replace(target);
     </script>
 </head>
 <body>
@@ -92,8 +103,8 @@
         <div class="brand">ZENITH ENGLISH</div>
         <div class="subtitle">✨ Excellence in English Education ✨</div>
         <div class="spinner"></div>
-        <p class="message">2026 캘린더로 이동 중입니다...</p>
-        <a class="link" href="https://calendar.zenith-english.co.kr/2026/index.html">바로 가기 →</a>
+        <p class="message" id="go-msg">캘린더로 이동 중입니다...</p>
+        <a class="link" id="go-link" href="https://calendar.zenith-english.co.kr/2026/index.html">바로 가기 →</a>
     </div>
 </body>
 </html>
